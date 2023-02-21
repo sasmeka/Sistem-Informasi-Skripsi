@@ -173,9 +173,9 @@ class Login extends BaseController
     }
     public function redirect()
     {
-        $clientID = '632079100292-t1c8ut8h0cqn13n0qs2hhtm9a3egga8q.apps.googleusercontent.com';
-        $clientSecret = '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';
-        $redirectUri = base_url() . '/redirect'; //Harus sama dengan yang kita daftarkan
+        $clientID = '632079100292-qp50d2140fn921at4qgqc7ejj1qbojnc.apps.googleusercontent.com';
+        $clientSecret = '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';
+        $redirectUri = base_url() . 'redirect'; //Harus sama dengan yang kita daftarkan
 
         $client = new Google_Client();
         $client->setClientId($clientID);
