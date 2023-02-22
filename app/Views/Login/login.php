@@ -109,7 +109,7 @@
                                                     bimbingan pasca seminar proposal, pendaftaran sidang
                                                     dan input nilai seminar proposal.</a></p>
                                             <!-- <br> -->
-                                            <div class="form-group mb-4">
+                                            <!-- <div class="form-group mb-4">
                                                 <label>Username</label>
                                                 <input class="form-control" placeholder="Masukkan NIM / NIP / Email Anda" type="text" name="username">
                                             </div>
@@ -119,7 +119,7 @@
                                             </div>
                                             <div class="text-left text-lg-start pb-3">
                                                 <button type="submit" class="btn btn-modif btn-light btn-outline text-white" style="padding-left: 2.5rem; padding-right: 2.5rem;"><b>Login</b></button>
-                                            </div>
+                                            </div> -->
                                             <?= session()->getFlashdata('message'); ?>
                                             <div class="row row-xs">
                                                 <div class="col-sm-7 mg-t-10 mg-sm-t-0">
