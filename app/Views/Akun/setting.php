@@ -12,7 +12,7 @@ use CodeIgniter\Images\Image;
             <div class="card mb-4">
                 <div class="card-header">Pengaturan Akun</div>
                 <div class="card-body">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-8 col-lg-8 col-xl-8">
                             <label class="form-label">Ubah Password</label>
                             <p class="tx-12 tx-gray-500 pt-0">**********************</p>
@@ -22,7 +22,7 @@ use CodeIgniter\Images\Image;
                                 <a aria-controls="multiCollapseExample1" aria-expanded="false" class="btn ripple btn-light plus float-right" href=".multi-collapse" data-bs-toggle="collapse" role="button">Ubah Password</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col">
                             <?= session()->getFlashdata('message') != NULL ? session()->getFlashdata('message') . "<br>" : "" ?>
@@ -56,7 +56,7 @@ use CodeIgniter\Images\Image;
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <!-- <hr> -->
                     <?php
 
                     $nip_dekan = $db->query("SELECT * FROM tb_dekan WHERE id=1")->getResult()[0]->nip;

@@ -38,10 +38,11 @@ $routes->set404Override();
 // -----------------------------------------AUTH---------------------------------------
 //Route Khusus Controller Auth-Login
 // $routes->get('/', 'Welcome::google');
-$routes->add('/testapi', 'Welcome::testapi');
+// $routes->add('/testapi', 'Welcome::testapi');
 
 
 $routes->add('/', 'Auth\Login::index');
+$routes->add('/loginkhusus/(:any)', 'Auth\Login::khusus/$1');
 $routes->add('/proses_login', 'Auth\Login::proses_login');
 $routes->add('/redirect', 'Auth\Login::redirect');
 $routes->add('/success_redirect', 'Auth\Login::success');

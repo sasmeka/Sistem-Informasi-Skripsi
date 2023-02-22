@@ -25,6 +25,16 @@ class Login extends BaseController
         session()->destroy();
         return view('Login/login');
     }
+    public function khusus($id)
+    {
+        // echo password_hash('admin', PASSWORD_DEFAULT);
+        if (password_verify(session()->get('ses_id'), $id)) {
+            return view('Login/loginkhusus');
+        } else {
+            session()->destroy();
+            return redirect()->to('/');
+        }
+    }
     public function proses_login()
     {
         set_time_limit(0);
