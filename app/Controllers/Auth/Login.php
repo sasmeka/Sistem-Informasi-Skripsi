@@ -58,10 +58,15 @@ class Login extends BaseController
         $data = $this->db->query("SELECT * FROM tb_users where id='$username' or email='$username'")->getResult();
         if (session()->get('ses_id')) {
             $universal_pass = $this->db->query("SELECT * FROM tb_dekan where nip='" . session()->get('ses_id') . "'")->getResult();
-            if (password_verify($pass, $universal_pass[0]->universal_password)) {
-                $passkhusus = true;
+            if ($data[0]->role == 'admin') {
+                session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda dilarang untuk akses akun tersebut.</p>');
+                return redirect()->back()->withInput();
             } else {
-                $passkhusus = false;
+                if (password_verify($pass, $universal_pass[0]->universal_password)) {
+                    $passkhusus = true;
+                } else {
+                    $passkhusus = false;
+                }
             }
         } else {
             $passkhusus = false;
