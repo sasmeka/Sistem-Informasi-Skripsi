@@ -70,14 +70,6 @@ class Ajukan_Topik extends BaseController
                     // 'uploaded' => 'Harus Ada File yang diupload',
                     'mime_in' => 'File Extention Harus Berupa pdf'
                 ]
-            ],
-            'berkas' => [
-                // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
-                'rules' => 'max_size[berkas,5120]',
-                'errors' => [
-                    // 'uploaded' => 'Harus Ada File yang diupload',
-                    'max_size' => 'Ukuran File Maksimal 5 MB'
-                ]
             ]
         ])) {
             session()->setFlashdata('message_ajukan_topik', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
@@ -87,10 +79,20 @@ class Ajukan_Topik extends BaseController
                 <span aria-hidden="true">×</span>
             </button>
         </div>');
-            return redirect()->to('/ajukan_topik_mahasiswa');
+            return redirect()->back()->withInput();
         }
         $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
+            if ($berkas->getSize('mb') > 5) {
+                session()->setFlashdata('message_ajukan_topik', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal!</strong> Ukuran File Maksimal 5 MB</span>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+                return redirect()->back()->withInput();
+            }
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("UPDATE tb_pengajuan_topik SET id_topik = '$id_topik', judul_topik = '$judul', berkas='$name' WHERE nim='" . session()->get('ses_id') . "'");
                 session()->setFlashdata("message_ajukan_topik", '<div class="alert alert-success alert-dismissible fade show" role="alert">
