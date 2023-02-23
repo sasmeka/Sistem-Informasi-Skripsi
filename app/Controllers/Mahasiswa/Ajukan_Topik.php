@@ -73,7 +73,7 @@ class Ajukan_Topik extends BaseController
             ],
             'berkas' => [
                 // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
-                'rules' => 'max_size[berkas,2048]',
+                'rules' => 'max_size[berkas,5120]',
                 'errors' => [
                     // 'uploaded' => 'Harus Ada File yang diupload',
                     'max_size' => 'Ukuran File Maksimal 2 MB'
