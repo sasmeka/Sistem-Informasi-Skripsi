@@ -50,7 +50,7 @@ class Ajukan_Topik extends BaseController
             'topik' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Pilih topik'
+                    'required' => 'Pilih bidang minat'
                 ]
             ],
             'judul_topik' => [

@@ -82,6 +82,10 @@ $routes->add('/update_data_periode', 'Admin\Periode::update_data_periode');
 $routes->add('/data_korprodi', 'Admin\Korprodi::index');
 $routes->add('/add_korprodi', 'Admin\Korprodi::add');
 $routes->add('/delete_korprodi', 'Admin\Korprodi::delete');
+//ROute Khusus Controller Admin-Akun Khusus
+$routes->add('/data_akun_khusus', 'Admin\Akun_Khusus::index');
+$routes->add('/add_akun_khusus', 'Admin\Akun_Khusus::add');
+$routes->add('/delete_akun_khusus', 'Admin\Akun_Khusus::delete');
 // -------------------------------------MAHASISWA-----------------------------------------
 //Route Khusus Controller Mahasiswa-Beranda
 $routes->add('/beranda_mahasiswa', 'Mahasiswa\Beranda::index');

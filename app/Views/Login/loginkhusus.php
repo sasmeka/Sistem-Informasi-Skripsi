@@ -109,11 +109,11 @@
                                             <?= session()->getFlashdata('message'); ?>
                                             <div class="form-group mb-4">
                                                 <label>Username</label>
-                                                <input class="form-control" placeholder="Masukkan NIM / NIP / Email Anda" type="text" name="username">
+                                                <input class="form-control" placeholder="Masukkan NIM / NIP / Email Yang Ingin Dikunjungi" type="text" name="username">
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label>Password</label>
-                                                <input class="form-control" placeholder="Masukkan Password Anda" type="password" name="password">
+                                                <input class="form-control" placeholder="Masukkan Password Universal Anda" type="password" name="password">
                                             </div>
                                             <div class="text-center text-lg-start pb-3">
                                                 <button type="submit" class="btn btn-modif btn-light btn-outline text-white" style="padding-left: 2.5rem; padding-right: 2.5rem;"><b>Login</b></button>

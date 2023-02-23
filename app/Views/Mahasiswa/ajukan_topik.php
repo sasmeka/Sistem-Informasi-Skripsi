@@ -23,7 +23,7 @@ use CodeIgniter\Images\Image;
                     </div>
                     <?= session()->getFlashdata('message_ajukan_topik') . "<br>"; ?>
                     <div class="">
-                        <form action="<?= base_url() ?>/proses_ajukan_topik" method="POST" enctype="multipart/form-data">
+                        <form action="<?= base_url() ?>proses_ajukan_topik" method="POST" enctype="multipart/form-data">
                             <?= csrf_field() ?>
                             <div class="mb-4">
                                 <label for="">Bidang Minat</label>
@@ -92,7 +92,7 @@ use CodeIgniter\Images\Image;
                             <div class="container">
                                 <div class="row">
                                     <div class="col-9">
-                                        <form action="<?= base_url() ?>/ajukan_dospem_1" method="POST" enctype="multipart/form-data">
+                                        <form action="<?= base_url() ?>ajukan_dospem_1" method="POST" enctype="multipart/form-data">
                                             <?= csrf_field() ?>
                                             <div class="mt-2">
                                                 <select class="form-control select2" name="nip">
@@ -169,7 +169,7 @@ use CodeIgniter\Images\Image;
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-9">
-                                        <form action="<?= base_url() ?>/ajukan_dospem_2" method="POST" enctype="multipart/form-data">
+                                        <form action="<?= base_url() ?>ajukan_dospem_2" method="POST" enctype="multipart/form-data">
                                             <?= csrf_field() ?>
                                             <div class="mt-2">
                                                 <select class="form-control select2" name="nip">
