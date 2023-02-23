@@ -76,7 +76,7 @@ class Ajukan_Topik extends BaseController
                 'rules' => 'max_size[berkas,5120]',
                 'errors' => [
                     // 'uploaded' => 'Harus Ada File yang diupload',
-                    'max_size' => 'Ukuran File Maksimal 2 MB'
+                    'max_size' => 'Ukuran File Maksimal 5 MB'
                 ]
             ]
         ])) {
