@@ -46,6 +46,10 @@ class Ajukan_Topik extends BaseController
     }
     public function proses_ajukan_topik()
     {
+
+        $id_topik = $this->request->getPost('topik');
+        $judul = $this->request->getPost('judul_topik');
+        $berkas = $this->request->getFile('berkas');
         if (!$this->validate([
             'topik' => [
                 'rules' => 'required',
@@ -61,13 +65,19 @@ class Ajukan_Topik extends BaseController
             ],
             'berkas' => [
                 // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
-                'rules' => 'mime_in[berkas,application/pdf]|max_size[berkas,2048]',
+                'rules' => 'mime_in[berkas,application/pdf]',
                 'errors' => [
                     // 'uploaded' => 'Harus Ada File yang diupload',
-                    'mime_in' => 'File Extention Harus Berupa pdf',
+                    'mime_in' => 'File Extention Harus Berupa pdf'
+                ]
+            ],
+            'berkas' => [
+                // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
+                'rules' => 'max_size[berkas,2048]',
+                'errors' => [
+                    // 'uploaded' => 'Harus Ada File yang diupload',
                     'max_size' => 'Ukuran File Maksimal 2 MB'
                 ]
-
             ]
         ])) {
             session()->setFlashdata('message_ajukan_topik', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
@@ -79,9 +89,6 @@ class Ajukan_Topik extends BaseController
         </div>');
             return redirect()->back()->withInput();
         }
-        $id_topik = $this->request->getPost('topik');
-        $judul = $this->request->getPost('judul_topik');
-        $berkas = $this->request->getFile('berkas');
         $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
