@@ -51,9 +51,9 @@ use CodeIgniter\Images\Image;
                                                     if ($stsp1 > 0 || $stsp2 > 0) {
                                                         echo "readonly";
                                                     }
-                                                    ?> name="judul_topik" class="form-control" id="exampleInput" placeholder="Isikan Judul Skripsi Anda" <?php if (!empty($data_pengajuan_topik[0]->judul_topik)) {
-                                                                                                                                                                echo "value='" . $data_pengajuan_topik[0]->judul_topik . "'";
-                                                                                                                                                            } ?>>
+                                                    ?> name="judul_topik" class="form-control" id="exampleInput" placeholder="Isikan Judul Skripsi Anda" value=<?php if (!empty($data_pengajuan_topik[0]->judul_topik)) {
+                                                                                                                                                                    echo "'" . $data_pengajuan_topik[0]->judul_topik . "'";
+                                                                                                                                                                } ?>>
                             </div>
                             <div class="row">
                                 <div class="col-sm-7 col-md-6 col-lg-4">
