@@ -50,6 +50,19 @@ class Ajukan_Topik extends BaseController
         $id_topik = $this->request->getPost('topik');
         $judul = $this->request->getPost('judul_topik');
         $berkas = $this->request->getFile('berkas');
+        $name = $berkas->getRandomName();
+        if ($berkas->getName() != '') {
+            if ($berkas->getSize('mb') > 5) {
+                session()->setFlashdata('message_ajukan_topik', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal!</strong> Ukuran File Maksimal 5 MB</span>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+                return redirect()->back()->withInput();
+            }
+        }
         if (!$this->validate([
             'topik' => [
                 'rules' => 'required',
@@ -81,18 +94,7 @@ class Ajukan_Topik extends BaseController
         </div>');
             return redirect()->back()->withInput();
         }
-        $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
-            if ($berkas->getSize('mb') > 5) {
-                session()->setFlashdata('message_ajukan_topik', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-                <span class="alert-inner--text"><strong>Gagal!</strong> Ukuran File Maksimal 5 MB</span>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>');
-                return redirect()->back()->withInput();
-            }
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("UPDATE tb_pengajuan_topik SET id_topik = '$id_topik', judul_topik = '$judul', berkas='$name' WHERE nim='" . session()->get('ses_id') . "'");
                 session()->setFlashdata("message_ajukan_topik", '<div class="alert alert-success alert-dismissible fade show" role="alert">
