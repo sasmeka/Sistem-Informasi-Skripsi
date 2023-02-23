@@ -105,6 +105,8 @@
                                                     </ol>
                                                 </a></p>
                                             <!-- <br> -->
+
+                                            <?= session()->getFlashdata('message'); ?>
                                             <div class="form-group mb-4">
                                                 <label>Username</label>
                                                 <input class="form-control" placeholder="Masukkan NIM / NIP / Email Anda" type="text" name="username">
@@ -116,7 +118,6 @@
                                             <div class="text-center text-lg-start pb-3">
                                                 <button type="submit" class="btn btn-modif btn-light btn-outline text-white" style="padding-left: 2.5rem; padding-right: 2.5rem;"><b>Login</b></button>
                                             </div>
-                                            <?= session()->getFlashdata('message'); ?>
                                             <div class="row row-xs">
                                                 <!-- <div class="col-sm-7 mg-t-10 mg-sm-t-0">
                                                     <a class="btn btn-primary btn-google btn-block btn-outline" href="<?= base_url() ?>redirect"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign In with Google</a>

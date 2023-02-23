@@ -101,13 +101,7 @@
                                         <form action="<?= base_url() ?>proses_login" method="POST" enctype="multipart/form-data">
                                             <?= csrf_field() ?>
                                             <h3 class="text-secondary"><b>SELAMAT DATANG</b><br></h3>
-                                            <p class="text-secondary" style="text-align: justify;"><b>SISRI</b> <a class="font-weight-light">merupakan sistem informasi manejemen skripsi
-                                                    fakultas teknik yang bertujuan memudahkan mahasiswa
-                                                    dan dosen pembimbing dalam melaksanakan prosedur skripsi.
-                                                    Sistem ini memungkinkan mahasiswa untuk melakukan pengajuan
-                                                    judul, bimbingan proposal, pendaftaran seminar proposal,
-                                                    bimbingan pasca seminar proposal, pendaftaran sidang
-                                                    dan input nilai seminar proposal.</a></p>
+                                            <p class="text-secondary" style="text-align: justify;"><b>SISRI</b> <a class="font-weight-light">merupakan sistem informasi manejemen skripsi fakultas teknik yang bertujuan memudahkan mahasiswa dan dosen pembimbing dalam melaksanakan prosedur skripsi. Sistem ini memungkinkan mahasiswa untuk melakukan pengajuan judul, bimbingan proposal, pendaftaran seminar proposal, bimbingan pasca seminar proposal dan pendaftaran sidang. Sistem ini juga memungkinkan dosen untuk melakukan validasi usulan, proses bimbingan, revisi pasca seminar dan sidang, validasi pendaftaran seminar dan sidang skripsi serta input nilai skripsi.</a></p>
                                             <!-- <br> -->
                                             <!-- <div class="form-group mb-4">
                                                 <label>Username</label>

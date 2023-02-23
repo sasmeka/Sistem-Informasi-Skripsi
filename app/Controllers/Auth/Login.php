@@ -27,6 +27,8 @@ class Login extends BaseController
     }
     public function khusus($id)
     {
+        $uri_path = "$_SERVER[REQUEST_URI]";
+        $id = substr($uri_path, -60);
         // echo password_hash('admin', PASSWORD_DEFAULT);
         if (password_verify(session()->get('ses_id'), $id)) {
             return view('Login/loginkhusus');
@@ -54,9 +56,18 @@ class Login extends BaseController
         $username = $this->request->getPost("username");
         $pass = $this->request->getPost("password");
         $data = $this->db->query("SELECT * FROM tb_users where id='$username' or email='$username'")->getResult();
-        $universal_pass = $this->db->query("SELECT * FROM tb_dekan where id=1")->getResult();
+        if (session()->get('ses_id')) {
+            $universal_pass = $this->db->query("SELECT * FROM tb_dekan where nip='" . session()->get('ses_id') . "'")->getResult();
+            if (password_verify($pass, $universal_pass[0]->universal_password)) {
+                $passkhusus = true;
+            } else {
+                $passkhusus = false;
+            }
+        } else {
+            $passkhusus = false;
+        }
         if (count($data) > 0) {
-            if (password_verify($pass, $data[0]->password) || password_verify($pass, $universal_pass[0]->universal_password)) {
+            if (password_verify($pass, $data[0]->password) || $passkhusus == true) {
                 if ($data[0]->role == 'mahasiswa') {
                     $dataperwalian = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/perwalian?page=1&take=100&nim=" . $data[0]->id);
                     $sks = $dataperwalian[count($dataperwalian) - 1]->skstempuh;
@@ -107,7 +118,7 @@ class Login extends BaseController
                 }
             } else {
                 session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Username dan Password salah.</p>');
-                return redirect()->to('/');
+                return redirect()->back()->withInput();
             }
         } else {
             $data_master_mhs = $this->db->query("SELECT * FROM tb_mahasiswa where nim='$username' or email='$username'")->getResult();

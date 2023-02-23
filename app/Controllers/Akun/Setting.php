@@ -75,16 +75,16 @@ class Setting extends BaseController
         // </div>');
         //     return redirect()->back()->withInput();
         // } else {
-            $ciphertext = password_hash($new_pass, PASSWORD_DEFAULT);
-            $this->db->query("UPDATE tb_users SET password='$ciphertext' WHERE id='" . session()->get('ses_id') . "'");
-            session()->setFlashdata('message', '<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        $ciphertext = password_hash($new_pass, PASSWORD_DEFAULT);
+        $this->db->query("UPDATE tb_users SET password='$ciphertext' WHERE id='" . session()->get('ses_id') . "'");
+        session()->setFlashdata('message', '<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
             <span class="alert-inner--text"><strong>Berhasil!</strong> Mengganti Password.</span>
             <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
         </div>');
-            return redirect()->back()->withInput();
+        return redirect()->back()->withInput();
         // }
     }
     public function update_universal_pass()
@@ -119,7 +119,7 @@ class Setting extends BaseController
         }
         $new_pass = $this->request->getPost("new_pass");
         $ciphertext = password_hash($new_pass, PASSWORD_DEFAULT);
-        $this->db->query("UPDATE tb_dekan SET universal_password='$ciphertext' WHERE id=1 AND nip='" . session()->get('ses_id') . "'");
+        $this->db->query("UPDATE tb_dekan SET universal_password='$ciphertext' WHERE nip='" . session()->get('ses_id') . "'");
         session()->setFlashdata('message2', '<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
             <span class="alert-inner--text"><strong>Berhasil!</strong> Mengganti Password.</span>

@@ -58,10 +58,8 @@ use CodeIgniter\Images\Image;
                     </div>
                     <!-- <hr> -->
                     <?php
-
-                    $nip_dekan = $db->query("SELECT * FROM tb_dekan WHERE id=1")->getResult()[0]->nip;
-                    if (session()->get('ses_id') == $nip_dekan) {
-                    ?>
+                    $nip_dekan = $db->query("SELECT * FROM tb_dekan WHERE nip='" . session()->get('ses_id') . "'")->getResult()[0]->nip;
+                    if (!empty($nip_dekan) && session()->get('ses_id') == $nip_dekan) { ?>
                         <div class="row">
                             <div class="col-md-8 col-lg-8 col-xl-8">
                                 <label class="form-label">Ubah Universal Password</label>
@@ -77,7 +75,7 @@ use CodeIgniter\Images\Image;
                             <div class="col">
                                 <?= session()->getFlashdata('message2') != NULL ? session()->getFlashdata('message') . "<br>" : "" ?>
                                 <div class="collapse <?= session()->getFlashdata('message') != NULL ? 'show' : ''  ?> multi-collapse2" id="multiCollapseExample2">
-                                    <form action="<?= base_url() ?>/update_universal_pass" method="POST" enctype="multipart/form-data">
+                                    <form action="<?= base_url() ?>update_universal_pass" method="POST" enctype="multipart/form-data">
                                         <?= csrf_field() ?>
                                         <div class="row row-sm">
                                             <div class="col-4">

@@ -41,11 +41,14 @@
 									?>
 										<a class="dropdown-item" href="<?= base_url() ?>profil"><i class="bx bx-user-circle"></i>Profil</a>
 										<a class="dropdown-item" href="<?= base_url() ?>edit_profil"><i class="bx bx-cog"></i> Edit Profil</a>
+										<?php
+									}
+									$nip_dekan = $db->query("SELECT * FROM tb_dekan WHERE nip='" . session()->get('ses_id') . "'")->getResult();
+									if (!empty($nip_dekan)) {
+										if (session()->get('ses_id') == $nip_dekan[0]->nip) { ?>
+											<a class="dropdown-item" href="<?= base_url() ?>setting"><i class="bx bx-slider-alt"></i> Pengaturan Akun</a>
 									<?php }
-									$nip_dekan = $db->query("SELECT * FROM tb_dekan WHERE id=1")->getResult()[0]->nip;
-									if (session()->get('ses_id') == $nip_dekan) { ?>
-										<a class="dropdown-item" href="<?= base_url() ?>setting"><i class="bx bx-slider-alt"></i> Pengaturan Akun</a>
-									<?php } ?>
+									} ?>
 									<a class="dropdown-item" href="<?= base_url() ?>logout"><i class="bx bx-log-out"></i> Log Out</a>
 								</div>
 							</li>
