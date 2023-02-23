@@ -87,7 +87,7 @@ class Ajukan_Topik extends BaseController
                 <span aria-hidden="true">×</span>
             </button>
         </div>');
-            return redirect()->back()->withInput();
+            return redirect()->to('/ajukan_topik_mahasiswa');
         }
         $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
