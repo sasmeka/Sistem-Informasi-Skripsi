@@ -64,6 +64,13 @@ writable/debugbar/*
 
 php_errors.log
 
+public/image/*
+!public/image/Logo_uTM.png
+!public/image/Profile_Default.png
+
+public/berkas/*
+
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------
