@@ -21,39 +21,39 @@ class Daftar_Sidang extends BaseController
         set_time_limit(0);
         ini_set('max_execution_time', '0');
         ini_set('max_input_time', '0');
-    $data = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/krs?page=1&take=1000&nim=".session()->get('ses_id'));
-    $datamka = [];
-    $datanmka = [];
-    foreach ($data as $key){
-        $datamk = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/matakuliah?page=1&take=100&idmk=".$key->idmk);
-        if(strtoupper($datamk[0]->namamk)!='SKRIPSI'){
-          $a = array_search(strtoupper($datamk[0]->namamk), $datamka);
-          if($a==NULL){
-            array_push($datamka,strtoupper($datamk[0]->namamk));
-            array_push($datanmka,$key->nhuruf);
-          }else{
-            $datanmka[$a]=$key->nhuruf;
-          }
-        }      
-}
-$datafix = [];
-for($i=0;$i<count($datamka);$i++){
-  $error = [
-    'namamk'=>$datamka[$i],
-    'nhuruf'=>$datanmka[$i]
-      ];
-      array_push($datafix,$error);
-}
+        $data = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/krs?page=1&take=1000&nim=" . session()->get('ses_id'));
+        $datamka = [];
+        $datanmka = [];
+        foreach ($data as $key) {
+            $datamk = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/matakuliah?page=1&take=100&idmk=" . $key->idmk);
+            if (strtoupper($datamk[0]->namamk) != 'SKRIPSI' && strtoupper($datamk[0]->namamk) != 'TUGAS AKHIR') {
+                $a = array_search(strtoupper($datamk[0]->namamk), $datamka);
+                if ($a == NULL) {
+                    array_push($datamka, strtoupper($datamk[0]->namamk));
+                    array_push($datanmka, $key->nhuruf);
+                } else {
+                    $datanmka[$a] = $key->nhuruf;
+                }
+            }
+        }
+        $datafix = [];
+        for ($i = 0; $i < count($datamka); $i++) {
+            $error = [
+                'namamk' => $datamka[$i],
+                'nhuruf' => $datanmka[$i]
+            ];
+            array_push($datafix, $error);
+        }
         $mkerror = [];
-    foreach ($datafix as $key){
-      if($key['nhuruf']=='E' || $key['nhuruf']=='D' || $key['nhuruf']==NULL){
-  $error = [
-'namamk'=>$key['namamk'],
-'nilai'=>$key['nhuruf']
-  ];
-  array_push($mkerror,$error);
-}
-}
+        foreach ($datafix as $key) {
+            if ($key['nhuruf'] == 'E' || $key['nhuruf'] == 'D' || $key['nhuruf'] == NULL) {
+                $error = [
+                    'namamk' => $key['namamk'],
+                    'nilai' => $key['nhuruf']
+                ];
+                array_push($mkerror, $error);
+            }
+        }
         $id = session()->get('ses_id');
         $idunit_mhs = $this->db->query("SELECT * FROM tb_mahasiswa WHERE nim='$id'")->getResult()[0]->idunit;
         $data = [
@@ -152,15 +152,15 @@ for($i=0;$i<count($datamka);$i++){
         $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
-        $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'".$name."')");
-        session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "')");
+                session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
                 <span class="alert-inner--text"><strong>Sukses!</strong> mendaftar sidang skripsi.</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
-            }else{
+            } else {
                 session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
                 <span class="alert-inner--text"><strong>Gagal!</strong> mendaftar sidang skripsi.</span>

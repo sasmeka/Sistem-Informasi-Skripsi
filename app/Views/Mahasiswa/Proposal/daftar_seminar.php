@@ -179,7 +179,8 @@ use CodeIgniter\Images\Image;
                                             date_default_timezone_set("Asia/Jakarta");
                                             $no = 1;
                                             foreach ($data_jadwal as $key) {
-                                                if (date('d F Y H:i:s') <= date('d F Y H:i:s', strtotime($key->expire))) {
+                                                if (time() <= strtotime($key->expire)) {
+                                                    // }
                                             ?>
                                                     <tr>
                                                         <th scope="row"><?= $no ?></th>
@@ -193,9 +194,9 @@ use CodeIgniter\Images\Image;
                                                             $acc_pem2 = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='pembimbing 2' AND jenis_sidang='seminar proposal' AND `status`='disetujui' ")->getResult();
                                                             $acc_kor = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='koordinator' AND jenis_sidang='seminar proposal' AND `status`='disetujui' ")->getResult();
                                                             $cek_pendaftar_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang WHERE nim='" . session()->get('ses_id') . "' AND id_jadwal='" . $key->id_jadwal . "' ")->getResult();
-                                                            if (date('d F Y H:i:s') < date('d F Y H:i:s', strtotime($key->open))) {
+                                                            if (time() < strtotime($key->open)) {
                                                                 echo "<a class='text-danger'>Belum Dibuka</a>";
-                                                            } elseif (date('d F Y H:i:s') >= date('d F Y H:i:s', strtotime($key->open))) {
+                                                            } elseif (time() >= strtotime($key->open)) {
                                                                 if (count($acc_pem1) != NULL && count($acc_pem2) != NULL && count($acc_kor) != NULL) {
                                                                     if (count($cek_pendaftar_sidang) != NULL) {
                                                                         echo "<a class='text-success'>Telah Mendaftar</a>";
