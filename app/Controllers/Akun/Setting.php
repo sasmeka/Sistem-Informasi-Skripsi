@@ -129,4 +129,51 @@ class Setting extends BaseController
         </div>');
         return redirect()->back()->withInput();
     }
+    public function clear_recycle_bin()
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'admin') {
+            return redirect()->to('/');
+        }
+
+        helper('filesystem'); // Load Helper File System
+        $dataimage = [];
+        $databerkas = [];
+        $data_pengajuan_topik = $this->db->query("SELECT berkas FROM tb_pengajuan_topik")->getResult();
+        foreach ($data_pengajuan_topik as $key) {
+            if ($key->berkas != NULL) {
+                array_push($databerkas, $key->berkas);
+            }
+        }
+        $data_tb_profil_tambahan = $this->db->query("SELECT image FROM tb_profil_tambahan")->getResult();
+        foreach ($data_tb_profil_tambahan as $key) {
+            if ($key->image != NULL) {
+                array_push($dataimage, $key->image);
+            }
+        }
+        var_dump($databerkas);
+        echo '<br>';
+        var_dump($dataimage);
+
+        $direktori = WRITEPATH . '../public/berkas/'; //definisikan direktori upload
+        chmod($direktori, 0777);
+        $map = directory_map($direktori, FALSE, TRUE); // List direktori
+        /* Cek File apakah ada */
+        foreach ($map as $key) {
+            if (!in_array($key, $databerkas)) {
+                unlink(FCPATH . 'berkas/' . $key);
+            }
+        }
+
+        $direktori2 = WRITEPATH . '../public/image/'; //definisikan direktori upload
+        chmod($direktori2, 0777);
+        $map2 = directory_map($direktori2, FALSE, TRUE); // List direktori
+        /* Cek File apakah ada */
+        foreach ($map2 as $key) {
+            if (!in_array($key, $dataimage)) {
+                if ($key != 'Logo_UTM.png') {
+                    unlink(FCPATH . 'image/' . $key);
+                }
+            }
+        }
+    }
 }
