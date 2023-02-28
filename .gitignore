@@ -64,11 +64,7 @@ writable/debugbar/*
 
 php_errors.log
 
-# public/image/*
-# !public/image/Logo_uTM.png
-# !public/image/Profile_Default.png
-# public/berkas/*
-public
+
 
 #-------------------------
 # User Guide Temp Files
@@ -89,7 +85,11 @@ phpunit
 #-------------------------
 # Composer
 #-------------------------
-#vendor/
+# vendor/
+public/image/*
+!public/image/Logo_uTM.png
+!public/image/Profile_Default.png
+public/berkas/*
 
 #-------------------------
 # IDE / Development Files
