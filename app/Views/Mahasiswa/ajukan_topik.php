@@ -100,7 +100,7 @@ use CodeIgniter\Images\Image;
                                                     </option>
                                                     <?php foreach ($dosen as $key1) { ?>
                                                         <option value="<?= $key1->nip_dos ?>">
-                                                            <?= $key1->namaunit . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
+                                                            <?= $key1->namaunit . ' - ' . $key1->nip_dos . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
                                                             <?php if ($key1->jumlah >= 10) {
                                                                 echo '<a class="text-danger"> - (Penuh)</a>';
                                                             } elseif ($key1->jumlah == NULL) {
@@ -177,7 +177,7 @@ use CodeIgniter\Images\Image;
                                                     </option>
                                                     <?php foreach ($dosen as $key2) { ?>
                                                         <option value="<?= $key2->nip_dos ?>">
-                                                            <?= $key2->namaunit . ' - ' . $key2->gelardepan . ' ' . $key2->nama . ', ' . $key2->gelarbelakang ?>
+                                                            <?= $key2->namaunit . ' - ' . $key2->nip_dos . ' - ' . $key2->gelardepan . ' ' . $key2->nama . ', ' . $key2->gelarbelakang ?>
                                                             <?php if ($key2->jumlah >= 10) {
                                                                 echo '<a class="text-danger"> - (Penuh)</a>';
                                                             } elseif ($key2->jumlah == NULL) {
