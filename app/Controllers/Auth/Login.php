@@ -66,10 +66,14 @@ class Login extends BaseController
                     $passkhusus = true;
                 } else {
                     $passkhusus = false;
+                    session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Password Salah.</p>');
+                    return redirect()->back()->withInput();
                 }
             }
         } else {
             $passkhusus = false;
+            session()->destroy();
+            return redirect()->to('/');
         }
         if (count($data) > 0) {
             if (password_verify($pass, $data[0]->password) || $passkhusus == true) {

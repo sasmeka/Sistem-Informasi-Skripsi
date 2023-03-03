@@ -139,7 +139,8 @@ use CodeIgniter\Images\Image;
                                                             <span class="text-success ms-2">Diterima</span>
                                                         <?php
                                                         } elseif ($pem1->status_pengajuan == 'menunggu') { ?>
-                                                            <span class="text-warning ms-2">Menunggu</span>
+                                                            <span class="text-warning ms-2">Menunggu</span> |
+                                                            <a href="<?= base_url() ?>batal_ajukan_dospem_1/<?= $pem1->id_pengajuan_pembimbing ?>" class="btn btn-danger btn-sm"> Batalkan</a>
                                                         <?php
                                                         } else { ?>
                                                             <span class="text-danger ms-2">Ditolak</span>
@@ -217,6 +218,7 @@ use CodeIgniter\Images\Image;
                                                         <?php
                                                         } elseif ($pem2->status_pengajuan == 'menunggu') { ?>
                                                             <span class="text-warning ms-2">Menunggu</span>
+                                                            <a href="<?= base_url() ?>batal_ajukan_dospem_2/<?= $pem2->id_pengajuan_pembimbing ?>" class="btn btn-danger btn-sm"> Batalkan</a>
                                                         <?php
                                                         } else { ?>
                                                             <span class="text-danger ms-2">Ditolak</span>

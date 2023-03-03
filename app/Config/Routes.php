@@ -93,7 +93,9 @@ $routes->add('/beranda_mahasiswa', 'Mahasiswa\Beranda::index');
 //Route Khusus Controller Mahasiswa-Ajukan_Topik
 $routes->add('/ajukan_topik_mahasiswa', 'Mahasiswa\Ajukan_Topik::index');
 $routes->add('/ajukan_dospem_1', 'Mahasiswa\Ajukan_Topik::ajukan_dospem_1');
+$routes->add('/batal_ajukan_dospem_1/(:any)', 'Mahasiswa\Ajukan_Topik::batal_ajukan_dospem_1/$1');
 $routes->add('/ajukan_dospem_2', 'Mahasiswa\Ajukan_Topik::ajukan_dospem_2');
+$routes->add('/batal_ajukan_dospem_2/(:any)', 'Mahasiswa\Ajukan_Topik::batal_ajukan_dospem_2/$1');
 $routes->add('/proses_ajukan_topik', 'Mahasiswa\Ajukan_Topik::proses_ajukan_topik');
 //Route Khusus Controller Mahasiswa-Bimbingan Proposal
 $routes->get('/bimbingan_proposal/(:any)', 'Mahasiswa\Proposal\Bimbingan::index/$1');

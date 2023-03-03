@@ -20,6 +20,24 @@ class Ajukan_Topik extends BaseController
         }
         $data_mahasiswa = $this->db->query("SELECT * FROM tb_mahasiswa where nim='" . session()->get('ses_id') . "'")->getResult();
         $idunit = $data_mahasiswa[0]->idunit;
+
+        //------Start keberadaan nip dosen-------
+        $cek_p1 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing  where nim='" . session()->get('ses_id') . "' AND sebagai='1' AND status_pengajuan='menunggu'")->getResult();
+        $cek_p2 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing  where nim='" . session()->get('ses_id') . "' AND sebagai='2' AND status_pengajuan='menunggu'")->getResult();
+        if (count($cek_p1) > 0) {
+            $cek_dos_p1 = $this->db->query("SELECT * FROM tb_dosen  where nip='" . $cek_p1[0]->nip . "'")->getResult();
+            if (count($cek_dos_p1) == 0) {
+                $this->db->query("DELETE FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing='" . $cek_p1[0]->id_pengajuan_pembimbing . "'");
+            }
+        }
+        if (count($cek_p2) > 0) {
+            $cek_dos_p2 = $this->db->query("SELECT * FROM tb_dosen  where nip='" . $cek_p2[0]->nip . "'")->getResult();
+            if (count($cek_dos_p2) == 0) {
+                $this->db->query("DELETE FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing='" . $cek_p2[0]->id_pengajuan_pembimbing . "'");
+            }
+        }
+        //------End keberadaan nip dosen-------
+
         $data_dosen = $this->db->query("SELECT a.nip as nip_dos,a.*,b.*,c.* FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` LEFT JOIN tb_jumlah_pembimbing c ON a.`nip`=c.`nip` WHERE a.idunit IN (SELECT idunit FROM tb_unit WHERE parentunit=(SELECT parentunit FROM tb_unit WHERE idunit='$idunit')) AND a.`nip` NOT IN (SELECT nip FROM tb_pengajuan_pembimbing WHERE nim='" . session()->get('ses_id') . "' AND (status_pengajuan='diterima' OR status_pengajuan='menunggu')) order by a.nama")->getResult();
         $data_pengajuan_pembimbing_1 = $this->db->query("SELECT * FROM tb_dosen a LEFT JOIN tb_pengajuan_pembimbing b ON a.`nip`=b.`nip` LEFT JOIN tb_unit c ON a.`idunit`=c.`idunit` WHERE b.nim='" . session()->get('ses_id') . "' AND b.sebagai='1'")->getResult();
         $data_pengajuan_pembimbing_2 = $this->db->query("SELECT * FROM tb_dosen a LEFT JOIN tb_pengajuan_pembimbing b ON a.`nip`=b.`nip` LEFT JOIN tb_unit c ON a.`idunit`=c.`idunit` WHERE b.nim='" . session()->get('ses_id') . "' AND b.sebagai='2'")->getResult();
@@ -213,6 +231,38 @@ class Ajukan_Topik extends BaseController
                 $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','pengajuan dospem 2','Pengajuan dosen pembimbing 2 ($nip)',now())");
             }
         }
+        return redirect()->to('/ajukan_topik_mahasiswa');
+    }
+    public function batal_ajukan_dospem_1($id)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
+            return redirect()->to('/');
+        }
+        $this->db->query("DELETE FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing='$id'");
+        session()->setFlashdata('message_pem1', '
+        <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+    <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
+    <span class="alert-inner--text"><strong>Sukses!</strong> membatalkan pengajuan dosen pembimbing 1.</span>
+    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>');
+        return redirect()->to('/ajukan_topik_mahasiswa');
+    }
+    public function batal_ajukan_dospem_2($id)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
+            return redirect()->to('/');
+        }
+        $this->db->query("DELETE FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing='$id'");
+        session()->setFlashdata('message_pem2', '
+        <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+    <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
+    <span class="alert-inner--text"><strong>Sukses!</strong> membatalkan pengajuan dosen pembimbing 2.</span>
+    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>');
         return redirect()->to('/ajukan_topik_mahasiswa');
     }
 }
