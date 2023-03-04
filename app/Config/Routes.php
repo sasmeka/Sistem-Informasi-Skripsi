@@ -63,6 +63,7 @@ $routes->add('/beranda_admin', 'Admin\Beranda::index');
 $routes->add('/data_mahasiswa', 'Admin\Mahasiswa::index');
 $routes->add('/data_mahasiswa2', 'Admin\Mahasiswa::index2');
 $routes->add('/update_data_mhs', 'Admin\Mahasiswa::update_data_mhs');
+// $routes->add('/update_data_mhs/(:any)', 'Admin\Mahasiswa::update_data_mhs/$1');
 $routes->get('/jurusan_mhs/(:any)', 'Admin\Mahasiswa::jurusan_mhs/$1');
 $routes->get('/prodi_mhs/(:any)', 'Admin\Mahasiswa::prodi_mhs/$1');
 $routes->get('/detail_data_mhs/(:any)/(:any)', 'Admin\Mahasiswa::detail_data_mhs/$1/$2');
