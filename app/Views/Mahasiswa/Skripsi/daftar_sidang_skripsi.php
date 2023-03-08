@@ -54,7 +54,7 @@ use CodeIgniter\Images\Image;
                                                 <h5 class="mb-1 tx-15">Pembimbing 1 (<?= $pem1->gelardepan . ' ' . $pem1->nama . ', ' . $pem1->gelarbelakang ?>)</h5>
                                                 <p class="mb-0 tx-11 text-muted">NIP: <?= $pem1->nip; ?>
                                                     <?php
-                                                    if (count($cek) == NULL) {
+                                                    if (count($cek) == 0) {
                                                         echo "<span class='text-danger ms-2'>Belum Melakukan Perizinan</span>";
                                                     } elseif ($cek[0]->status == 'ditolak') {
                                                         echo "<span class='text-danger ms-2'>Izin ditolak</span>";
@@ -67,7 +67,7 @@ use CodeIgniter\Images\Image;
                                                 </p>
                                             </div>
                                             <?php
-                                            if (count($cek) != NULL) {
+                                            if (count($cek) > 0) {
                                                 if ($cek[0]->status == 'ditolak') { ?>
                                                     <div class="offset-1">
                                                         <Button class="btn btn-primary btn-sm" <?= $ststbl ?> type='submit'>Meminta Izin</Button>
@@ -99,7 +99,7 @@ use CodeIgniter\Images\Image;
                                                 <h5 class="mb-1 tx-15">Pembimbing 2 (<?= $pem2->gelardepan . ' ' . $pem2->nama . ', ' . $pem2->gelarbelakang ?>)</h5>
                                                 <p class="mb-0 tx-11 text-muted">NIP: <?= $pem2->nip; ?>
                                                     <?php $cek = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND nip='" . $pem2->nip . "' AND izin_sebagai='pembimbing 2' AND jenis_sidang='skripsi'")->getResult();
-                                                    if (count($cek) == NULL) {
+                                                    if (count($cek) == 0) {
                                                         echo "<span class='text-danger ms-2'>Belum Melakukan Perizinan</span>";
                                                     } elseif ($cek[0]->status == 'ditolak') {
                                                         echo "<span class='text-danger ms-2'>Izin ditolak</span>";
@@ -112,7 +112,7 @@ use CodeIgniter\Images\Image;
                                                 </p>
                                             </div>
                                             <?php
-                                            if (count($cek) != NULL) {
+                                            if (count($cek) > 0) {
                                                 if ($cek[0]->status == 'ditolak') { ?>
                                                     <div class="offset-1">
                                                         <Button class="btn btn-primary btn-sm" <?= $ststbl ?> type='submit'>Meminta Izin</Button>
@@ -144,7 +144,7 @@ use CodeIgniter\Images\Image;
                                                 <h5 class="mb-1 tx-15">Koordinator Prodi (<?= $kor->gelardepan . ' ' . $kor->nama . ', ' . $kor->gelarbelakang ?>)</h5>
                                                 <p class="mb-0 tx-11 text-muted">NIP: <?= $kor->nip; ?>
                                                     <?php $cek = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND nip='" . $kor->nip . "' AND izin_sebagai='koordinator'  AND jenis_sidang='skripsi'")->getResult();
-                                                    if (count($cek) == NULL) {
+                                                    if (count($cek) == 0) {
                                                         // echo "<span class='text-danger ms-2'>Belum Melakukan Perizinan</span>";
                                                     } elseif ($cek[0]->status == 'ditolak') {
                                                         // echo "<span class='text-danger ms-2'>Izin ditolak</span>";
@@ -157,7 +157,7 @@ use CodeIgniter\Images\Image;
                                                 </p>
                                             </div>
                                             <?php
-                                            if (count($cek) != NULL) {
+                                            if (count($cek) > 0) {
                                                 if ($cek[0]->status == 'ditolak') { ?>
                                                     <div class="offset-1">
                                                         <Button class="btn btn-primary btn-sm" <?= $ststbl ?> type='submit'>Meminta Izin</Button>
@@ -221,9 +221,9 @@ use CodeIgniter\Images\Image;
                                                             if (time() < strtotime($key->open)) {
                                                                 echo "<a class='text-danger'>Belum Dibuka</a>";
                                                             } elseif (time() >= strtotime($key->open)) {
-                                                                if ($acc_seminar_penguji1 != NULL && $acc_seminar_penguji2 != NULL && $acc_seminar_penguji3 != NULL) {
-                                                                    if (count($acc_pem1) != NULL && count($acc_pem2) != NULL) {
-                                                                        if (count($cek_pendaftar_sidang) != NULL) {
+                                                                if ($acc_seminar_penguji1 > 0 && $acc_seminar_penguji2 > 0 && $acc_seminar_penguji3 > 0) {
+                                                                    if (count($acc_pem1) > 0 && count($acc_pem2) > 0) {
+                                                                        if (count($cek_pendaftar_sidang) > 0) {
                                                                             echo "<a class='text-success'>Telah Mendaftar</a>";
                                                                         } else {
                                                             ?>
