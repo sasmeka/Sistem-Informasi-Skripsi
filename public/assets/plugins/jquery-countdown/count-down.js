@@ -1,11 +1,11 @@
-$(function() {
+$(function () {
 	"use strict";
-	//Set your date
+	// Set your date
 	$('#count-down').countDown({
 		targetDate: {
-			'day': 20,
-			'month': 12,
-			'year': 2028,
+			'day': 21,
+			'month': 3,
+			'year': 2023,
 			'hour': 0,
 			'min': 0,
 			'sec': 0

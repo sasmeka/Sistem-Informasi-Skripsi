@@ -9,8 +9,8 @@ class Home extends BaseController
         return view('welcome_message');
     }
 
-    public function notif()
+    public function perbaikan()
     {
-        return view('notifikasi');
+        return view('perbaikan');
     }
 }

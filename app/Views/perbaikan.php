@@ -17,30 +17,30 @@
     <link rel="icon" href="<?= base_url() ?>/assets/img/ft.png" type="image/x-icon" />
 
     <!--- Icons css --->
-    <link href="../../assets/css/icons.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/icons.css" rel="stylesheet">
 
     <!-- Bootstrap css -->
-    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!--- Right-sidemenu css --->
-    <link href="../../assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
 
     <!-- P-scroll bar css-->
-    <link href="../../assets/plugins/perfect-scrollbar/p-scrollbar.css" rel="stylesheet" />
+    <link href="<?= base_url() ?>/assets/plugins/perfect-scrollbar/p-scrollbar.css" rel="stylesheet" />
 
     <!--- Style css --->
-    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/style.css" rel="stylesheet">
 
     <!--- Skinmodes css --->
-    <link href="../../assets/css/skin-modes.css" rel="stylesheet">
-    <link href="../../assets/css/boxed.css" rel="stylesheet">
-    <link href="../../assets/css/dark-boxed.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/skin-modes.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/boxed.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/dark-boxed.css" rel="stylesheet">
 
     <!--- Darktheme css --->
-    <link href="../../assets/css/style-dark.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/style-dark.css" rel="stylesheet">
 
     <!--- Animations css --->
-    <link href="../../assets/css/animate.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/assets/css/animate.css" rel="stylesheet">
 
 </head>
 
@@ -50,7 +50,7 @@
 
     <!-- Loader -->
     <div id="global-loader">
-        <img src="../../assets/img/loader.svg" class="loader-img" alt="Loader">
+        <img src="<?= base_url() ?>/assets/img/loader.svg" class="loader-img" alt="Loader">
     </div>
     <!-- /Loader -->
 
@@ -63,7 +63,7 @@
                 <div class="col-md-5 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
                     <div class="row wd-100p mx-auto text-center">
                         <div class="col-md-12 col-lg-12 col-xl-12 my-auto mx-auto wd-100p">
-                            <img src="../../assets/img/media/underconstruction.png" class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mx-auto" alt="logo">
+                            <img src="<?= base_url() ?>/assets/img/media/underconstruction.png" class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mx-auto" alt="logo">
                         </div>
                     </div>
                 </div>
@@ -116,38 +116,57 @@
     <!-- End Page -->
 
     <!--- JQuery min js --->
-    <script src="../../assets/plugins/jquery/jquery.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/jquery/jquery.min.js"></script>
 
     <!--- Bootstrap Bundle js --->
-    <script src="../../assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="../../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!--- Ionicons js --->
-    <script src="../../assets/plugins/ionicons/ionicons.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/ionicons/ionicons.js"></script>
 
     <!--- JQuery sparkline js --->
-    <script src="../../assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
 
 
     <!--- Moment js --->
-    <script src="../../assets/plugins/moment/moment.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/moment/moment.js"></script>
 
     <!-- P-scroll js -->
-    <script src="../../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
     <!--- Eva-icons js --->
-    <script src="../../assets/js/eva-icons.min.js"></script>
+    <script src="<?= base_url() ?>/assets/js/eva-icons.min.js"></script>
 
     <!--- Jquery.Coutdown js --->
-    <script src="../../assets/plugins/jquery-countdown/jquery.lwtCountdown-1.0.js"></script>
-    <script src="../../assets/plugins/jquery-countdown/count-down.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/jquery-countdown/jquery.lwtCountdown-1.0.js"></script>
+    <!-- <script src="<?= base_url() ?>/assets/plugins/jquery-countdown/count-down.js"></script> -->
+    <script>
+        $(function() {
+            "use strict";
+            // Set your date
+            $('#count-down').countDown({
+                targetDate: {
+                    'day': 21,
+                    'month': 3,
+                    'year': 2023,
+                    'hour': 0,
+                    'min': 0,
+                    'sec': 0
+                },
+                omitWeeks: true
+            });
+
+        });
+    </script>
+
 
     <!--- Rating js --->
-    <script src="../../assets/plugins/rating/jquery.rating-stars.js"></script>
-    <script src="../../assets/plugins/rating/jquery.barrating.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/rating/jquery.rating-stars.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/rating/jquery.barrating.js"></script>
 
     <!--- Custom js --->
-    <script src="../../assets/js/custom.js"></script>
+    <script src="<?= base_url() ?>/assets/js/custom.js"></script>
 
 </body>
 
