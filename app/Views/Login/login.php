@@ -14,7 +14,7 @@
     <title> SISRI - Login</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="<?= base_url() ?>/assets/img/brand/logoutm.png" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url() ?>/assets/img/brand/Sisri.png" type="image/x-icon" />
 
     <!-- Icons css -->
     <link href="<?= base_url() ?>/assets/css/icons.css" rel="stylesheet">
@@ -104,17 +104,17 @@
                                             <p class="text-secondary" style="text-align: justify;"><b>SISRI</b> <a class="font-weight-light">merupakan sistem informasi manejemen skripsi fakultas teknik yang bertujuan memudahkan mahasiswa dan dosen pembimbing dalam melaksanakan prosedur skripsi. Sistem ini memungkinkan mahasiswa untuk melakukan pengajuan judul, bimbingan proposal, pendaftaran seminar proposal, bimbingan pasca seminar proposal dan pendaftaran sidang. Sistem ini juga memungkinkan dosen untuk melakukan validasi usulan, proses bimbingan, revisi pasca seminar dan sidang, validasi pendaftaran seminar dan sidang skripsi serta input nilai skripsi.</a></p>
                                             <!-- <br> -->
                                             <!-- <div class="form-group mb-4">
-                                                <label>Username</label>
-                                                <input class="form-control" placeholder="Masukkan NIM / NIP / Email Anda" type="text" name="username">
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label>Password</label>
-                                                <input class="form-control" placeholder="Masukkan Password Anda" type="password" name="password">
-                                            </div>
-                                            <div class="text-left text-lg-start pb-3">
-                                                <button type="submit" class="btn btn-modif btn-light btn-outline text-white" style="padding-left: 2.5rem; padding-right: 2.5rem;"><b>Login</b></button>
-                                            </div> -->
-                                            <?= session()->getFlashdata('message'); ?>
+                                            <label>Username</label>
+                                            <input class="form-control" placeholder="Masukkan NIM / NIP / Email Anda" type="text" name="username">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label>Password</label>
+                                        <input class="form-control" placeholder="Masukkan Password Anda" type="password" name="password">
+                                    </div>
+                                    <div class="text-left text-lg-start pb-3">
+                                        <button type="submit" class="btn btn-modif btn-light btn-outline text-white" style="padding-left: 2.5rem; padding-right: 2.5rem;"><b>Login</b></button>
+                                    </div>
+                                    <!-- <?= session()->getFlashdata('message'); ?> -->
                                             <div class="row row-xs">
                                                 <div class="col-sm-7 mg-t-10 mg-sm-t-0">
                                                     <a class="btn btn-primary btn-google btn-block btn-outline" href="<?= base_url() ?>redirect"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign In with Google</a>
