@@ -20,9 +20,11 @@ use CodeIgniter\Images\Image;
                                 <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_dosen">UPDATE</a>
                             <?php }
                         } else {
-                            if ($count_data < $total_data) { ?>
-                                <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_mhs">UPDATE</a>
-                        <?php }
+                            // if ($count_data < $total_data) { 
+                            ?>
+                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_mhs">UPDATE</a>
+                        <?php
+                            // }
                         }
                         ?>
                     </div>

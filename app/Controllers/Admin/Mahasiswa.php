@@ -134,31 +134,28 @@ class Mahasiswa extends BaseController
     }
     public function update_data_mhs()
     {
-        // if (session()->get('ses_id') == '' || session()->get('ses_login') != 'admin') {
-        //     return redirect()->to('/');
-        // }
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'admin') {
+            return redirect()->to('/');
+        }
         set_time_limit(0);
         ini_set('max_execution_time', 0);
         ini_set('max_input_time', 0);
-        $data1 = $this->api->get_meta_api("https://api.trunojoyo.ac.id:8212/siakad/v1/mahasiswa?page=1&take=1000");
+        $data1 = $this->api->get_meta_api("https://api.trunojoyo.ac.id:8212/siakad/v1/mahasiswa?page=1&take=100");
         $total_page = intval($data1->pageCount);
-        // $period = '20181';
-        // $this->db->query("DELETE FROM tb_mahasiswa where idperiode='$period'");
         $this->db->query("TRUNCATE TABLE tb_mahasiswa");
         function add_data($page, $a, $db)
         {
             $array_data = [];
-            $data = $a->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/mahasiswa?page=$page&take=1000");
+            $data = $a->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/mahasiswa?page=$page&take=100");
             foreach ($data as $key) {
-                // if ($key->idperiode == $period) {
                 $nama = '"' . $key->nama . '"';
                 // $cek_data = $a->db->query("SELECT count(nim) as jumlah from tb_mahasiswa where nim='$key->nim'")->getResult()[0]->jumlah;
                 // if ($cek_data == 0) {
-                $db->query("INSERT INTO tb_mahasiswa (nim, nama, jk, idunit, idperiode, email, `page`) VALUES ('$key->nim', " . $nama . ", '$key->jk','$key->idunit','$key->idperiode','$key->email','$page');");
+                // $db->query("INSERT INTO tb_mahasiswa (nim, nama, jk, idunit, idperiode, email, `page`) VALUES ('$key->nim', " . $nama . ", '$key->jk','$key->idunit','$key->idperiode','$key->email','$page');");
+                array_push($array_data, "('$key->nim', " . $nama . ", '$key->jk','$key->idunit','$key->idperiode','$key->email','$page')");
                 // array_push($array_data, "INSERT INTO tb_mahasiswa (nim, nama, jk, idunit, idperiode, email, `page`) VALUES ('$key->nim', " . $nama . ", '$key->jk','$key->idunit','$key->idperiode','$key->email','$page');");
                 // } else {
                 // array_push($array_data, "UPDATE tb_mahasiswa SET nama=" . $nama . ", jk='$key->jk', idunit='$key->idunit', idperiode='$key->idperiode', email='$key->email',`page`='$page' WHERE nim='$key->nim')");
-                // }
                 // }
             }
             return $array_data;
@@ -166,16 +163,13 @@ class Mahasiswa extends BaseController
         // $r = [];
         for ($i = 1; $i <= $total_page; $i++) {
             $result = add_data($i, $this, $this->db);
+            $rr = implode(', ', $result);
+            $this->db->query("INSERT INTO tb_mahasiswa (nim, nama, jk, idunit, idperiode, email, `page`) VALUES $rr");
             // $r = array_merge($r, $result);
         }
-        // $rr = implode(' ', $r);
-        // $this->db->query("$rr");
-        // for ($i = 0; $i < count($r); $i++) {
-        //     $this->db->query("$r[$i]");
-        // }
-        // $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Mahasiswa',now())");
+        // $rr = implode(', ', $r);
+        // $this->db->query("INSERT INTO tb_mahasiswa (nim, nama, jk, idunit, idperiode, email, `page`) VALUES $rr");
+        $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Mahasiswa',now())");
         return redirect()->to('/data_mahasiswa');
-        // return redirect()->to('/data_periode');
-        // echo "SUKSES";
     }
 }

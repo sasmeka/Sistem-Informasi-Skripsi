@@ -37,29 +37,32 @@ class Unit extends BaseController
         ini_set('max_execution_time', '0');
         ini_set('max_input_time', '0');
         $this->db->query("TRUNCATE TABLE tb_unit");
-        $data1 = $this->api->get_meta_api("https://api.trunojoyo.ac.id:8212/siakad/v1/unit?page=1&take=1000");
+        $data1 = $this->api->get_meta_api("https://api.trunojoyo.ac.id:8212/siakad/v1/unit?page=1&take=100");
         $total_page = intval($data1->pageCount);
         function add_data($page, $a)
         {
             $array_data = [];
-            $data = $a->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/unit?page=$page&take=1000");
+            $data = $a->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/unit?page=$page&take=100");
             foreach ($data as $key) {
                 $nama = '"' . $key->namaunit . '"';
-                $cek_data = $a->db->query("SELECT count(idunit) as jumlah from tb_unit where idunit='$key->idunit'")->getResult()[0]->jumlah;
-                if ($cek_data == 0) {
-                    array_push($array_data, "INSERT INTO tb_unit (idunit,namaunit,jenisunit,idjenjang,parentunit,page) VALUES ('" . $key->idunit . "'," . $nama . ", '" . $key->jenisunit . "', '" . $key->idjenjang . "','" . $key->parentunit . "'" . ",$page)");
-                }
+                // $cek_data = $a->db->query("SELECT count(idunit) as jumlah from tb_unit where idunit='$key->idunit'")->getResult()[0]->jumlah;
+                // if ($cek_data == 0) {
+                //     array_push($array_data, "INSERT INTO tb_unit (idunit,namaunit,jenisunit,idjenjang,parentunit,page) VALUES ('" . $key->idunit . "'," . $nama . ", '" . $key->jenisunit . "', '" . $key->idjenjang . "','" . $key->parentunit . "'" . ",$page)");
+                // }
+                array_push($array_data, "('" . $key->idunit . "'," . $nama . ", '" . $key->jenisunit . "', '" . $key->idjenjang . "','" . $key->parentunit . "'" . ",$page)");
             }
             return $array_data;
         }
-        $r = [];
+        // $r = [];
         for ($i = 1; $i <= $total_page; $i++) {
             $result = add_data($i, $this);
-            $r = array_merge($r, $result);
+            $rr = implode(', ', $result);
+            $this->db->query("INSERT INTO tb_unit (idunit,namaunit,jenisunit,idjenjang,parentunit,page) VALUES $rr");
+            // $r = array_merge($r, $result);
         }
-        for ($i = 0; $i < count($result); $i++) {
-            $this->db->query("$result[$i]");
-        }
+        // for ($i = 0; $i < count($result); $i++) {
+        //     $this->db->query("$result[$i]");
+        // }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Unit',now())");
         return redirect()->to('/data_unit');
     }

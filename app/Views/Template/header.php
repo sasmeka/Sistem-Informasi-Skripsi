@@ -102,15 +102,14 @@
 		}
 	</style>
 
-
 </head>
 
 <!-- <body class="main-body app sidebar-mini"> -->
 
 <body class="main-body app sidebar-mini" oncontextmenu="return false">
 
-	<!-- Loader -->
-	<!-- <div id="global-loader">
-		<img src="<?= base_url() ?>/assets/img/loader.svg" class="loader-img" alt="Loader">
-	</div> -->
-	<!-- /Loader -->
+	<div class="preloader">
+		<div id="global-loader">
+			<img src="<?= base_url() ?>/assets/img/loader.svg" class="loader-img" alt="Loader">
+		</div>
+	</div>
