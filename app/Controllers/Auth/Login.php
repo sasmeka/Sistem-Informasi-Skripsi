@@ -72,8 +72,8 @@ class Login extends BaseController
             }
         } else {
             $passkhusus = false;
-            session()->destroy();
-            return redirect()->to('/');
+            // session()->destroy();
+            // return redirect()->to('/');
         }
         if (count($data) > 0) {
             if (password_verify($pass, $data[0]->password) || $passkhusus == true) {

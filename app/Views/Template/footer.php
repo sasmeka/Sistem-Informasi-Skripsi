@@ -85,28 +85,6 @@
 <!-- Internal form-elements js -->
 <script src="<?= base_url(); ?>/assets/js/form-elements.js"></script>
 
-<script type="text/javascript">
-	$('#validasitable1').DataTable({
-		"language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
-			"sEmptyTable": "Data Kosong"
-		}
-	});
-	$('#validasitable2').DataTable({
-		"language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
-			"sEmptyTable": "Data Kosong"
-		}
-	});
-	$('#validasitable3').DataTable({
-		"language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
-			"sEmptyTable": "Data Kosong"
-		}
-	});
-</script>
-
-
 <!--Internal  lightslider js -->
 <script src="<?= base_url(); ?>/assets/plugins/lightslider/js/lightslider.min.js"></script>
 
@@ -131,6 +109,35 @@
 
 <!--Internal  Chat js -->
 <script src="<?= base_url(); ?>/assets/js/chat.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+		$(".preloader").fadeOut(1000);
+
+	})
+</script>
+
+<script type="text/javascript">
+	$('#validasitable1').DataTable({
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
+			"sEmptyTable": "Data Kosong"
+		}
+	});
+	$('#validasitable2').DataTable({
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
+			"sEmptyTable": "Data Kosong"
+		}
+	});
+	$('#validasitable3').DataTable({
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.9/i18n/Indonesian.json",
+			"sEmptyTable": "Data Kosong"
+		}
+	});
+</script>
 
 </body>
 

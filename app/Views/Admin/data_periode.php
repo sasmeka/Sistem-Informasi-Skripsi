@@ -31,6 +31,7 @@ use CodeIgniter\Images\Image;
                                             <th style="text-align: center; vertical-align: middle;"><span>No.</span></th>
                                             <th style="text-align: center; vertical-align: middle;"><span>ID</span></th>
                                             <th style="text-align: center; vertical-align: middle;"><span>Nama Periode</span></th>
+                                            <!-- <th style="text-align: center; vertical-align: middle;"><span>Aksi</span></th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,6 +41,11 @@ use CodeIgniter\Images\Image;
                                                 <td><?= $no; ?></td>
                                                 <td><?= $key->idperiode; ?></td>
                                                 <td><?= $key->namaperiode; ?></td>
+                                                <!-- <td>
+                                                    <?php if (intval($key->idperiode) % 2 == 1) { ?>
+                                                        <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_mhs/<?= $key->idperiode; ?>">Update Mahasiswa</a>
+                                                    <?php } ?>
+                                                </td> -->
                                             </tr>
                                         <?php $no++;
                                         endforeach; ?>
