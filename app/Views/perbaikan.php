@@ -11,10 +11,10 @@
     <meta name="Keywords" content="admin,admin dashboard,admin dashboard template,admin panel template,admin template,admin theme,bootstrap 4 admin template,bootstrap 4 dashboard,bootstrap admin,bootstrap admin dashboard,bootstrap admin panel,bootstrap admin template,bootstrap admin theme,bootstrap dashboard,bootstrap form template,bootstrap panel,bootstrap ui kit,dashboard bootstrap 4,dashboard design,dashboard html,dashboard template,dashboard ui kit,envato templates,flat ui,html,html and css templates,html dashboard template,html5,jquery html,premium,premium quality,sidebar bootstrap 4,template admin bootstrap 4" />
 
     <!-- Title -->
-    <title> Valex - Premium dashboard ui bootstrap rwd admin html5 template </title>
+    <title> Maintenance </title>
 
     <!--- Favicon --->
-    <link rel="icon" href="<?= base_url() ?>/assets/img/ft.png" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url() ?>/assets/img/brand/Sisri.png" type="image/x-icon" />
 
     <!--- Icons css --->
     <link href="<?= base_url() ?>/assets/css/icons.css" rel="stylesheet">
@@ -60,15 +60,15 @@
         <div class="container-fluid">
             <div class="row no-gutter">
                 <!-- The image half -->
-                <div class="col-md-5 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
+                <!-- <div class="col-md-5 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
                     <div class="row wd-100p mx-auto text-center">
                         <div class="col-md-12 col-lg-12 col-xl-12 my-auto mx-auto wd-100p">
                             <img src="<?= base_url() ?>/assets/img/media/underconstruction.png" class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mx-auto" alt="logo">
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- The content half -->
-                <div class="col-md-7 col-lg-6 col-xl-5 bg-white">
+                <div class="col-md-12 col-lg-12 col-xl-12 bg-white">
                     <div class="login d-flex align-items-center py-2">
                         <!-- Demo content-->
                         <div class="container">

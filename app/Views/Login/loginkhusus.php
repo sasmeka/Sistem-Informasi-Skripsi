@@ -14,7 +14,7 @@
     <title> SISRI - Login</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="<?= base_url() ?>/assets/img/brand/logoutm.png" type="image/x-icon" />
+    <link rel="icon" href="<?= base_url() ?>/assets/img/brand/Sisri.png" type="image/x-icon" />
 
     <!-- Icons css -->
     <link href="<?= base_url() ?>/assets/css/icons.css" rel="stylesheet">
