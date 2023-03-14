@@ -23,7 +23,20 @@ class Login extends BaseController
     {
         // echo password_hash('admin', PASSWORD_DEFAULT);
         session()->destroy();
-        return view('Login/login');
+        $option = [
+            'headers' => [
+                'x-secret-key' => '6YUYRMWt03DHW2oIcpac1Bm7ftWp8n6JQCbtwbbhVSfQThezDfybm4A1lTTDvzIe',
+            ],
+        ];
+        $client = \Config\Services::curlrequest($option);
+        $data = $client->request('POST', 'https://api.trunojoyo.ac.id:8212/siakad/v1/authorize', [
+            'form_params' => [
+                'email' => "170441100055@student.trunojoyo.ac.id"
+            ]
+        ])->getBody();
+        $result = json_decode($data);
+        var_dump($result);
+        // return view('Login/login');
     }
     public function khusus($id)
     {
