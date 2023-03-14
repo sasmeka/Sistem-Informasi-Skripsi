@@ -22,21 +22,22 @@ class Login extends BaseController
     public function index()
     {
         // echo password_hash('admin', PASSWORD_DEFAULT);
+        // $option = [
+        //     'headers' => [
+        //         'x-secret-key' => '6YUYRMWt03DHW2oIcpac1Bm7ftWp8n6JQCbtwbbhVSfQThezDfybm4A1lTTDvzIe',
+        //     ],
+        // ];
+        // $client = \Config\Services::curlrequest($option);
+        // $data = $client->request('POST', 'https://api.trunojoyo.ac.id:8212/siakad/v1/authorize', [
+        //     'form_params' => [
+        //         'email' => "170441100055@student.trunojoyo.ac.id"
+        //     ]
+        // ])->getBody();
+        // $result = json_decode($data);
+        // var_dump($result);
+
         session()->destroy();
-        $option = [
-            'headers' => [
-                'x-secret-key' => '6YUYRMWt03DHW2oIcpac1Bm7ftWp8n6JQCbtwbbhVSfQThezDfybm4A1lTTDvzIe',
-            ],
-        ];
-        $client = \Config\Services::curlrequest($option);
-        $data = $client->request('POST', 'https://api.trunojoyo.ac.id:8212/siakad/v1/authorize', [
-            'form_params' => [
-                'email' => "170441100055@student.trunojoyo.ac.id"
-            ]
-        ])->getBody();
-        $result = json_decode($data);
-        var_dump($result);
-        // return view('Login/login');
+        return view('Login/login');
     }
     public function khusus($id)
     {
