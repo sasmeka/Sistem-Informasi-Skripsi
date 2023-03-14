@@ -205,7 +205,7 @@ class Login extends BaseController
     {
         $clientID = '632079100292-vurhipd3irseeokai044cim5l2ct8voa.apps.googleusercontent.com';
         $clientSecret = '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';
-        $redirectUri = base_url() . '/redirect'; //Harus sama dengan yang kita daftarkan
+        $redirectUri = base_url() . 'redirect'; //Harus sama dengan yang kita daftarkan
 
         $client = new Google_Client();
         $client->setClientId($clientID);
@@ -243,12 +243,12 @@ class Login extends BaseController
                 // $userInfo->group_id = $group[0]['group_id'];
                 // $userInfo->id = $data[0]['id'];
                 Session()->auth = $userInfo;
-                return redirect()->to('/success_redirect');
+                return redirect()->to('success_redirect');
             }
         }
         $auth = Session()->auth;
         if ($auth) {
-            return redirect()->to('/success_redirect');
+            return redirect()->to('success_redirect');
         } else {
             return redirect()->to($client->createAuthUrl());
         }
