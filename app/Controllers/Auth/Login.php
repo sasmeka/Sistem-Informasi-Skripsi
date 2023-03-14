@@ -206,7 +206,7 @@ class Login extends BaseController
         $clientID = '632079100292-vurhipd3irseeokai044cim5l2ct8voa.apps.googleusercontent.com';
         $clientSecret = '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';
         $redirectUri = base_url() . 'redirect'; //Harus sama dengan yang kita daftarkan
-        return $redirectUri;
+        // return $redirectUri;
         $client = new Google_Client();
         $client->setClientId($clientID);
         $client->setClientSecret($clientSecret);
