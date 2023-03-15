@@ -122,10 +122,10 @@ use CodeIgniter\Images\Image;
                                                     <?php
                                                     if (time() < strtotime($key->open)) {
                                                         echo "<a class='text-secondary'>Belum Dibuka</a>";
-                                                    } elseif (time() >= strtotime($key->open)) {
-                                                        echo "<a class='text-success'>Dibuka</a>";
-                                                    } elseif (time() > strtotime($key->exspire)) {
+                                                    } elseif (time() > strtotime($key->expire)) {
                                                         echo "<a class='text-danger'>Ditutup</a>";
+                                                    } else {
+                                                        echo "<a class='text-success'>Dibuka</a>";
                                                     } ?>
                                                 </td>
                                                 <td>
