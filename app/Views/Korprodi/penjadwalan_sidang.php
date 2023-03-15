@@ -120,11 +120,11 @@ use CodeIgniter\Images\Image;
                                                 <td><?= $key->jenis_sidang == 'seminar proposal' ? 'PROPOSAL' : 'SKRIPSI' ?></td>
                                                 <td>
                                                     <?php
-                                                    if (date('d F Y H:i:s') < date('d F Y H:i:s', strtotime($key->open))) {
+                                                    if (time() < strtotime($key->open)) {
                                                         echo "<a class='text-secondary'>Belum Dibuka</a>";
-                                                    } elseif (date('d F Y H:i:s') >= date('d F Y H:i:s', strtotime($key->open))) {
+                                                    } elseif (time() >= strtotime($key->open)) {
                                                         echo "<a class='text-success'>Dibuka</a>";
-                                                    } elseif (date('d F Y H:i:s') > date('d F Y H:i:s', strtotime($key->exspire))) {
+                                                    } elseif (time() > strtotime($key->exspire)) {
                                                         echo "<a class='text-danger'>Ditutup</a>";
                                                     } ?>
                                                 </td>
