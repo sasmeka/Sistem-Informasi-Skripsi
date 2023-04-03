@@ -101,7 +101,7 @@ use CodeIgniter\Images\Image;
                                                     <?php foreach ($dosen as $key1) { ?>
                                                         <option value="<?= $key1->nip_dos ?>">
                                                             <?= $key1->namaunit . ' - ' . $key1->nip_dos . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
-                                                            <?php if ($key1->jumlah >= 10) {
+                                                            <?php if ($key1->jumlah >= $key1->kuota) {
                                                                 echo '<a class="text-danger"> - (Penuh)</a>';
                                                             } elseif ($key1->jumlah == NULL) {
                                                                 echo '<a class="text-success"> - (0 Bimbingan)</a>';

@@ -184,12 +184,15 @@ $routes->add('/add_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::add');
 $routes->add('/del_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::del');
 $routes->add('/upd_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::upd');
 $routes->add('/data_pendaftar', 'Korprodi\Penjadwalan_Sidang::data_pendaftar');
-//Route Khusus Controller Dosen-Validasi Daftar Seminar
+//Route Khusus Controller Korprodi-Validasi Daftar Seminar
 $routes->add('/validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar::index');
 $routes->add('/proses_validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar::validasi');
-//Route Khusus Controller Koorprodi
+//Route Khusus Controller Koorprodi-Nilai
 $routes->add('/daftar_nilai', 'Korprodi\Nilai::index');
 $routes->add('/export_nilai', 'Korprodi\Nilai::export');
+//Route Khusus Controller Koorprodi-Data dosesn
+$routes->add('/data_dosen_koorprodi', 'Korprodi\Data_Dosen::index');
+$routes->add('/update_kuota_dosen', 'Korprodi\Data_Dosen::update');
 // --------------------------------------CETAK-------------------------------------------
 $routes->add('/cobaqr', 'Cetak::cobaqr');
 $routes->add('/berkas_mhs_proposal', 'Cetak::berkas_mhs_proposal');
