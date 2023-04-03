@@ -54,12 +54,13 @@ class Cetak extends BaseController
     }
     public function form_bimbingan_proposal($id, $id_pembimbing)
     {
-        if (session()->get('ses_id') == '') {
-            return redirect()->to('/');
-        }
+        // if (session()->get('ses_id') == '') {
+        //     return redirect()->to('/');
+        // }
         if ($id == '') {
             $id = session()->get('ses_id');
         }
+        $link = base_url() . "form_bimbingan_proposal/$id/$id_pembimbing";
         $nama_pembimbing = $this->db->query("SELECT * FROM tb_dosen WHERE nip='$id_pembimbing'")->getResult()[0];
         $disetujui_pada = $this->db->query("SELECT * FROM tb_perizinan_sidang WHERE nip='$id_pembimbing' AND nim='$id' AND jenis_sidang='seminar proposal'")->getResult();
         // ------------------------------------------------------------------
@@ -74,6 +75,7 @@ class Cetak extends BaseController
         } else {
             $qr = '<br>(BELUM DITANDA TANGANI)<br>';
         }
+        $qr_link = $this->qr->cetakqr($link);
         // ------------------------------------------------------------------
         $data = [
             'title' => 'Form Bimbingan Proposal',
@@ -86,9 +88,9 @@ class Cetak extends BaseController
             'nip' => $id_pembimbing,
             'data' => $this->db->query("SELECT * FROM tb_bimbingan WHERE `to`='$id' AND `from`='$id_pembimbing' AND pokok_bimbingan!=''  AND kategori_bimbingan='1'")->getResult(),
             'qr' => $qr,
+            'qr_link' => $qr_link,
             'db' => $this->db,
         ];
-        // return view('Cetak/form_bimbingan_proposal', $data);
         $dompdf = new Dompdf();
         $filename = date('y-m-d-H-i-s');
         $dompdf->loadHtml(view('Cetak/form_bimbingan_proposal', $data));
@@ -99,12 +101,13 @@ class Cetak extends BaseController
     }
     public function form_bimbingan_skripsi($id, $id_pembimbing)
     {
-        if (session()->get('ses_id') == '') {
-            return redirect()->to('/');
-        }
+        // if (session()->get('ses_id') == '') {
+        //     return redirect()->to('/');
+        // }
         if ($id == '') {
             $id = session()->get('ses_id');
         }
+        $link = base_url() . "form_bimbingan_skripsi/$id/$id_pembimbing";
         $nama_pembimbing = $this->db->query("SELECT * FROM tb_dosen WHERE nip='$id_pembimbing'")->getResult()[0];
         $disetujui_pada = $this->db->query("SELECT * FROM tb_perizinan_sidang WHERE nip='$id_pembimbing' AND nim='$id' AND jenis_sidang='skripsi'")->getResult();
         // ------------------------------------------------------------------
@@ -118,6 +121,7 @@ class Cetak extends BaseController
         } else {
             $qr = '<br>(BELUM DITANDA TANGANI)<br>';
         }
+        $qr_link = $this->qr->cetakqr($link);
         // ------------------------------------------------------------------
         $data = [
             'title' => 'Form Bimbingan Skripsi',
@@ -130,9 +134,9 @@ class Cetak extends BaseController
             'nip' => $id_pembimbing,
             'data' => $this->db->query("SELECT * FROM tb_bimbingan WHERE `to`='$id' AND `from`='$id_pembimbing' AND pokok_bimbingan!='' AND kategori_bimbingan='3'")->getResult(),
             'qr' => $qr,
+            'qr_link' => $qr_link,
             'db' => $this->db,
         ];
-        // return view('Cetak/form_bimbingan_skripsi', $data);
         $dompdf = new Dompdf();
         $filename = date('y-m-d-H-i-s');
         $dompdf->loadHtml(view('Cetak/form_bimbingan_skripsi', $data));
@@ -143,9 +147,9 @@ class Cetak extends BaseController
     }
     public function berita_acara_proposal($id)
     {
-        if (session()->get('ses_id') == '') {
-            return redirect()->to('/');
-        }
+        // if (session()->get('ses_id') == '') {
+        //     return redirect()->to('/');
+        // }
         if ($id == '') {
             $id = session()->get('ses_id');
         }
@@ -221,6 +225,8 @@ class Cetak extends BaseController
         }
         // ------------------------------------------------------------------
 
+        $link = base_url() . "berita_acara_proposal/$id";
+        $qr_link = $this->qr->cetakqr($link);
         $prodi = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . session()->get('ses_idunit') . "'")->getResult();
         $jurusan = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . $prodi[0]->parentunit . "'")->getResult();
         $fakultas = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . $jurusan[0]->parentunit . "'")->getResult();
@@ -240,12 +246,12 @@ class Cetak extends BaseController
             'qr_penguji_1' => $qr_penguji_1,
             'qr_penguji_2' => $qr_penguji_2,
             'qr_penguji_3' => $qr_penguji_3,
+            'qr_link' => $qr_link,
             'db' => $this->db,
             'nm_prodi' => $prodi[0]->namaunit,
             'nm_jurusan' => $jurusan[0]->namaunit,
             'nm_fakultas' => $fakultas[0]->namaunit,
         ];
-        // return view('Cetak/berita_acara_proposal', $data);
         $dompdf = new Dompdf();
         $filename = date('y-m-d-H-i-s');
         $dompdf->loadHtml(view('Cetak/berita_acara_proposal', $data));
@@ -256,9 +262,9 @@ class Cetak extends BaseController
     }
     public function berita_acara_skripsi($id)
     {
-        if (session()->get('ses_id') == '') {
-            return redirect()->to('/');
-        }
+        // if (session()->get('ses_id') == '') {
+        //     return redirect()->to('/');
+        // }
         if ($id == '') {
             $id = session()->get('ses_id');
         }
@@ -333,6 +339,8 @@ class Cetak extends BaseController
             $qr_penguji_3 = '<br>(BELUM DITANDA TANGANI)<br>';
         }
         // ------------------------------------------------------------------
+        $link = base_url() . "berita_acara_skripsi/$id";
+        $qr_link = $this->qr->cetakqr($link);
         $prodi = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . session()->get('ses_idunit') . "'")->getResult();
         $jurusan = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . $prodi[0]->parentunit . "'")->getResult();
         $fakultas = $this->db->query("SELECT * FROM tb_unit WHERE idunit='" . $jurusan[0]->parentunit . "'")->getResult();
@@ -352,12 +360,12 @@ class Cetak extends BaseController
             'qr_penguji_1' => $qr_penguji_1,
             'qr_penguji_2' => $qr_penguji_2,
             'qr_penguji_3' => $qr_penguji_3,
+            'qr_link' => $qr_link,
             'db' => $this->db,
             'nm_prodi' => $prodi[0]->namaunit,
             'nm_jurusan' => $jurusan[0]->namaunit,
             'nm_fakultas' => $fakultas[0]->namaunit,
         ];
-        // return view('Cetak/berita_acara_skripsi', $data);
         $dompdf = new Dompdf();
         $filename = date('y-m-d-H-i-s');
         $dompdf->loadHtml(view('Cetak/berita_acara_skripsi', $data));

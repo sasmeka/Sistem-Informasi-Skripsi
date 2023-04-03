@@ -258,6 +258,15 @@ use CodeIgniter\Images\Image;
                                                                                     </span>
                                                                                 </label>
                                                                             </div>
+                                                                            <label for="">Upload Hasil Turnitin</label>
+                                                                            <div class="input-group file-browser">
+                                                                                <input type="text" class="form-control border-right-0 browse-file" placeholder="Berkas Turnitin (.pdf)" name="ket_berkas_turnitin">
+                                                                                <label class="input-group-btn">
+                                                                                    <span class="btn btn-default">
+                                                                                        Browse <input type="file" name="berkas_turnitin" class="d-none" multiple>
+                                                                                    </span>
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button class="btn ripple btn-primary" type="submit">Daftar</button>

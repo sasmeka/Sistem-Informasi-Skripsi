@@ -28,6 +28,20 @@ class Berita_Acara extends BaseController
         ];
         return view('Dosen/Proposal/berita_acara_proposal', $data);
     }
+    public function download($jenis, $id)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
+            return redirect()->to('/');
+        }
+        if ($jenis == 'proposal') {
+            $data = $this->db->query("SELECT * FROM tb_pendaftar_sidang  where id_pendaftar=$id")->getResult()[0]->file_proposal;
+        } elseif ($jenis == 'skripsi') {
+            $data = $this->db->query("SELECT * FROM tb_pendaftar_sidang  where id_pendaftar=$id")->getResult()[0]->file_proposal;
+        } else {
+            $data = $this->db->query("SELECT * FROM tb_pendaftar_sidang  where id_pendaftar=$id")->getResult()[0]->file_turnitin;
+        }
+        return $this->response->download(FCPATH . 'berkas/' . $data, null);
+    }
     public function ttd()
     {
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
@@ -43,13 +57,13 @@ class Berita_Acara extends BaseController
             $this->db->query("UPDATE tb_pendaftar_sidang SET hasil_sidang='$status' WHERE id_pendaftar='$id_pendaftar'");
             if (empty($d_berita_acara)) {
                 $this->db->query("INSERT INTO tb_berita_acara (nim,nip,sebagai,status,jenis_sidang,id_pendaftar) VALUES ('$nim','" . session()->get('ses_id') . "','$sebagai','ditandatangani','proposal','$id_pendaftar')");
-                } else {
+            } else {
                 $this->db->query("UPDATE tb_berita_acara SET status= 'ditandatangani' WHERE nim='" . $nim . "' AND nip='" . session()->get('ses_id') . "' AND sebagai='" . $sebagai . "' AND jenis_sidang='proposal' AND id_pendaftar='$id_pendaftar'");
             }
         } else {
             if (empty($d_berita_acara)) {
                 $this->db->query("INSERT INTO tb_berita_acara (nim,nip,sebagai,status,jenis_sidang,id_pendaftar) VALUES ('$nim','" . session()->get('ses_id') . "','$sebagai','ditandatangani','proposal','$id_pendaftar')");
-             } else {
+            } else {
                 $this->db->query("UPDATE tb_berita_acara SET status= 'ditandatangani' WHERE nim='" . $nim . "' AND nip='" . session()->get('ses_id') . "' AND sebagai='" . $sebagai . "' AND jenis_sidang='proposal' AND id_pendaftar='$id_pendaftar'");
             }
         }

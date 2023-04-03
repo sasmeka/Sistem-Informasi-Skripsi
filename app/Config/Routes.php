@@ -143,6 +143,7 @@ $routes->add('/berita_acara_seminar', 'Dosen\Proposal\Berita_Acara::index');
 $routes->add('/tandatangani_proposal', 'Dosen\Proposal\Berita_Acara::ttd');
 $routes->add('/berita_acara_skripsi', 'Dosen\Skripsi\Berita_Acara::index');
 $routes->add('/tandatangani_skripsi', 'Dosen\Skripsi\Berita_Acara::ttd');
+$routes->add('/berita_acara_proposal_download_file/(:any)/(:any)', 'Dosen\Proposal\Berita_Acara::download/$1/$2');
 //Route Khusus Controller Dosen-Validasi Daftar Seminar
 $routes->add('/validasi_daftar_seminar', 'Dosen\Proposal\Validasi_Daftar_Seminar::index');
 $routes->add('/proses_validasi_daftar_seminar', 'Dosen\Proposal\Validasi_Daftar_Seminar::validasi');

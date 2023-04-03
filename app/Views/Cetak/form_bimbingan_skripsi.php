@@ -117,6 +117,9 @@
     <p class="footer">
     <table width='100%'>
         <tr>
+            <td align="center" valign='top'>
+                <?= $qr_link ?><br>SCAN ME
+            </td>
             <td align="right" valign='top'>
                 <small>Fakultas Teknik - Universitas Trunojoyo Madura</small>
             </td>

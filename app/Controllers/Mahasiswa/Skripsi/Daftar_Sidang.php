@@ -128,12 +128,22 @@ class Daftar_Sidang extends BaseController
                 // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
                 'rules' => 'uploaded[berkas_proposal]|mime_in[berkas_proposal,application/pdf]',
                 'errors' => [
-                    'uploaded' => 'Harus Ada File yang diupload',
+                    'uploaded' => 'Berkas skripsi wajib diisi.',
                     'mime_in' => 'File Extention Harus Berupa pdf',
                     // 'max_size' => 'Ukuran File Maksimal 2 MB'
                 ]
 
-            ]
+            ],
+            'berkas_turnitin' => [
+                // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
+                'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
+                'errors' => [
+                    'uploaded' => 'Berkas turnitin wajib diisi.',
+                    'mime_in' => 'File Extention Harus Berupa pdf',
+                    // 'max_size' => 'Ukuran File Maksimal 2 MB'
+                ]
+
+            ],
         ])) {
             session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
@@ -150,9 +160,11 @@ class Daftar_Sidang extends BaseController
         $id_jadwal = $this->request->getPost('id_jadwal');
         $berkas = $this->request->getFile('berkas_proposal');
         $name = $berkas->getRandomName();
-        if ($berkas->getName() != '') {
-            if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
-                $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "')");
+        $berkas2 = $this->request->getFile('berkas_turnitin');
+        $name2 = $berkas2->getRandomName();
+        if ($berkas->getName() != '' && $berkas2->getName() != '') {
+            if ($berkas->move(WRITEPATH . '../public/berkas/', $name) && $berkas2->move(WRITEPATH . '../public/berkas/', $name2)) {
+                $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal,file_turnitin) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "','" . $name2 . "')");
                 session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
                 <span class="alert-inner--text"><strong>Sukses!</strong> mendaftar sidang skripsi.</span>

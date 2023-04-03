@@ -48,10 +48,10 @@ use CodeIgniter\Images\Image;
                                             </tr>
                                             <tr>
                                                 <td class="border-0">
-                                                    <a href="<?= base_url() ?>form_bimbingan_proposal/<?= session()->get('ses_id') ?>/<?= $dosen_pembimbing_1[0]->nip ?>"><button class="btn btn-primary btn-sm" type="button">Unduh</button></a>
+                                                    <a href="<?= base_url() ?>form_bimbingan_skripsi/<?= session()->get('ses_id') ?>/<?= $dosen_pembimbing_1[0]->nip ?>"><button class="btn btn-primary btn-sm" type="button">Unduh</button></a>
                                                 </td>
                                                 <td class="border-0">
-                                                    <a href="<?= base_url() ?>form_bimbingan_proposal/<?= session()->get('ses_id') ?>/<?= $dosen_pembimbing_2[0]->nip ?>"><button class="btn btn-primary btn-sm" type="button">Unduh</button></a>
+                                                    <a href="<?= base_url() ?>form_bimbingan_skripsi/<?= session()->get('ses_id') ?>/<?= $dosen_pembimbing_2[0]->nip ?>"><button class="btn btn-primary btn-sm" type="button">Unduh</button></a>
                                                 </td>
                                             </tr>
                                         </tbody>

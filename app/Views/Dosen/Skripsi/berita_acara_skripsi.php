@@ -75,8 +75,10 @@ use CodeIgniter\Images\Image;
                                                                                             echo "Disetuji tanpa perbaikan";
                                                                                         } elseif ($sidang[0]->hasil_sidang == '2') {
                                                                                             echo "Disetuji dengan perbaikan";
-                                                                                        } else {
+                                                                                        } elseif ($sidang[0]->hasil_sidang == '3') {
                                                                                             echo "Tidak disetujui/mengulang";
+                                                                                        } else {
+                                                                                            echo '-';
                                                                                         }
                                                                                     } else {
                                                                                         echo '-';
@@ -92,10 +94,14 @@ use CodeIgniter\Images\Image;
                                                                                             <?php } else {
                                                                                             if ('pembimbing ' . $key1->sebagai == 'pembimbing 1') { ?>
                                                                                                 <a class="btn btn-success btn-sm" data-bs-target="#modalpembimbing<?= $no ?>" data-bs-toggle="modal" href="">Edit Hasil Seminar</a>
-                                                                                    <?php } else {
+                                                                                        <?php } else {
                                                                                                 echo "<span class='text-success ms-2'>Telah Ditandatangani</span>";
                                                                                             }
                                                                                         }
+                                                                                        ?>
+                                                                                        <a href="<?= base_url() ?>/berita_acara_proposal_download_file/skripsi/<?= $sidang[0]->id_pendaftar ?>" class="btn btn-primary btn-sm mt-2 ml-2"><i class="las la-download"> Skripsi</i></a>
+                                                                                        <a href="<?= base_url() ?>/berita_acara_proposal_download_file/turnitin/<?= $sidang[0]->id_pendaftar ?>" class="btn btn-danger btn-sm mt-2 ml-2"><i class="las la-download"> Hasil Turnitin</i></a>
+                                                                                    <?php
                                                                                     } else {
                                                                                         echo "<span class='text-danger ms-2'>Belum Mendaftar Sidang Skripsi</span>";
                                                                                     } ?>
@@ -192,8 +198,10 @@ use CodeIgniter\Images\Image;
                                                                                             echo "Disetuji tanpa perbaikan";
                                                                                         } elseif ($sidang[0]->hasil_sidang == '2') {
                                                                                             echo "Disetuji dengan perbaikan";
-                                                                                        } else {
+                                                                                        } elseif ($sidang[0]->hasil_sidang == '3') {
                                                                                             echo "Tidak disetujui/mengulang";
+                                                                                        } else {
+                                                                                            echo "-";
                                                                                         }
                                                                                     } else {
                                                                                         echo '-';

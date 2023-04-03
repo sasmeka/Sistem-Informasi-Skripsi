@@ -112,7 +112,6 @@
     ?>
     <br>
     <p><b>Pada,</b></p>
-    <p>
     <table>
         <tr>
             <th align="left"> Hari / Tanggal </th>
@@ -127,10 +126,8 @@
             <td> : <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->ruang_sidang : '' ?></td>
         </tr>
     </table>
-    </p>
     <br>
     <p><b>Telah dilaksanakan Seminar Skripsi oleh,</b></p>
-    <p>
     <table>
         <tr>
             <th align="left"> Nama </th>
@@ -157,7 +154,6 @@
             <td> : <?= ucwords(strtolower($judul_skripsi)) ?></td>
         </tr>
     </table>
-    </p>
     <br>
     <p><b>Status Seminar :</b></p>
     <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 1 ? 'checked' : '' : '' ?>> Disetuji tanpa perbaikan
@@ -205,6 +201,9 @@
     <p class="footer">
     <table width='100%'>
         <tr>
+            <td align="center" valign='top'>
+                <?= $qr_link ?><br>SCAN ME
+            </td>
             <td align="right" valign='top'>
                 <small>Fakultas Teknik - Universitas Trunojoyo Madura</small>
             </td>
