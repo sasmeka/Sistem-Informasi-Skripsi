@@ -20,6 +20,33 @@ use CodeIgniter\Images\Image;
                 <div class="row mt-3">
                     <div class="col">
                         <div class="card-body">
+                            <form class="form-inline mb-4" action="<?= base_url() ?>export_nilai" method="POST" enctype="multipart/form-data">
+                                <?= csrf_field() ?>
+                                <div class="form-group mb-2 ml-4" style="width: 20%;">
+                                    <select class="form-control select2" name="id_periode">
+                                        <option selected disabled>Semua Angkatan</option>
+                                        <?php
+                                        foreach ($data_periode as $key) {
+                                            if (substr($key->idperiode, 4) == 1) {
+                                                echo "<option value='$key->idperiode'>" . substr($key->idperiode, 0, -1) . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2 mx-2" style="width: 30%;">
+                                    <select class="form-control  select2" name="id_jadwal">
+                                        <option selected disabled>Semua Periode Sidang</option>
+                                        <?php
+                                        foreach ($data_jadwal as $key) {
+                                            echo "<option value='$key->id_jadwal'>" . $key->periode . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2">Export</button>
+                            </form>
+                            <hr>
                             <div class="table-responsive">
                                 <table class="table table-striped mg-b-0 text-md-nowrap" id="validasitable1">
                                     <thead>
@@ -103,13 +130,13 @@ use CodeIgniter\Images\Image;
                                         ?>
                                             <tr>
                                                 <th scope="row"><?= $no ?></th>
-                                                <td><?= $key->id ?></td>
-                                                <td><?= $mhs[0]->nama ?></td>
-                                                <td><?= $judul[0]->judul_topik ?></td>
-                                                <td><?= $nb ?></td>
-                                                <td><?= $ns ?></td>
-                                                <td><?= $total ?></td>
-                                                <td><?= $grade ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $key->id ?></td>
+                                                <td style="text-align: left; vertical-align: middle;"><?= $mhs[0]->nama ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $judul[0]->judul_topik ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $nb ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $ns ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $total ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?= $grade ?></td>
                                             </tr>
                                         <?php $no++;
                                         } ?>

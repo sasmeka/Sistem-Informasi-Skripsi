@@ -189,6 +189,7 @@ $routes->add('/validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar:
 $routes->add('/proses_validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar::validasi');
 //Route Khusus Controller Koorprodi
 $routes->add('/daftar_nilai', 'Korprodi\Nilai::index');
+$routes->add('/export_nilai', 'Korprodi\Nilai::export');
 // --------------------------------------CETAK-------------------------------------------
 $routes->add('/cobaqr', 'Cetak::cobaqr');
 $routes->add('/berkas_mhs_proposal', 'Cetak::berkas_mhs_proposal');
