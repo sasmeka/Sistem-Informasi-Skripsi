@@ -176,4 +176,58 @@ class Setting extends BaseController
             }
         }
     }
+    public function delete_data_mhs()
+    {
+        if (session()->get('ses_id') == '') {
+            return redirect()->to('/');
+        }
+        if (!$this->validate([
+            'nim' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Silahkan Masukkan NIM yang akan dihapus/bersihkan.'
+                ]
+            ]
+        ])) {
+            session()->setFlashdata('message3', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+            return redirect()->back()->withInput();
+        }
+        $nim = $this->request->getPost("nim");
+        $cek = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nim='$nim' AND status_pengajuan = 'diterima'")->getResult();
+        foreach ($cek as $key) {
+            if ($key->sebagai == 1) {
+                $jumlah_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='$key->nip' AND sebagai = 'pembimbing $key->sebagai'")->getResult()[0]->jumlah;
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah = $jumlah_p1 - 1 WHERE nip='$key->nip' AND sebagai = 'pembimbing $key->sebagai';");
+            } else {
+                $jumlah_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='$key->nip' AND sebagai = 'pembimbing $key->sebagai'")->getResult()[0]->jumlah;
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah = $jumlah_p2 - 1 WHERE nip='$key->nip' AND sebagai = 'pembimbing $key->sebagai';");
+            }
+        }
+        $this->db->query("DELETE FROM tb_pengajuan_pembimbing WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_users WHERE id='$nim'");
+        $this->db->query("DELETE FROM tb_profil_tambahan WHERE id='$nim'");
+        $this->db->query("DELETE FROM tb_perizinan_sidang WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_penguji WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_pengajuan_topik WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_pendaftar_sidang WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_nilai WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_bimbingan WHERE `from`='$nim'");
+        $this->db->query("DELETE FROM tb_bimbingan WHERE `to`='$nim'");
+        $this->db->query("DELETE FROM tb_berita_acara WHERE nim='$nim'");
+        $this->db->query("DELETE FROM tb_acc_revisi WHERE nim='$nim'");
+        session()->setFlashdata('message3', '<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
+            <span class="alert-inner--text"><strong>Berhasil!</strong> menghapus/membersihkan data mahasiswa.</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+        return redirect()->back()->withInput();
+    }
 }

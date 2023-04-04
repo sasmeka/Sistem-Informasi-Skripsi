@@ -27,7 +27,7 @@ use CodeIgniter\Images\Image;
                     <div class="modal-body">
                         <input type="hidden" name="nim" value="<?= $nim ?>">
                         <div class="form-group">
-                            <label for="">Upload File</label>
+                            <label for="">Upload File <small>(.pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip)</small></label>
                             <div class="input-group file-browser">
                                 <input type="text" class="form-control border-right-0 browse-file" placeholder="-" name="ket_berkas" readonly>
                                 <label class="input-group-btn">
@@ -62,6 +62,7 @@ use CodeIgniter\Images\Image;
             </div>
         </div>
         <div class="col-xl-12 col-lg-12 col-sm-12">
+            <?= session()->getFlashdata('message') != NULL ? session()->getFlashdata('message') . "<br>" : "" ?>
             <div class="card">
                 <div class="main-content-body-show main-content-body-chat-show">
                     <div class="main-chat-header">

@@ -46,6 +46,13 @@ class Data_Dosen extends BaseController
         } else {
             $this->db->query("UPDATE tb_jumlah_pembimbing SET kuota = '$p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
         }
+        session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
+            <span class="alert-inner--text"><strong>Sukses!</strong> update kuota dosen.</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
         return redirect()->to('/data_dosen_koorprodi');
     }
 }

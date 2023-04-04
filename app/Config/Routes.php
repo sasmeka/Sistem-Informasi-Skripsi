@@ -58,6 +58,7 @@ $routes->add('/setting', 'Akun\Setting::index');
 $routes->add('/update_pass', 'Akun\Setting::update_pass');
 $routes->add('/update_universal_pass', 'Akun\Setting::update_universal_pass');
 $routes->add('/clear_recycle_bin', 'Akun\Setting::clear_recycle_bin');
+$routes->add('/delete_data_mhs', 'Akun\Setting::delete_data_mhs');
 // ---------------------------------------ADMIN-------------------------------------------
 //Route Khusus Controller Admin-Beranda
 $routes->add('/beranda_admin', 'Admin\Beranda::index');

@@ -120,6 +120,23 @@ class Revisi extends BaseController
     }
     public function tambah()
     {
+        if (!$this->validate([
+            'berkas' => [
+                'rules' => 'ext_in[berkas,png,jpg,zip,pdf,doc,csv,docx,xls,xlsx,ppt,pptx,jpeg]',
+                'errors' => [
+                    'ext_in' => 'File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip'
+                ]
+            ]
+        ])) {
+            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+            return redirect()->back()->withInput();
+        }
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
             return redirect()->to('/');
         }

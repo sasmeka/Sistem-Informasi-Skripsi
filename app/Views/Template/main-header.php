@@ -28,7 +28,7 @@
 								<div class="dropdown-menu">
 									<div class="main-header-profile bg-primary p-3">
 										<div class="d-flex wd-100p">
-											<div class="main-img-user"><img alt="" src="<?= base_url() ?>/image/<?= session()->get('ses_image') ?>"></div>
+											<div class="main-img-user"><img alt="" src="<?= base_url() ?>image/<?= session()->get('ses_image') ?>"></div>
 											<div class="ms-3 my-auto">
 												<?php $namaunit = $db->query("SELECT * FROM tb_unit WHERE idunit='" . session()->get('ses_idunit') . "'")->getResult()[0]->namaunit; ?>
 												<h7><?= session()->get('ses_nama'); ?></h7><span><?= session()->get('ses_id'); ?></span>

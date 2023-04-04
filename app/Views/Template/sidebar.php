@@ -144,6 +144,16 @@
 						<?php if (session()->get('ses_login') == 'korprodi') {; ?>
 							<li class="side-item side-item-category">KOORDINATOR PRODI</li>
 							<li class="slide">
+								<a class="side-menu__item" href="<?= base_url() ?>data_dosen_koorprodi">
+									<svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
+										<path d="M0 0h24v24H0V0z" fill="none" />
+										<path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3" />
+										<path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z" />
+									</svg>
+									<span class="side-menu__label">Data Dosen</span>
+								</a>
+							</li>
+							<li class="slide">
 								<a class="side-menu__item" href="<?= base_url() ?>bidang_minat">
 									<svg style="width:24px;height:24px" viewBox="0 0 24 24">
 										<path fill="currentColor" d="M14 2H6C4.89 2 4 2.89 4 4V20C4 21.11 4.89 22 6 22H13.81C13.28 21.09 13 20.05 13 19C13 18.67 13.03 18.33 13.08 18H6V16H13.81C14.27 15.2 14.91 14.5 15.68 14H6V12H18V13.08C18.33 13.03 18.67 13 19 13S19.67 13.03 20 13.08V8L14 2M13 9V3.5L18.5 9H13M18 15V18H15V20H18V23H20V20H23V18H20V15H18Z" />

@@ -15,7 +15,8 @@ use CodeIgniter\Images\Image;
                         <h4 class="card-title mg-b-0">Data Dosen</h4>
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2">Data dosen <?= $nama_prodi ?> yang telah mengakses SISRI.</a></p>
-                    <div class="row mt-5">
+                    <?= session()->getFlashdata('message'); ?>
+                    <div class="row mt-3">
                         <div class="col-xl-12">
                             <div class="table-responsive">
                                 <table class="table text-md-nowrap" id="validasitable1">

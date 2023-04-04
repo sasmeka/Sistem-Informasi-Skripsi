@@ -31,7 +31,7 @@ use CodeIgniter\Images\Image;
                             <input type="teks" name="pokok_bimbingan" class="form-control" id="exampleInput" placeholder="Contoh : Bimbingan BAB I">
                         </div>
                         <div class="form-group">
-                            <label for="">Upload File</label>
+                            <label for="">Upload File <small>(.pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip)</small></label>
                             <div class="input-group file-browser">
                                 <input type="text" class="form-control border-right-0 browse-file" placeholder="-" name="ket_berkas" readonly>
                                 <label class="input-group-btn">
@@ -139,6 +139,7 @@ use CodeIgniter\Images\Image;
             </div>
         </div>
         <div class="col-xl-8 col-lg-7 col-sm-7">
+            <?= session()->getFlashdata('message') != NULL ? session()->getFlashdata('message') . "<br>" : "" ?>
             <div class="card">
                 <!-- <a class="main-header-arrow" href="" id="ChatBodyHide"><i class="icon ion-md-arrow-back"></i></a> -->
                 <div class="main-content-body-show main-content-body-chat-show">
