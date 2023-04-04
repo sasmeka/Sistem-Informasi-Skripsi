@@ -145,7 +145,7 @@ class Login extends BaseController
             }
         } else {
             $data_master_mhs = $this->db->query("SELECT * FROM tb_mahasiswa where nim='$username' or email='$username'")->getResult();
-            $data_master_dosen = $this->db->query("SELECT * FROM tb_dosen where nip='$username' or email='$username'")->getResult();
+            $data_master_dosen = $this->db->query("SELECT *,LENGTH(nip) AS jum FROM tb_dosen where nip='$username' or email='$username' ORDER BY jum DESC LIMIT 1")->getResult();
             if (count($data_master_mhs) > 0) {
                 $dataperwalian = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/perwalian?page=1&take=100&nim=" . $data_master_mhs[0]->nim);
                 $sks = $dataperwalian[count($dataperwalian) - 1]->skstempuh;
@@ -338,7 +338,7 @@ class Login extends BaseController
                 }
             } else {
                 $data_master_mhs = $this->db->query("SELECT * FROM tb_mahasiswa where email='$username'")->getResult();
-                $data_master_dosen = $this->db->query("SELECT * FROM tb_dosen where email='$username'")->getResult();
+                $data_master_dosen = $this->db->query("SELECT *,LENGTH(nip) AS jum FROM tb_dosen where email='$username' ORDER BY jum DESC LIMIT 1")->getResult();
                 if (count($data_master_mhs) > 0) {
                     if ($username == $data_master_mhs[0]->email) {
                         $dataperwalian = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/perwalian?page=1&take=100&nim=" . $data_master_mhs[0]->nim);

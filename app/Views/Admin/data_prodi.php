@@ -54,6 +54,7 @@ use CodeIgniter\Images\Image;
                                                 <td>
                                                     <?php if ($tab == "Data Dosen") { ?>
                                                         <a class="btn btn-primary btn-sm" href="<?= base_url() ?>detail_data_dosen/<?= $key->idunit ?>">Detail Dosen</a>
+                                                        <a class="btn btn-success btn-sm" href="<?= base_url() ?>detail_data_dosen_perprodi/<?= $key->idunit ?>">Update Data</a>
                                                     <?php } else { ?>
                                                         <a class="btn btn-primary btn-sm" href="<?= base_url() ?>angkatan_mhs/<?= $key->idunit ?>">Detail Angkatan</a>
                                                     <?php } ?>

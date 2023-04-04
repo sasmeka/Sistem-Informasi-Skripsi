@@ -74,6 +74,7 @@ $routes->get('/angkatan_mhs/(:any)', 'Admin\Mahasiswa::angkatan_mhs/$1');
 //Route Khusus Controller Admin-Dosen
 $routes->add('/data_dosen', 'Admin\Dosen::index');
 $routes->add('/update_data_dosen', 'Admin\Dosen::update_data_dosen');
+$routes->add('/update_data_dosen_perprodi/(:any)', 'Admin\Dosen::update_data_dosen_perprodi/$1');
 $routes->get('/jurusan_dosen/(:any)', 'Admin\Dosen::jurusan_dosen/$1');
 $routes->get('/prodi_dosen/(:any)', 'Admin\Dosen::prodi_dosen/$1');
 $routes->add('/detail_data_dosen/(:any)', 'Admin\Dosen::detail_data_dosen/$1');

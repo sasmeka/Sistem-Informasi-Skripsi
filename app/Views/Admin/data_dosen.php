@@ -50,7 +50,7 @@ use CodeIgniter\Images\Image;
                                                 <td><?= $no; ?></td>
                                                 <td><?= $key->nip; ?></td>
                                                 <td><?= $key->nidn; ?></td>
-                                                <td><?= $key->gelardepan . '. ' . $key->nama . ', ' . $key->gelarbelakang; ?></td>
+                                                <td><?= $key->gelardepan . ' ' . $key->nama . ', ' . $key->gelarbelakang; ?></td>
                                                 <td><?= $key->jk; ?></td>
                                                 <td><?= $key->email; ?></td>
                                                 <td><?php

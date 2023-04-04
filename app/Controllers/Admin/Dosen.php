@@ -164,4 +164,67 @@ class Dosen extends BaseController
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
         return redirect()->to('/data_dosen');
     }
+    public function update_data_dosen_perprodi($idunitnew)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'admin') {
+            return redirect()->to('/');
+        }
+        set_time_limit(0);
+        ini_set('max_execution_time', '0');
+        ini_set('max_input_time', '0');
+        $this->db->query("DELETE FROM tb_dosen WHERE idunit='$idunitnew'");
+        $data1 = $this->api->get_meta_api("https://api.trunojoyo.ac.id:8212/siakad/v1/dosen?page=1&take=100");
+        $total_page = intval($data1->pageCount);
+        function add_data($page, $a, $idunitnew)
+        {
+            $array_data = [];
+            $data = $a->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/dosen?page=$page&take=100");
+            foreach ($data as $key) {
+                $nama = '"' . $key->nama . '"';
+                $nip = preg_replace("/[^0-9]/", "", $key->nip);
+                $nidn = preg_replace("/[^0-9]/", "", $key->nidn);
+                if ($key->idunit == $idunitnew) {
+                    array_push($array_data, "('" . $nip . "','" . $nidn . "', " . $nama . ", '" . $key->gelardepan . "','" . $key->gelarbelakang . "','" . $key->jk . "','" . $key->idunit . "','" . $key->email . "',$page)");
+                }
+            }
+            return $array_data;
+        }
+        $fix_result = [];
+        for ($i = 1; $i <= $total_page; $i++) {
+            $result = add_data($i, $this, $idunitnew);
+            $fix_result = array_merge($fix_result, $result);
+        }
+        $rr = implode(', ', $fix_result);
+        $this->db->query("INSERT INTO tb_dosen (nip,nidn,nama,gelardepan,gelarbelakang,jk,idunit,email,page) VALUES $rr");
+        $datados = $this->db->query("SELECT * FROM tb_dosen WHERE idunit='$idunitnew'")->getResult();
+        foreach ($datados as $key) {
+            $dataid = $this->db->query("SELECT * FROM tb_users WHERE id='$key->nip' limit 1")->getResult();
+            if (count($dataid) > 0 && $dataid[0]->email != $key->email) {
+                $this->db->query("UPDATE tb_users SET email='$key->email' WHERE id='$key->nip';");
+            }
+            if ($key->email != '' || $key->email != NULL) {
+                $datadoscek = $this->db->query("SELECT *,LENGTH(nip) AS jum  FROM tb_dosen WHERE email = '$key->email' ORDER BY jum DESC LIMIT 1")->getResult();
+                $nip = $datadoscek[0]->nip;
+                $dataemail = $this->db->query("SELECT * FROM tb_users WHERE email='$key->email' limit 1")->getResult();
+                if (count($dataemail) > 0 && $dataemail[0]->id != $nip) {
+                    $this->db->query("UPDATE tb_acc_revisi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_berita_acara SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_bimbingan SET `from`='$nip' WHERE `from`='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_bimbingan SET `to`='$nip' WHERE `to`='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_dekan SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_jumlah_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_korprodi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_log SET user='$nip' WHERE user='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_nilai SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_pengajuan_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_penguji SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
+                    $this->db->query("UPDATE tb_users SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
+                }
+            }
+        }
+        $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
+        return redirect()->to('/data_dosen');
+    }
 }
