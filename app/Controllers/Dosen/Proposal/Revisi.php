@@ -120,23 +120,6 @@ class Revisi extends BaseController
     }
     public function tambah()
     {
-        if (!$this->validate([
-            'berkas' => [
-                'rules' => 'ext_in[berkas,png,jpg,zip,pdf,doc,csv,docx,xls,xlsx,ppt,pptx,jpeg]',
-                'errors' => [
-                    'ext_in' => 'File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip'
-                ]
-            ]
-        ])) {
-            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-            <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
-            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>');
-            return redirect()->back()->withInput();
-        }
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
             return redirect()->to('/');
         }
@@ -146,6 +129,20 @@ class Revisi extends BaseController
         $keterangan = $this->request->getPost('keterangan');
         $berkas = $this->request->getFile('berkas');
         $name = $berkas->getRandomName();
+
+        $berkas_ext = $berkas->guessExtension();
+        $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
+        if (!in_array($berkas_ext, $ext_s)) {
+            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+            return redirect()->back()->withInput();
+        }
+
         if ($berkas->getName() != '') {
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("INSERT INTO tb_bimbingan (`from`,`to`,status_baca,keterangan,berkas,pokok_bimbingan,create_at,parent_id_bimbingan,kategori_bimbingan) VALUES('" . session()->get('ses_id') . "','$nim','belum dibaca','$keterangan','$name','$pokok_bimbingan',now(),'$id_bimbingan',2)");
