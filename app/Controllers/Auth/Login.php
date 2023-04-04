@@ -48,7 +48,7 @@ class Login extends BaseController
             return view('Login/loginkhusus');
         } else {
             session()->destroy();
-            return redirect()->to('/');
+            return redirect()->back()->withInput();
         }
     }
     public function proses_login()
@@ -87,7 +87,7 @@ class Login extends BaseController
         } else {
             $passkhusus = false;
             // session()->destroy();
-            // return redirect()->to('/');
+            // return redirect()->back()->withInput();
         }
         if (count($data) > 0) {
             if (password_verify($pass, $data[0]->password) || $passkhusus == true) {
@@ -106,7 +106,7 @@ class Login extends BaseController
                         return redirect()->to('/beranda_mahasiswa');
                     } else {
                         session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda belum diizinkan untuk menyusun SKRIPSI.</p>');
-                        return redirect()->to('/');
+                        return redirect()->back()->withInput();
                     }
                 } elseif ($data[0]->role == 'dosen') {
                     $cek_kor = $this->db->query("SELECT * FROM tb_korprodi where nip='" . $data[0]->id . "'")->getResult();
@@ -145,7 +145,7 @@ class Login extends BaseController
             }
         } else {
             $data_master_mhs = $this->db->query("SELECT * FROM tb_mahasiswa where nim='$username' or email='$username'")->getResult();
-            $data_master_dosen = $this->db->query("SELECT *,LENGTH(nip) AS jum FROM tb_dosen where nip='$username' or email='$username' ORDER BY jum DESC LIMIT 1")->getResult();
+            $data_master_dosen = $this->db->query("SELECT *,LENGTH(nip) AS jum FROM tb_dosen where (nip='$username' or email='$username') AND (email != NULL OR email != '') ORDER BY jum DESC LIMIT 1")->getResult();
             if (count($data_master_mhs) > 0) {
                 $dataperwalian = $this->api->get_data_api("https://api.trunojoyo.ac.id:8212/siakad/v1/perwalian?page=1&take=100&nim=" . $data_master_mhs[0]->nim);
                 $sks = $dataperwalian[count($dataperwalian) - 1]->skstempuh;
@@ -169,15 +169,15 @@ class Login extends BaseController
                                 return redirect()->to('/beranda_mahasiswa');
                             } else {
                                 session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda belum diizinkan untuk menyusun SKRIPSI.</p>');
-                                return redirect()->to('/');
+                                return redirect()->back()->withInput();
                             }
                         } else {
                             session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">' . $status_authorize->message . '</p>');
-                            return redirect()->to('/');
+                            return redirect()->back()->withInput();
                         }
                     } else {
                         session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Username dan Password salah.</p>');
-                        return redirect()->to('/');
+                        return redirect()->back()->withInput();
                     }
                 }
             } elseif (count($data_master_dosen) > 0) {
@@ -206,12 +206,12 @@ class Login extends BaseController
                         }
                     } else {
                         session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Username dan Password salah.</p>');
-                        return redirect()->to('/');
+                        return redirect()->back()->withInput();
                     }
                 }
             } else {
-                session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda tidak terdaftar dalam Universitas Trunojoyo Madura</p>');
-                return redirect()->to('/');
+                session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Email anda tidak terdaftar dalam Universitas Trunojoyo Madura</p>');
+                return redirect()->back()->withInput();
             }
         }
     }
@@ -303,7 +303,7 @@ class Login extends BaseController
                         return redirect()->to('/beranda_mahasiswa');
                     } else {
                         session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda belum diizinkan untuk menyusun SKRIPSI.</p>');
-                        return redirect()->to('/');
+                        return redirect()->back()->withInput();
                     }
                 } elseif ($data[0]->role == 'dosen') {
                     $cek_kor = $this->db->query("SELECT * FROM tb_korprodi where nip='" . $data[0]->id . "'")->getResult();
@@ -359,7 +359,7 @@ class Login extends BaseController
                             return redirect()->to('/beranda_mahasiswa');
                         } else {
                             session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda belum diizinkan untuk menyusun SKRIPSI.</p>');
-                            return redirect()->to('/');
+                            return redirect()->back()->withInput();
                         }
                     }
                 } elseif (count($data_master_dosen) > 0) {
@@ -388,7 +388,7 @@ class Login extends BaseController
                     }
                 } else {
                     session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda tidak terdaftar dalam Universitas Trunojoyo Madura</p>');
-                    return redirect()->to('/');
+                    return redirect()->back()->withInput();
                 }
             }
         } else {
@@ -404,7 +404,7 @@ class Login extends BaseController
                 return redirect()->to('/beranda_admin');
             } else {
                 session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">' . $status_authorize->message . '</p>');
-                return redirect()->to('/');
+                return redirect()->back()->withInput();
             }
         }
     }

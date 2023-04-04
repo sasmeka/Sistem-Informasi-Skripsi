@@ -133,32 +133,30 @@ class Dosen extends BaseController
             $rr = implode(', ', $result);
             $this->db->query("INSERT INTO tb_dosen (nip,nidn,nama,gelardepan,gelarbelakang,jk,idunit,email,page) VALUES $rr");
         }
-        $datados = $this->db->query("SELECT * FROM tb_dosen")->getResult();
+        $datados = $this->db->query("SELECT * FROM tb_dosen WHERE (email != NULL OR email != '')")->getResult();
         foreach ($datados as $key) {
             $dataid = $this->db->query("SELECT * FROM tb_users WHERE id='$key->nip' limit 1")->getResult();
             if (count($dataid) > 0 && $dataid[0]->email != $key->email) {
-                $this->db->query("UPDATE tb_users SET email='$key->email' WHERE id='$key->nip';");
+                $this->db->query("UPDATE tb_users SET email='$key->email',idunit='$key->idunit' WHERE id='$key->nip';");
             }
-            if ($key->email != '' || $key->email != NULL) {
-                $datadoscek = $this->db->query("SELECT *,LENGTH(nip) AS jum  FROM tb_dosen WHERE email = '$key->email' ORDER BY jum DESC LIMIT 1")->getResult();
-                $nip = $datadoscek[0]->nip;
-                $dataemail = $this->db->query("SELECT * FROM tb_users WHERE email='$key->email' limit 1")->getResult();
-                if (count($dataemail) > 0 && $dataemail[0]->id != $nip) {
-                    $this->db->query("UPDATE tb_acc_revisi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_berita_acara SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_bimbingan SET `from`='$nip' WHERE `from`='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_bimbingan SET `to`='$nip' WHERE `to`='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_dekan SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_korprodi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_log SET user='$nip' WHERE user='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_nilai SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_pengajuan_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_penguji SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_users SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
-                }
+            $nip = $key->nip;
+            $idunit = $key->idunit;
+            $dataemail = $this->db->query("SELECT * FROM tb_users WHERE email='$key->email' limit 1")->getResult();
+            if (count($dataemail) > 0 && $dataemail[0]->id != $nip) {
+                $this->db->query("UPDATE tb_acc_revisi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_berita_acara SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_bimbingan SET `from`='$nip' WHERE `from`='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_bimbingan SET `to`='$nip' WHERE `to`='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_dekan SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_korprodi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_log SET user='$nip' WHERE user='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_nilai SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_pengajuan_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_penguji SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_users SET id='$nip',idunit='$idunit' WHERE id='" . $dataemail[0]->id . "'");
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
@@ -196,32 +194,31 @@ class Dosen extends BaseController
         }
         $rr = implode(', ', $fix_result);
         $this->db->query("INSERT INTO tb_dosen (nip,nidn,nama,gelardepan,gelarbelakang,jk,idunit,email,page) VALUES $rr");
-        $datados = $this->db->query("SELECT * FROM tb_dosen WHERE idunit='$idunitnew'")->getResult();
+
+        $datados = $this->db->query("SELECT * FROM tb_dosen WHERE (email != NULL OR email != '') AND idunit='$idunitnew'")->getResult();
         foreach ($datados as $key) {
             $dataid = $this->db->query("SELECT * FROM tb_users WHERE id='$key->nip' limit 1")->getResult();
             if (count($dataid) > 0 && $dataid[0]->email != $key->email) {
-                $this->db->query("UPDATE tb_users SET email='$key->email' WHERE id='$key->nip';");
+                $this->db->query("UPDATE tb_users SET email='$key->email',idunit='$key->idunit' WHERE id='$key->nip';");
             }
-            if ($key->email != '' || $key->email != NULL) {
-                $datadoscek = $this->db->query("SELECT *,LENGTH(nip) AS jum  FROM tb_dosen WHERE email = '$key->email' ORDER BY jum DESC LIMIT 1")->getResult();
-                $nip = $datadoscek[0]->nip;
-                $dataemail = $this->db->query("SELECT * FROM tb_users WHERE email='$key->email' limit 1")->getResult();
-                if (count($dataemail) > 0 && $dataemail[0]->id != $nip) {
-                    $this->db->query("UPDATE tb_acc_revisi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_berita_acara SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_bimbingan SET `from`='$nip' WHERE `from`='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_bimbingan SET `to`='$nip' WHERE `to`='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_dekan SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_korprodi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_log SET user='$nip' WHERE user='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_nilai SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_pengajuan_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_penguji SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
-                    $this->db->query("UPDATE tb_users SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
-                }
+            $nip = $key->nip;
+            $idunit = $key->idunit;
+            $dataemail = $this->db->query("SELECT * FROM tb_users WHERE email='$key->email' limit 1")->getResult();
+            if (count($dataemail) > 0 && $dataemail[0]->id != $nip) {
+                $this->db->query("UPDATE tb_acc_revisi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_berita_acara SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_bimbingan SET `from`='$nip' WHERE `from`='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_bimbingan SET `to`='$nip' WHERE `to`='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_dekan SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_korprodi SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_log SET user='$nip' WHERE user='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_nilai SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_pengajuan_pembimbing SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_penguji SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
+                $this->db->query("UPDATE tb_users SET id='$nip',idunit='$idunit' WHERE id='" . $dataemail[0]->id . "'");
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");

@@ -21,8 +21,8 @@ class Profil extends BaseController
         }
         function data($a, $id)
         {
-            $data_master_mhs = $a->query("SELECT * FROM tb_mahasiswa a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.nim='" . $id . "'")->getResult();
-            $data_master_dosen = $a->query("SELECT * FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` where a.nip='" . $id . "'")->getResult();
+            $data_master_mhs = $a->query("SELECT * FROM tb_mahasiswa a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.nim='" . $id . "' AND (email != NULL OR email != '')")->getResult();
+            $data_master_dosen = $a->query("SELECT * FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` where a.nip='" . $id . "' AND (email != NULL OR email != '')")->getResult();
             if (count($data_master_mhs) > 0) {
                 return $data_master_mhs;
             } elseif (count($data_master_dosen) > 0) {
