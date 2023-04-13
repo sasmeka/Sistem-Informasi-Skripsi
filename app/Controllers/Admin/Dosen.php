@@ -485,7 +485,8 @@ class Dosen extends BaseController
             return redirect()->back()->withInput();
         } else {
             $execute = $this->db->query('INSERT INTO tb_dosen (nip,nidn,nama,gelardepan,gelarbelakang,jk,idunit,email,page) VALUES ("' . $nip . '","' . $nidn . '","' . $nama . '","' . $gelardepan . '","' . $gelarbelakang . '","' . $jk . '","' . $idunit . '","' . $email . '","")');
-            if ($execute) {
+            $execute2 = $this->db->query("INSERT INTO tb_profil_tambahan (id,`image`) VALUES ('" . $nip . "','Profile_Default.png')");
+            if ($execute && $execute2) {
                 $dataid = $this->db->query("SELECT * FROM tb_users WHERE id='$nip' limit 1")->getResult();
                 if (count($dataid) > 0 && $dataid[0]->email != $email) {
                     $this->db->query("UPDATE tb_users SET email='$email',idunit='$idunit' WHERE id='$nip';");
