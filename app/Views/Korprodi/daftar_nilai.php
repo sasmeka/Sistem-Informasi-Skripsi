@@ -44,7 +44,7 @@ use CodeIgniter\Images\Image;
                                         ?>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2">Export</button>
+                                <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-print"></i></button>
                             </form>
                             <hr>
                             <div class="table-responsive">

@@ -374,9 +374,31 @@ class Cetak extends BaseController
         $dompdf->stream($filename, array('Attachment' => false));
         exit();
     }
-    public function cobaqr()
+    public function pendaftar($id, $jenis)
     {
-        $isi = "SUKSES";
-        return $this->qr->cetakqr($isi);
+        // if (session()->get('ses_id') == '') {
+        //     return redirect()->to('/');
+        // }
+        $link = base_url() . "cetak_pendaftar/$id/$jenis";
+        $qr_link = $this->qr->cetakqr($link);
+
+        $data = [
+            'baseurl' => base_url(),
+            'title' => 'Data Pendaftar Sidang',
+            'db' => $this->db,
+            'id_jadwal' => $id,
+            'jenis' => $jenis,
+            'data_pendaftar' => $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_jadwal='$id'")->getResult(),
+            'data_jadwal' => $this->db->query("SELECT * FROM tb_jadwal_sidang WHERE id_jadwal='$id'")->getResult(),
+            'qr_link' => $qr_link,
+        ];
+        session()->set('ses_id_jadwal', $id);
+        $dompdf = new Dompdf();
+        $filename = date('y-m-d-H-i-s');
+        $dompdf->loadHtml(view('Cetak/data_pendaftar_sidang', $data));
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream($filename, array('Attachment' => false));
+        exit();
     }
 }

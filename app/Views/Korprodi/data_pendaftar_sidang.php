@@ -13,6 +13,10 @@ use CodeIgniter\Images\Image;
                     <div class="d-flex justify-content-between">
                         <h4 class="card-title mg-b-0">Data Pendaftar Sidang</h4>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/semua"><i class="fa fa-print"></i> Semua</a>
+                            <a class="btn btn-success btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/terjadwal"><i class="fa fa-print"></i> Terjadwal</a>
+                        </div>
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2">Data pendaftar seminar proposal dan sidang skripsi</a></p>
                 </div>
