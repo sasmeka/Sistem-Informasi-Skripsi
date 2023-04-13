@@ -86,7 +86,7 @@ use CodeIgniter\Images\Image;
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <!-- <hr>
                     <div class="row">
                         <div class="col-md-9 col-lg-9 col-xl-9">
                             <label class="form-label"><b>Cetak Data Dosen</b></label>
@@ -97,7 +97,7 @@ use CodeIgniter\Images\Image;
                                 <a aria-controls="multiCollapseExample" aria-expanded="false" class="btn ripple btn-light plus float-right" href=".multi-collapse" data-bs-toggle="collapse" role="button">OPEN</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col">
                             <div class="collapse <?= session()->getFlashdata('message') != NULL ? 'show' : ''  ?> multi-collapse" id="multiCollapseExample">
@@ -124,7 +124,7 @@ use CodeIgniter\Images\Image;
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <!-- <hr> -->
                 </div>
 
             </div>
