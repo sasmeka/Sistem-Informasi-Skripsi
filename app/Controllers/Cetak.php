@@ -376,12 +376,9 @@ class Cetak extends BaseController
     }
     public function pendaftar($id, $jenis)
     {
-        // if (session()->get('ses_id') == '') {
-        //     return redirect()->to('/');
-        // }
         $link = base_url() . "cetak_pendaftar/$id/$jenis";
         $qr_link = $this->qr->cetakqr($link);
-
+        $data_jadwal = $this->db->query("SELECT * FROM tb_jadwal_sidang a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.`id_jadwal`='$id'")->getResult();
         $data = [
             'baseurl' => base_url(),
             'title' => 'Data Pendaftar Sidang',
@@ -389,7 +386,8 @@ class Cetak extends BaseController
             'id_jadwal' => $id,
             'jenis' => $jenis,
             'data_pendaftar' => $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_jadwal='$id'")->getResult(),
-            'data_jadwal' => $this->db->query("SELECT * FROM tb_jadwal_sidang WHERE id_jadwal='$id'")->getResult(),
+            'data_jadwal' => $data_jadwal,
+            'namaunit' => $data_jadwal[0]->namaunit,
             'qr_link' => $qr_link,
         ];
         session()->set('ses_id_jadwal', $id);

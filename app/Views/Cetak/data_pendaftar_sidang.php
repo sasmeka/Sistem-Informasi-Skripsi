@@ -43,7 +43,7 @@
             <td style="text-align:center;font-size: 18px;border: 1px solid black;" colspan="3"><b><?= strtoupper($data_jadwal[0]->jenis_sidang) ?></b></td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align:center;font-size: 18px;border: 1px solid black;"><b>DATA MAHASISWA</b></td>
+            <td colspan="2" style="text-align:center;font-size: 18px;border: 1px solid black;"><b>DATA MAHASISWA <?= strtoupper($namaunit) ?></b></td>
             <td style="border: 1px solid black;padding: 5px;text-align:center;">Tanggal : <b><?= date('d-m-Y') ?></b></td>
         </tr>
     </table>

@@ -86,8 +86,47 @@ use CodeIgniter\Images\Image;
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <label class="form-label"><b>Cetak Data Dosen</b></label>
+                            <p class="tx-12 tx-gray-500 pt-0">Data dosen yang akan dicetak adalah menurut jumlah mahasiswa yang telah melakukan sidang skripsi menurut periode tertentu.</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="btn-list">
+                                <a aria-controls="multiCollapseExample" aria-expanded="false" class="btn ripple btn-light plus float-right" href=".multi-collapse" data-bs-toggle="collapse" role="button">OPEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse <?= session()->getFlashdata('message') != NULL ? 'show' : ''  ?> multi-collapse" id="multiCollapseExample">
+                                <form action="<?= base_url() ?>update_universal_pass" method="POST" enctype="multipart/form-data">
+                                    <?= csrf_field() ?>
+                                    <div class="row row-sm">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">Password Baru</label>
+                                                <input class="form-control" name="new_pass" placeholder="Isikan Password Baru" type="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label class="form-label">Verifikasi Password</label>
+                                                <input class="form-control" name="re_new_pass" placeholder="Isikan Password Baru" type="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-12"><button class="btn btn-success pd-x-20 mg-t-10" type="submit"><i class="fa fa-print"></i></button>
+                                            <a aria-controls="multiCollapseExample" aria-expanded="false" class="btn ripple btn-light pd-x-20 mg-t-10" href=".multi-collapse" data-bs-toggle="collapse" role="button" class="col-md-10 col-lg-9 col-xl-2 offset-xl-10 pt-4">Tutup</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <div class="row mt-3"></div>
+
             </div>
         </div>
     </div>
