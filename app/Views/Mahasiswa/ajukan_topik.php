@@ -98,18 +98,21 @@ use CodeIgniter\Images\Image;
                                                 <select class="form-control select2" name="nip">
                                                     <option label="Pilih Pembimbing 1" selected disabled>Pilih Pembimbing 1
                                                     </option>
-                                                    <?php foreach ($dosen as $key1) { ?>
-                                                        <option value="<?= $key1->nip_dos ?>">
-                                                            <?= $key1->namaunit . ' - ' . $key1->nip_dos . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
-                                                            <?php if ($key1->jumlah >= $key1->kuota) {
-                                                                echo '<a class="text-danger"> - (Penuh)</a>';
-                                                            } elseif ($key1->jumlah == NULL) {
-                                                                echo '<a class="text-success"> - (0 Bimbingan)</a>';
-                                                            } else {
-                                                                echo '<a class="text-success"> - (' . $key1->jumlah . ' Bimbingan)</a>';
-                                                            } ?>
-                                                        </option>
+                                                    <?php foreach ($dosen as $key1) {
+                                                        if ($key1->idunit == session()->get('ses_idunit')) {
+                                                    ?>
+                                                            <option value="<?= $key1->nip_dos ?>">
+                                                                <?= $key1->namaunit . ' - ' . $key1->nip_dos . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
+                                                                <?php if ($key1->jumlah >= $key1->kuota) {
+                                                                    echo '<a class="text-danger"> - (Penuh)</a>';
+                                                                } elseif ($key1->jumlah == NULL) {
+                                                                    echo '<a class="text-success"> - (0 Bimbingan)</a>';
+                                                                } else {
+                                                                    echo '<a class="text-success"> - (' . $key1->jumlah . ' Bimbingan)</a>';
+                                                                } ?>
+                                                            </option>
                                                     <?php
+                                                        }
                                                     } ?>
                                                 </select>
                                             </div>

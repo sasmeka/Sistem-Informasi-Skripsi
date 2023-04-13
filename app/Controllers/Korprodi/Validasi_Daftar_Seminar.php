@@ -20,7 +20,7 @@ class Validasi_Daftar_Seminar extends BaseController
         }
         $id = session()->get('ses_id');
         $data_mhs = [];
-        $data_mhs_bimbingan = $this->db->query("SELECT a.*,b.`nama` AS nama_mhs, b.`jk`, c.`namaunit`, d.* FROM tb_perizinan_sidang a LEFT JOIN tb_mahasiswa b ON b.`nim`=a.`nim` LEFT JOIN tb_unit c ON b.`idunit`=c.`idunit` LEFT JOIN tb_profil_tambahan d ON a.`nim`=d.`id` WHERE nip='$id' AND a.izin_sebagai='koordinator'")->getResult();
+        $data_mhs_bimbingan = $this->db->query("SELECT a.*,b.`nama` AS nama_mhs, b.`jk`, c.`namaunit`, d.* FROM tb_perizinan_sidang a LEFT JOIN tb_mahasiswa b ON b.`nim`=a.`nim` LEFT JOIN tb_unit c ON b.`idunit`=c.`idunit` LEFT JOIN tb_profil_tambahan d ON a.`nim`=d.`id` WHERE nip='$id' AND a.`izin_sebagai`='koordinator'")->getResult();
         foreach ($data_mhs_bimbingan as $key) {
             if ($key->image != NULL) {
                 $image = $key->image;
@@ -33,6 +33,8 @@ class Validasi_Daftar_Seminar extends BaseController
                 'jk' => $key->jk,
                 'namaunit' => $key->namaunit,
                 'image' => $image,
+                'jenis_sidang' => $key->jenis_sidang,
+                'id_perizinan_sidang' => $key->id_perizinan_sidang,
             ];
             array_push($data_mhs, $data);
         }
@@ -48,14 +50,15 @@ class Validasi_Daftar_Seminar extends BaseController
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
             return redirect()->to('/');
         }
+        $jenis_sidang = $this->request->getPost('jenis_sidang');
         $nim = $this->request->getPost('nim');
         $status = $this->request->getPost('status');
         if ($status == 'disetujui') {
-            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='disetujui' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='seminar proposal'");
+            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='disetujui' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='$jenis_sidang'");
         } elseif ($status == 'ditolak') {
-            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='ditolak' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='seminar proposal'");
+            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='ditolak' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='$jenis_sidang'");
         } else {
-            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='menunggu' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='seminar proposal'");
+            $this->db->query("UPDATE tb_perizinan_sidang SET `status`='menunggu' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='$jenis_sidang'");
         }
         // echo "UPDATE tb_perizinan_sidang SET `status`='ditolak' WHERE nim='$nim' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='seminar_proposal'";
         return redirect()->to('/validasi_daftar_seminar_koor');

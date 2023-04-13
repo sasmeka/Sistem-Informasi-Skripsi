@@ -14,28 +14,31 @@ use CodeIgniter\Images\Image;
                     <h3 class="card-title mb-2">Permintaan Persetujuan</h3>
                     <p class="tx-12 mb-0 text-muted">Meminta izin daftar sidang skripsi ke dosen pembimbing dan koordinator prodi</p>
                 </div>
-                <?php
-                $ststbl = "";
-                if (count($mkerror) != 0) {
-                    $ststbl = "disabled";
-                ?>
+                <!-- <?php
+                        $ststbl = "";
+                        // if (count($mkerror) != 0) {
+                        // $ststbl = "disabled";
+                        // $ststbl = "";
+                        ?>
                     <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                         <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
                         <span class="alert-inner--text"><strong>Silahkan Perbaiki Dahulu !</strong><br>
                             <?php
-                            $no = 1;
+                            // $no = 1;
                             // var_dump($mkerror[0]);
-                            foreach ($mkerror as $key) {
-                                echo $no . '. ' . $key['namamk'] . ' : ' . $key['nilai'] . '<br>';
-                                $no++;
-                            }
+                            // foreach ($mkerror as $key) {
+                            // echo $no . '. ' . $key['namamk'] . ' : ' . $key['nilai'] . '<br>';
+                            // $no++;
+                            // }
                             ?>
                         </span>
                         <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                <?php } ?>
+                <?php
+                // } 
+                ?> -->
                 <div class="card-body p-0 customers mt-1">
                     <div class="list-group list-lg-group list-group-flush">
                         <div class="list-group-item list-group-item-action" href="#">
@@ -129,14 +132,14 @@ use CodeIgniter\Images\Image;
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="list-group-item list-group-item-action br-t-1" href="#">
+                        <div class="list-group-item list-group-item-action br-t-1" href="#">
                             <div class="media mt-0">
                                 <img class="avatar-lg rounded-circle my-auto me-3" src="<?= base_url() ?>image/<?= $kor->image ?>" alt="Image description">
                                 <div class="media-body">
                                     <div class="d-flex align-items-center">
                                         <form action="<?= base_url() ?>izin_sidang" method="POST" enctype="multipart/form-data">
-                                        <?= csrf_field() ?>    
-                                        <input type="hidden" name="nip" value="<?= $kor->nip ?>">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="nip" value="<?= $kor->nip ?>">
                                             <input type="hidden" name="nim" value="<?= session()->get('ses_id') ?>">
                                             <input type="hidden" name="idunit" value="<?= $idunit_mhs ?>">
                                             <input type="hidden" name="sebagai" value="koordinator">
@@ -145,13 +148,13 @@ use CodeIgniter\Images\Image;
                                                 <p class="mb-0 tx-11 text-muted">NIP: <?= $kor->nip; ?>
                                                     <?php $cek = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND nip='" . $kor->nip . "' AND izin_sebagai='koordinator'  AND jenis_sidang='skripsi'")->getResult();
                                                     if (count($cek) == 0) {
-                                                        // echo "<span class='text-danger ms-2'>Belum Melakukan Perizinan</span>";
+                                                        echo "<span class='text-danger ms-2'>Belum Melakukan Perizinan</span>";
                                                     } elseif ($cek[0]->status == 'ditolak') {
-                                                        // echo "<span class='text-danger ms-2'>Izin ditolak</span>";
+                                                        echo "<span class='text-danger ms-2'>Izin ditolak</span>";
                                                     } elseif ($cek[0]->status == 'menunggu') {
-                                                        // echo "<span class='text-warning ms-2'>Menunggu</span>";
+                                                        echo "<span class='text-warning ms-2'>Menunggu</span>";
                                                     } else {
-                                                        // echo "<span class='text-success ms-2'>Izin disetujui</span>";
+                                                        echo "<span class='text-success ms-2'>Izin disetujui</span>";
                                                     }
                                                     ?>
                                                 </p>
@@ -173,7 +176,7 @@ use CodeIgniter\Images\Image;
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

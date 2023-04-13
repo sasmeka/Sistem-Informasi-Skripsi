@@ -207,6 +207,8 @@ $routes->get('/berita_acara_proposal/(:any)', 'Cetak::berita_acara_proposal/$1')
 $routes->get('/form_bimbingan_skripsi/(:any)/(:any)', 'Cetak::form_bimbingan_skripsi/$1/$2');
 $routes->get('/berita_acara_skripsi/(:any)', 'Cetak::berita_acara_skripsi/$1');
 $routes->get('/cetak_pendaftar/(:any)/(:any)', 'Cetak::pendaftar/$1/$2');
+$routes->add('/direct_hasil_dosen', 'Cetak::direct_hasil_dosen');
+$routes->get('/hasil_dosen/(:any)/(:any)', 'Cetak::hasil_dosen/$1/$2');
 // ============================================================================================
 
 /*
