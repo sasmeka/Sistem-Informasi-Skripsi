@@ -404,10 +404,38 @@ class Cetak extends BaseController
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
             return redirect()->to('/');
         }
+        if (!$this->validate([
+            'start' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pilih Tanggal Mulai'
+                ]
+            ],
+            'end' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pilih Tanggal Akhir'
+                ]
+            ]
+        ])) {
+            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+            return redirect()->back()->withInput();
+        }
         $idunit = session()->get('ses_idunit');
         $date1 = $this->request->getPost('start');
         $date2 = $this->request->getPost('end');
-        return redirect()->to("hasil_dosen/$idunit/$date1/$date2");
+        $jenis_sidang = $this->request->getPost('jenis_sidang');
+        if ($jenis_sidang == 'pdf') {
+            return redirect()->to("hasil_dosen/$idunit/$date1/$date2");
+        } else {
+            return redirect()->to("hasil_dosen_excel/$idunit/$date1/$date2");
+        }
     }
     public function hasil_dosen($idunit, $date1, $date2)
     {
@@ -431,5 +459,22 @@ class Cetak extends BaseController
         $dompdf->render();
         $dompdf->stream($filename, array('Attachment' => false));
         exit();
+    }
+    public function hasil_dosen_excel($idunit, $date1, $date2)
+    {
+        $link = base_url() . "hasil_dosen/$idunit/$date1/$date2";
+        $qr_link = $this->qr->cetakqr($link);
+        $tb_unit = $this->db->query("SELECT * FROM tb_unit WHERE idunit='$idunit'")->getResult();
+        $data = [
+            'baseurl' => base_url(),
+            'title' => 'Data Hasil Dosen',
+            'db' => $this->db,
+            'qr_link' => $qr_link,
+            'namaunit' => $tb_unit[0]->namaunit,
+            'date1' => $date1,
+            'date2' => $date2,
+            'tb_dosen' => $this->db->query("SELECT DISTINCT a.`nip`,b.* FROM tb_nilai a LEFT JOIN tb_dosen b ON a.`nip`=b.`nip` WHERE idunit='$idunit'")->getResult(),
+        ];
+        return view('Cetak/hasil_dosen_excel', $data);
     }
 }

@@ -199,7 +199,6 @@ $routes->add('/export_nilai', 'Korprodi\Nilai::export');
 $routes->add('/data_dosen_koorprodi', 'Korprodi\Data_Dosen::index');
 $routes->add('/update_kuota_dosen', 'Korprodi\Data_Dosen::update');
 // --------------------------------------CETAK-------------------------------------------
-$routes->add('/cobaqr', 'Cetak::cobaqr');
 $routes->add('/berkas_mhs_proposal', 'Cetak::berkas_mhs_proposal');
 $routes->add('/berkas_mhs_skripsi', 'Cetak::berkas_mhs_skripsi');
 $routes->get('/form_bimbingan_proposal/(:any)/(:any)', 'Cetak::form_bimbingan_proposal/$1/$2');
@@ -209,6 +208,7 @@ $routes->get('/berita_acara_skripsi/(:any)', 'Cetak::berita_acara_skripsi/$1');
 $routes->get('/cetak_pendaftar/(:any)/(:any)', 'Cetak::pendaftar/$1/$2');
 $routes->add('/direct_hasil_dosen', 'Cetak::direct_hasil_dosen');
 $routes->get('/hasil_dosen/(:any)/(:any)', 'Cetak::hasil_dosen/$1/$2');
+$routes->get('/hasil_dosen_excel/(:any)/(:any)', 'Cetak::hasil_dosen_excel/$1/$2');
 // ============================================================================================
 
 /*

@@ -105,19 +105,29 @@ use CodeIgniter\Images\Image;
                                     <?= csrf_field() ?>
                                     <div class="row row-sm">
                                         <input class="form-control" name="idunit" type="hidden">
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label class="form-label">Tanggal Mulai</label>
                                                 <input class="form-control" name="start" type="date">
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label class="form-label">Tanggal Akhir</label>
                                                 <input class="form-control" name="end" type="date">
                                             </div>
                                         </div>
-                                        <div class="col-4"><button class="btn btn-success pd-x-20 mt-4" type="submit"><i class="fa fa-print"></i></button>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Jenis File</label>
+                                                <select class="form-control select2" name="jenis_file">
+                                                    <option value="pdf" selected>PDF</option>
+                                                    <option value="excel">Excel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3"><button class="btn btn-success pd-x-20 mt-4" type="submit"><i class="fa fa-print"></i></button>
                                             <a aria-controls="multiCollapseExample" aria-expanded="false" class="btn ripple btn-light pd-x-20 mt-4" href=".multi-collapse" data-bs-toggle="collapse" role="button" class="col-md-10 col-lg-9 col-xl-2 offset-xl-10 pt-4">Tutup</a>
                                         </div>
                                     </div>
