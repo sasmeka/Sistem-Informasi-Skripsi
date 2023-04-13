@@ -17,7 +17,7 @@ use CodeIgniter\Images\Image;
                         if ($tab == "Data Dosen") {
                             // if ($count_data < $total_data) { 
                         ?>
-                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_dosen">UPDATE</a>
+                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_dosen">UPDATE SELURUH DATA DOSEN</a>
                         <?php
                             // }
                         } else {

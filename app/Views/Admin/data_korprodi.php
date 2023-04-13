@@ -92,7 +92,7 @@ use CodeIgniter\Images\Image;
                                             <div class="modal" id="modaldelete<?= $key->id_korprodi ?>">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content modal-content-demo">
-                                                        <form action="<?php base_url() ?>delete_korprodi" method="POST" enctype="multipart/form-data">
+                                                        <form action="<?= base_url() ?>delete_korprodi" method="POST" enctype="multipart/form-data">
                                                             <?= csrf_field() ?>
                                                             <input type="hidden" name="id_korprodi" value="<?= $key->id_korprodi ?>">
                                                             <div class="modal-header">

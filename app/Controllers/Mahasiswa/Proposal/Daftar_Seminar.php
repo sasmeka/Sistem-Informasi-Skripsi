@@ -111,23 +111,34 @@ class Daftar_Seminar extends BaseController
         $berkas = $this->request->getFile('berkas_proposal');
         $name = $berkas->getRandomName();
         if ($berkas->getName() != '') {
-            if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
-                $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'".$name."')");
-                session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            $cek = $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE nim = '" . session()->get('ses_id') . "' AND id_jadwal='$id_jadwal'")->getResult();
+            if (count($cek) > 0) {
+                session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal!</strong> anda sudah terdaftar.</span>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+            } else {
+                if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
+                    $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "')");
+                    session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
                 <span class="alert-inner--text"><strong>Sukses!</strong> mendaftar sidang seminar proposal.</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
-            }else{
-                session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                } else {
+                    session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
                 <span class="alert-inner--text"><strong>Gagal!</strong> mendaftar sidang seminar proposal.</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
+                }
             }
         }
         return redirect()->to('/daftar_seminar');

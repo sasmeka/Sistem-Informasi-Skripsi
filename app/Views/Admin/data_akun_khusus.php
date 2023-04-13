@@ -77,7 +77,7 @@ use CodeIgniter\Images\Image;
                                             <div class="modal" id="modaldelete<?= $key->id ?>">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content modal-content-demo">
-                                                        <form action="<?php base_url() ?>delete_akun_khusus" method="POST" enctype="multipart/form-data">
+                                                        <form action="<?= base_url() ?>delete_akun_khusus" method="POST" enctype="multipart/form-data">
                                                             <?= csrf_field() ?>
                                                             <input type="hidden" name="nip" value="<?= $key->nip ?>">
                                                             <div class="modal-header">

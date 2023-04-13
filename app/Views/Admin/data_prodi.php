@@ -18,7 +18,7 @@ use CodeIgniter\Images\Image;
                         if ($tab == "Data Dosen") {
                             // if ($count_data < $total_data) { 
                         ?>
-                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_dosen">UPDATE</a>
+                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>update_data_dosen">UPDATE SELURUH DATA DOSEN</a>
                         <?php
                             // }
                         } else {
@@ -31,7 +31,7 @@ use CodeIgniter\Images\Image;
                         ?>
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2">Data program studi, <?php session()->set('jurusan', $nama_jurusan);
-                                                                            echo $nama_jurusan; ?>.</a></p> . </a></p>
+                                                                            echo $nama_jurusan; ?>.</a></p>
                     <div class="row mt-5">
                         <div class="col-xl-12">
                             <div class="table-responsive">
@@ -54,7 +54,7 @@ use CodeIgniter\Images\Image;
                                                 <td>
                                                     <?php if ($tab == "Data Dosen") { ?>
                                                         <a class="btn btn-primary btn-sm" href="<?= base_url() ?>detail_data_dosen/<?= $key->idunit ?>">Detail Dosen</a>
-                                                        <a class="btn btn-success btn-sm" href="<?= base_url() ?>detail_data_dosen_perprodi/<?= $key->idunit ?>">Update Data</a>
+                                                        <a class="btn btn-success btn-sm" href="<?= base_url() ?>update_data_dosen_perprodi/<?= $key->idunit ?>">Update Data</a>
                                                     <?php } else { ?>
                                                         <a class="btn btn-primary btn-sm" href="<?= base_url() ?>angkatan_mhs/<?= $key->idunit ?>">Detail Angkatan</a>
                                                     <?php } ?>

@@ -125,22 +125,18 @@ class Daftar_Sidang extends BaseController
         }
         if (!$this->validate([
             'berkas_proposal' => [
-                // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
                 'rules' => 'uploaded[berkas_proposal]|mime_in[berkas_proposal,application/pdf]',
                 'errors' => [
                     'uploaded' => 'Berkas skripsi wajib diisi.',
-                    'mime_in' => 'File Extention Harus Berupa pdf',
-                    // 'max_size' => 'Ukuran File Maksimal 2 MB'
+                    'mime_in' => 'File Extention Harus Berupa pdf'
                 ]
 
             ],
             'berkas_turnitin' => [
-                // 'rules' => 'uploaded[berkas]|mime_in[berkas,application/pdf]|max_size[berkas,2048]',
                 'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
                 'errors' => [
                     'uploaded' => 'Berkas turnitin wajib diisi.',
-                    'mime_in' => 'File Extention Harus Berupa pdf',
-                    // 'max_size' => 'Ukuran File Maksimal 2 MB'
+                    'mime_in' => 'File Extention Harus Berupa pdf'
                 ]
 
             ],
@@ -163,23 +159,34 @@ class Daftar_Sidang extends BaseController
         $berkas2 = $this->request->getFile('berkas_turnitin');
         $name2 = $berkas2->getRandomName();
         if ($berkas->getName() != '' && $berkas2->getName() != '') {
-            if ($berkas->move(WRITEPATH . '../public/berkas/', $name) && $berkas2->move(WRITEPATH . '../public/berkas/', $name2)) {
-                $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal,file_turnitin) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "','" . $name2 . "')");
-                session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            $cek = $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE nim = '" . session()->get('ses_id') . "' AND id_jadwal='$id_jadwal'")->getResult();
+            if (count($cek) > 0) {
+                session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal!</strong> anda sudah terdaftar.</span>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+            } else {
+                if ($berkas->move(WRITEPATH . '../public/berkas/', $name) && $berkas2->move(WRITEPATH . '../public/berkas/', $name2)) {
+                    $this->db->query("INSERT INTO tb_pendaftar_sidang (nim,id_jadwal,create_at,file_proposal,file_turnitin) VALUES ('" . session()->get('ses_id') . "','$id_jadwal',now(),'" . $name . "','" . $name2 . "')");
+                    session()->setFlashdata("message", '<div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
                 <span class="alert-inner--text"><strong>Sukses!</strong> mendaftar sidang skripsi.</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
-            } else {
-                session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                } else {
+                    session()->setFlashdata("message", '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
                 <span class="alert-inner--text"><strong>Gagal!</strong> mendaftar sidang skripsi.</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
+                }
             }
         }
         return redirect()->to('/daftar_sidang');

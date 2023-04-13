@@ -78,6 +78,9 @@ $routes->add('/update_data_dosen_perprodi/(:any)', 'Admin\Dosen::update_data_dos
 $routes->get('/jurusan_dosen/(:any)', 'Admin\Dosen::jurusan_dosen/$1');
 $routes->get('/prodi_dosen/(:any)', 'Admin\Dosen::prodi_dosen/$1');
 $routes->add('/detail_data_dosen/(:any)', 'Admin\Dosen::detail_data_dosen/$1');
+$routes->add('/delete_dosen', 'Admin\Dosen::delete');
+$routes->add('/edit_dosen', 'Admin\Dosen::edit');
+$routes->add('/add_dosen', 'Admin\Dosen::add');
 //Route Khusus Controller Admin-unit
 $routes->add('/data_unit', 'Admin\Unit::index');
 $routes->add('/update_data_unit', 'Admin\Unit::update_data_unit');
