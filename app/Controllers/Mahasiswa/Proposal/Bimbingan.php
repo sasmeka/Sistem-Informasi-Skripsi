@@ -43,7 +43,7 @@ class Bimbingan extends BaseController
             'progress_bimbingan' => $this->db->query("SELECT * FROM tb_bimbingan a LEFT JOIN tb_profil_tambahan b ON a.`from`=b.`id` WHERE (a.`from` = '" . $id . "' OR a.`to` = '" . $id . "') AND (a.`from` = '" . $how . "' OR a.`to` = '" . $how . "') AND kategori_bimbingan=1 ORDER BY create_at ASC")->getResult(),
         ];
         $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$how AND status_baca='belum dibaca' AND kategori_bimbingan=1");
-        return view('Mahasiswa/Proposal/pesan/bimbingan_proposal', $data);
+        return view('Mahasiswa/Proposal/Pesan/bimbingan_proposal', $data);
     }
     public function tambah()
     {
