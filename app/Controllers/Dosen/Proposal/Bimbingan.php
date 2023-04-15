@@ -83,6 +83,28 @@ class Bimbingan extends BaseController
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $nim dibaca ',now())");
         return view('Dosen/Proposal/bimbingan_proposal', $data);
     }
+    public function reload_m_dosen($nim)
+    {
+        $id = $nim;
+        $pembimbing = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . session()->get('ses_id') . "' AND nim='$nim'")->getResult();
+        $penguji = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . session()->get('ses_id') . "' AND nim='$nim'")->getResult();
+        if ($pembimbing != null) {
+            $sebagai = 'Pembimbing ' . $pembimbing[0]->sebagai;
+        } else {
+            $sebagai = 'Pembimbing ' . $penguji[0]->sebagai;
+        }
+        $data = [
+            'title' => 'Bimbingan Proposal',
+            'db' => $this->db,
+            'nim' => $id,
+            'sebagai' => $sebagai,
+            'data_mhs' => $this->db->query("SELECT * FROM tb_mahasiswa a LEFT JOIN tb_profil_tambahan b ON b.`id` = a.`nim` WHERE a.`nim` = $id")->getResult()[0],
+            'progress_bimbingan' => $this->db->query("SELECT * FROM tb_bimbingan a LEFT JOIN tb_profil_tambahan b ON a.`from`=b.`id` WHERE (a.`from` = '" . $id . "' OR a.`to` = '" . $id . "') AND (a.`from` = '" . session()->get('ses_id') . "' OR a.`to` = '" . session()->get('ses_id') . "') AND kategori_bimbingan=1 ORDER BY create_at ASC")->getResult(),
+        ];
+        $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$nim AND status_baca='belum dibaca' AND kategori_bimbingan=1");
+        $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $nim dibaca ',now())");
+        return view('Dosen/Proposal/Pesan/bimbingan_proposal', $data);
+    }
     public function tambah()
     {
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
@@ -95,20 +117,19 @@ class Bimbingan extends BaseController
         $berkas = $this->request->getFile('berkas');
         $name = $berkas->getRandomName();
 
-        $berkas_ext = $berkas->guessExtension();
-        $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
-        if (!in_array($berkas_ext, $ext_s)) {
-            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+        if ($berkas->getName() != '') {
+            $berkas_ext = $berkas->guessExtension();
+            $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
+            if (!in_array($berkas_ext, $ext_s)) {
+                session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
                 <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>');
-            return redirect()->back()->withInput();
-        }
-
-        if ($berkas->getName() != '') {
+                return redirect()->back()->withInput();
+            }
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("INSERT INTO tb_bimbingan (`from`,`to`,status_baca,keterangan,berkas,pokok_bimbingan,create_at,parent_id_bimbingan,kategori_bimbingan) VALUES('" . session()->get('ses_id') . "','$nim','belum dibaca','$keterangan','$name','$pokok_bimbingan',now(),'$id_bimbingan',1)");
                 session()->setFlashdata("message_bimbingan", '<div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -14,6 +14,9 @@
 	<!-- Title -->
 	<title> SISRI - <?= $title; ?></title>
 
+
+
+
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -85,10 +88,15 @@
 	<!--Internal  TelephoneInput css-->
 	<link rel="stylesheet" href="<?= base_url() ?>/assets/plugins/telephoneinput/telephoneinput.css">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"> -->
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script> -->
 
+	<script src="<?= base_url(); ?>/assets/js/jquery_reload.js"></script>
+	<script src="<?= base_url(); ?>/assets/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="<?= base_url(); ?>/assets/js/bootstrap-datepicker.js"></script>
+	<link href="<?= base_url() ?>/assets/css/bootstrap-datepicker.css" rel="stylesheet">
 	<style>
 		p.cs {
 			color: #dfb006;

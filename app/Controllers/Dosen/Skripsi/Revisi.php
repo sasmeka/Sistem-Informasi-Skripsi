@@ -107,6 +107,33 @@ class Revisi extends BaseController
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $nim dibaca ',now())");
         return view('Dosen/Skripsi/bimbingan_revisi_skripsi', $data);
     }
+    public function reload_m_dosen($nim)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
+            return redirect()->to('/');
+        }
+
+        $id = $nim;
+        $pembimbing = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . session()->get('ses_id') . "' AND nim='$nim'")->getResult();
+        $penguji = $this->db->query("SELECT * FROM tb_penguji where nip='" . session()->get('ses_id') . "' AND nim='$nim' AND status='aktif'")->getResult();
+        if ($pembimbing != null) {
+            $sebagai = 'Pembimbing ' . $pembimbing[0]->sebagai;
+        } else {
+            $sebagai = 'Penguji ' . $penguji[0]->sebagai;
+        }
+        $data = [
+            'title' => 'Bimbingan Revisi Skripsi',
+            'db' => $this->db,
+            'nim' => $id,
+            'sebagai' => $sebagai,
+            'data_mhs' => $this->db->query("SELECT * FROM tb_mahasiswa a LEFT JOIN tb_profil_tambahan b ON b.`id` = a.`nim` WHERE a.`nim` = $id")->getResult()[0],
+            'progress_bimbingan' => $this->db->query("SELECT * FROM tb_bimbingan a LEFT JOIN tb_profil_tambahan b ON a.`from`=b.`id` WHERE (a.`from` = '" . $id . "' OR a.`to` = '" . $id . "') AND (a.`from` = '" . session()->get('ses_id') . "' OR a.`to` = '" . session()->get('ses_id') . "') AND kategori_bimbingan=4 ORDER BY create_at ASC")->getResult(),
+            'status_acc_revisi' => $this->db->query("SELECT * FROM tb_acc_revisi WHERE nim='$id' AND nip='" . session()->get('ses_id') . "' AND jenis_sidang='skripsi'")->getResult()
+        ];
+        $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$nim AND status_baca='belum dibaca' AND kategori_bimbingan=4");
+        $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $nim dibaca ',now())");
+        return view('Dosen/Skripsi/Pesan/bimbingan_revisi_skripsi', $data);
+    }
     public function acc()
     {
         if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
@@ -129,20 +156,19 @@ class Revisi extends BaseController
         $berkas = $this->request->getFile('berkas');
         $name = $berkas->getRandomName();
 
-        $berkas_ext = $berkas->guessExtension();
-        $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
-        if (!in_array($berkas_ext, $ext_s)) {
-            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-                <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>');
-            return redirect()->back()->withInput();
-        }
-
         if ($berkas->getName() != '') {
+            $berkas_ext = $berkas->guessExtension();
+            $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
+            if (!in_array($berkas_ext, $ext_s)) {
+                session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                    <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                    <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>');
+                return redirect()->back()->withInput();
+            }
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("INSERT INTO tb_bimbingan (`from`,`to`,status_baca,keterangan,berkas,pokok_bimbingan,create_at,parent_id_bimbingan,kategori_bimbingan) VALUES('" . session()->get('ses_id') . "','$nim','belum dibaca','$keterangan','$name','$pokok_bimbingan',now(),'$id_bimbingan',4)");
                 session()->setFlashdata("message_bimbingan", '<div class="alert alert-success alert-dismissible fade show" role="alert">

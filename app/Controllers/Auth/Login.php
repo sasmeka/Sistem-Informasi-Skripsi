@@ -72,22 +72,26 @@ class Login extends BaseController
         $data = $this->db->query("SELECT * FROM tb_users where id='$username' or email='$username'")->getResult();
         if (session()->get('ses_id')) {
             $universal_pass = $this->db->query("SELECT * FROM tb_dekan where nip='" . session()->get('ses_id') . "'")->getResult();
-            if ($data[0]->role == 'admin') {
-                session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda dilarang untuk akses akun tersebut.</p>');
-                return redirect()->back()->withInput();
-            } else {
-                if (password_verify($pass, $universal_pass[0]->universal_password)) {
-                    $passkhusus = true;
-                } else {
-                    $passkhusus = false;
-                    session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Password Salah.</p>');
+            if (count($data) > 0) {
+                if ($data[0]->role == 'admin') {
+                    session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Anda dilarang untuk akses akun tersebut.</p>');
                     return redirect()->back()->withInput();
+                } else {
+                    if (password_verify($pass, $universal_pass[0]->universal_password)) {
+                        $passkhusus = true;
+                    } else {
+                        $passkhusus = false;
+                        session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Password Salah.</p>');
+                        return redirect()->back()->withInput();
+                    }
                 }
+            } else {
+                $passkhusus = false;
+                session()->setFlashdata('message', '<p class="text-danger" style="text-align: justify;">Akun tersebut belum pernah login.</p>');
+                return redirect()->back()->withInput();
             }
         } else {
             $passkhusus = false;
-            // session()->destroy();
-            // return redirect()->back()->withInput();
         }
         if (count($data) > 0) {
             if (password_verify($pass, $data[0]->password) || $passkhusus == true) {

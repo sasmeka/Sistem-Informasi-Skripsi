@@ -30,6 +30,23 @@ class Bimbingan extends BaseController
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $how dibaca ',now())");
         return view('Mahasiswa/Skripsi/Bimbingan_Skripsi', $data);
     }
+    public function reload_m($how)
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
+            return redirect()->to('/');
+        }
+        $id = session()->get('ses_id');
+        $data = [
+            'title' => 'Bimbingan Skripsi',
+            'how' => $how,
+            'db' => $this->db,
+            'dosen_pembimbing' => $this->db->query("SELECT * FROM tb_pengajuan_pembimbing a LEFT JOIN tb_dosen b ON a.`nip`=b.`nip` LEFT JOIN tb_profil_tambahan c ON a.`nip`=c.`id` WHERE a.nim='" . $id . "' AND a.status_pengajuan='diterima'")->getResult(),
+            'progress_bimbingan' => $this->db->query("SELECT * FROM tb_bimbingan a LEFT JOIN tb_profil_tambahan b ON a.`from`=b.`id` WHERE (a.`from` = '" . $id . "' OR a.`to` = '" . $id . "') AND (a.`from` = '" . $how . "' OR a.`to` = '" . $how . "') AND kategori_bimbingan=3 ORDER BY create_at ASC")->getResult(),
+        ];
+        $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$how AND status_baca='belum dibaca' AND kategori_bimbingan=3");
+        $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $how dibaca ',now())");
+        return view('Mahasiswa/Skripsi/Pesan/Bimbingan_Skripsi', $data);
+    }
     public function tambah()
     {
         if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
@@ -41,20 +58,19 @@ class Bimbingan extends BaseController
         $pembimbing = $this->request->getPost('pembimbing');
         $name = $berkas->getRandomName();
 
-        $berkas_ext = $berkas->guessExtension();
-        $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
-        if (!in_array($berkas_ext, $ext_s)) {
-            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-                <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>');
-            return redirect()->back()->withInput();
-        }
-
         if ($berkas->getName() != '') {
+            $berkas_ext = $berkas->guessExtension();
+            $ext_s = ['png', 'jpg', 'zip', 'pdf', 'doc', 'csv', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpeg'];
+            if (!in_array($berkas_ext, $ext_s)) {
+                session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                    <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                    <span class="alert-inner--text"><strong>Gagal!</strong> File extention harus .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .csv, .jpg, .jpeg, .png, .zip</span>
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>');
+                return redirect()->back()->withInput();
+            }
             if ($berkas->move(WRITEPATH . '../public/berkas/', $name)) {
                 $this->db->query("INSERT INTO tb_bimbingan (`from`,`to`,status_baca,keterangan,berkas,pokok_bimbingan,create_at,kategori_bimbingan) VALUES('" . session()->get('ses_id') . "','$pembimbing','belum dibaca','$keterangan','$name','$pokok_bimbingan',now(),3)");
                 $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan','Bimbingan kepada pembimbing $pembimbing',now())");
