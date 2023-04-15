@@ -159,32 +159,32 @@ class Dosen extends BaseController
                 $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
                 $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
                 $this->db->query("UPDATE tb_users SET id='$nip',idunit='$idunit' WHERE id='" . $dataemail[0]->id . "'");
-                $jumlah_p1 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '1' AND status_pengajuan='diterima'")->getResult());
-                $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
-                $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
-                $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
-                if (count($data_jum_bimbingan_p1) > 0) {
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
-                    foreach ($data_jum_bimbingan_p1 as $kp1) {
-                        if ($kp1->jumlah == $jumlah_p1) {
-                            $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
-                            break;
-                        }
+            }
+            $jumlah_p1 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '1' AND status_pengajuan='diterima'")->getResult());
+            $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
+            $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
+            $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
+            if (count($data_jum_bimbingan_p1) > 0) {
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
+                foreach ($data_jum_bimbingan_p1 as $kp1) {
+                    if ($kp1->jumlah == $jumlah_p1) {
+                        $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
+                        break;
                     }
-                } else {
-                    $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p1','pembimbing 1','10')");
                 }
-                if (count($data_jum_bimbingan_p2) > 0) {
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
-                    foreach ($data_jum_bimbingan_p2 as $kp2) {
-                        if ($kp2->jumlah == $jumlah_p2) {
-                            $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 2' AND id_jumlah_pembimbing!='" . $kp2->id_jumlah_pembimbing . "'");
-                            break;
-                        }
+            } else {
+                $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p1','pembimbing 1','10')");
+            }
+            if (count($data_jum_bimbingan_p2) > 0) {
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
+                foreach ($data_jum_bimbingan_p2 as $kp2) {
+                    if ($kp2->jumlah == $jumlah_p2) {
+                        $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 2' AND id_jumlah_pembimbing!='" . $kp2->id_jumlah_pembimbing . "'");
+                        break;
                     }
-                } else {
-                    $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p2','pembimbing 2','10')");
                 }
+            } else {
+                $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p2','pembimbing 2','10')");
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
@@ -247,32 +247,32 @@ class Dosen extends BaseController
                 $this->db->query("UPDATE tb_perizinan_sidang SET nip='$nip' WHERE nip='" . $dataemail[0]->id . "'");
                 $this->db->query("UPDATE tb_profil_tambahan SET id='$nip' WHERE id='" . $dataemail[0]->id . "'");
                 $this->db->query("UPDATE tb_users SET id='$nip',idunit='$idunit' WHERE id='" . $dataemail[0]->id . "'");
-                $jumlah_p1 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '1' AND status_pengajuan='diterima'")->getResult());
-                $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
-                $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
-                $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
-                if (count($data_jum_bimbingan_p1) > 0) {
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
-                    foreach ($data_jum_bimbingan_p1 as $kp1) {
-                        if ($kp1->jumlah == $jumlah_p1) {
-                            $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
-                            break;
-                        }
+            }
+            $jumlah_p1 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '1' AND status_pengajuan='diterima'")->getResult());
+            $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
+            $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
+            $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
+            if (count($data_jum_bimbingan_p1) > 0) {
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
+                foreach ($data_jum_bimbingan_p1 as $kp1) {
+                    if ($kp1->jumlah == $jumlah_p1) {
+                        $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
+                        break;
                     }
-                } else {
-                    $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p1','pembimbing 1','10')");
                 }
-                if (count($data_jum_bimbingan_p2) > 0) {
-                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
-                    foreach ($data_jum_bimbingan_p2 as $kp2) {
-                        if ($kp2->jumlah == $jumlah_p2) {
-                            $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 2' AND id_jumlah_pembimbing!='" . $kp2->id_jumlah_pembimbing . "'");
-                            break;
-                        }
+            } else {
+                $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p1','pembimbing 1','10')");
+            }
+            if (count($data_jum_bimbingan_p2) > 0) {
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
+                foreach ($data_jum_bimbingan_p2 as $kp2) {
+                    if ($kp2->jumlah == $jumlah_p2) {
+                        $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 2' AND id_jumlah_pembimbing!='" . $kp2->id_jumlah_pembimbing . "'");
+                        break;
                     }
-                } else {
-                    $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p2','pembimbing 2','10')");
                 }
+            } else {
+                $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai,kuota) VALUES ('$nip','$jumlah_p2','pembimbing 2','10')");
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
