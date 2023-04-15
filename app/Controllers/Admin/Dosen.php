@@ -188,7 +188,7 @@ class Dosen extends BaseController
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
-        return redirect()->to('/data_dosen');
+        return redirect()->back()->withInput();
     }
     public function update_data_dosen_perprodi($idunitnew)
     {
@@ -276,7 +276,7 @@ class Dosen extends BaseController
             }
         }
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','insert or update','Update Data Dosen',now())");
-        return redirect()->to('/data_dosen');
+        return redirect()->back()->withInput();
     }
     public function delete()
     {
