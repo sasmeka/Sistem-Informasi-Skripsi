@@ -38,7 +38,9 @@ class Ajukan_Topik extends BaseController
         }
         //------End keberadaan nip dosen-------
 
-        $data_dosen = $this->db->query("SELECT a.nip as nip_dos,a.*,b.*,c.* FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` LEFT JOIN tb_jumlah_pembimbing c ON a.`nip`=c.`nip` WHERE a.idunit IN (SELECT idunit FROM tb_unit WHERE parentunit=(SELECT parentunit FROM tb_unit WHERE idunit='$idunit')) AND a.`nip` NOT IN (SELECT nip FROM tb_pengajuan_pembimbing WHERE nim='" . session()->get('ses_id') . "' AND (status_pengajuan='diterima' OR status_pengajuan='menunggu')) order by a.nama")->getResult();
+        // $data_dosen = $this->db->query("SELECT a.nip as nip_dos,a.*,b.*,c.* FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` LEFT JOIN tb_jumlah_pembimbing c ON a.`nip`=c.`nip` WHERE a.idunit IN (SELECT idunit FROM tb_unit WHERE parentunit=(SELECT parentunit FROM tb_unit WHERE idunit='$idunit')) AND a.`nip` NOT IN (SELECT nip FROM tb_pengajuan_pembimbing WHERE nim='" . session()->get('ses_id') . "' AND (status_pengajuan='diterima' OR status_pengajuan='menunggu')) order by a.nama")->getResult();
+        $data_dosen_p1 = $this->db->query("SELECT a.nip AS nip_dos,a.*,b.* FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.idunit='$idunit' AND a.`nip` NOT IN (SELECT nip FROM tb_pengajuan_pembimbing WHERE nim='" . session()->get('ses_id') . "' AND (status_pengajuan='diterima' OR status_pengajuan='menunggu')) ORDER BY a.nama")->getResult();
+        $data_dosen_p2 = $this->db->query("SELECT a.nip as nip_dos,a.*,b.* FROM tb_dosen a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.idunit IN (SELECT idunit FROM tb_unit WHERE parentunit=(SELECT parentunit FROM tb_unit WHERE idunit='$idunit')) AND a.`nip` NOT IN (SELECT nip FROM tb_pengajuan_pembimbing WHERE nim='" . session()->get('ses_id') . "' AND (status_pengajuan='diterima' OR status_pengajuan='menunggu')) order by a.nama")->getResult();
         $data_pengajuan_pembimbing_1 = $this->db->query("SELECT * FROM tb_dosen a LEFT JOIN tb_pengajuan_pembimbing b ON a.`nip`=b.`nip` LEFT JOIN tb_unit c ON a.`idunit`=c.`idunit` WHERE b.nim='" . session()->get('ses_id') . "' AND b.sebagai='1'")->getResult();
         $data_pengajuan_pembimbing_2 = $this->db->query("SELECT * FROM tb_dosen a LEFT JOIN tb_pengajuan_pembimbing b ON a.`nip`=b.`nip` LEFT JOIN tb_unit c ON a.`idunit`=c.`idunit` WHERE b.nim='" . session()->get('ses_id') . "' AND b.sebagai='2'")->getResult();
         $data_topik = $this->db->query("SELECT * FROM tb_topik where idunit='$idunit'")->getResult();
@@ -49,7 +51,9 @@ class Ajukan_Topik extends BaseController
         $data_pengajuan_topik = $this->db->query("SELECT * FROM tb_pengajuan_topik where nim='" . session()->get('ses_id') . "'")->getResult();
         $data = [
             'title' => 'Ajukan Topik Skripsi',
-            'dosen' => $data_dosen,
+            // 'dosen' => $data_dosen,
+            'dosen_p1' => $data_dosen_p1,
+            'dosen_p2' => $data_dosen_p2,
             'pengajuan_pem1' => $data_pengajuan_pembimbing_1,
             'pengajuan_pem2' => $data_pengajuan_pembimbing_2,
             'ststbl1' => $ststbl1,
