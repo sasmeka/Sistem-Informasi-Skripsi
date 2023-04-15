@@ -28,7 +28,7 @@ class Bimbingan extends BaseController
         ];
         $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$how AND status_baca='belum dibaca' AND kategori_bimbingan=3");
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $how dibaca ',now())");
-        return view('Mahasiswa/Skripsi/Bimbingan_Skripsi', $data);
+        return view('Mahasiswa/Skripsi/simbingan_skripsi', $data);
     }
     public function reload_m($how)
     {
@@ -45,7 +45,7 @@ class Bimbingan extends BaseController
         ];
         $this->db->query("UPDATE tb_bimbingan SET status_baca='dibaca' WHERE `from`=$how AND status_baca='belum dibaca' AND kategori_bimbingan=3");
         $this->db->query("INSERT INTO tb_log (user,`action`,`log`,date_time) VALUES ('" . session()->get('ses_id') . "','Bimbingan Dibaca','Bimbingan $how dibaca ',now())");
-        return view('Mahasiswa/Skripsi/Pesan/Bimbingan_Skripsi', $data);
+        return view('Mahasiswa/Skripsi/Pesan/simbingan_skripsi', $data);
     }
     public function tambah()
     {
