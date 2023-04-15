@@ -99,7 +99,7 @@ use CodeIgniter\Images\Image;
                                                     <option label="Pilih Pembimbing 1" selected disabled>Pilih Pembimbing 1
                                                     </option>
                                                     <?php foreach ($dosen as $key1) {
-                                                        if ($key1->idunit == session()->get('ses_idunit') && $key1->sebagai == 'pembimbing 1') {
+                                                        if ($key1->idunit == session()->get('ses_idunit') && ($key1->sebagai == 'pembimbing 1' || $key1->sebagai == NULL)) {
                                                     ?>
                                                             <option value="<?= $key1->nip_dos ?>">
                                                                 <?= $key1->namaunit . ' - ' . $key1->nip_dos . ' - ' . $key1->gelardepan . ' ' . $key1->nama . ', ' . $key1->gelarbelakang ?>
@@ -180,7 +180,7 @@ use CodeIgniter\Images\Image;
                                                     <option label="Pilih Pembimbing 1" selected disabled>Pilih Pembimbing 2
                                                     </option>
                                                     <?php foreach ($dosen as $key2) {
-                                                        if ($key2->sebagai == 'pembimbing 2') {
+                                                        if ($key2->sebagai == 'pembimbing 2' || $key2->sebagai == NULL) {
                                                     ?>
                                                             <option value="<?= $key2->nip_dos ?>">
                                                                 <?= $key2->namaunit . ' - ' . $key2->nip_dos . ' - ' . $key2->gelardepan . ' ' . $key2->nama . ', ' . $key2->gelarbelakang ?>

@@ -386,6 +386,8 @@ class Dosen extends BaseController
             $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
             $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
             $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
+            $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
+            $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
             foreach ($data_jum_bimbingan_p1 as $kp1) {
                 if ($kp1->jumlah == $jumlah_p1) {
                     $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
@@ -518,6 +520,8 @@ class Dosen extends BaseController
                 $jumlah_p2 = count($this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE nip = '$nip' AND sebagai = '2' AND status_pengajuan='diterima'")->getResult());
                 $data_jum_bimbingan_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 1'")->getResult();
                 $data_jum_bimbingan_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip = '$nip' AND sebagai = 'pembimbing 2'")->getResult();
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p1' WHERE nip='$nip' AND sebagai='pembimbing 1'");
+                $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah_p2' WHERE nip='$nip' AND sebagai='pembimbing 2'");
                 foreach ($data_jum_bimbingan_p1 as $kp1) {
                     if ($kp1->jumlah == $jumlah_p1) {
                         $this->db->query("DELETE FROM tb_jumlah_pembimbing WHERE nip='$nip' AND sebagai='pembimbing 1' AND id_jumlah_pembimbing!='" . $kp1->id_jumlah_pembimbing . "'");
