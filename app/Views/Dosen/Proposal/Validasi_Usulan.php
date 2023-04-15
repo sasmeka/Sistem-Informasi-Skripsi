@@ -41,9 +41,9 @@ use CodeIgniter\Images\Image;
                                                 <div class="tab-pane active" id="menunggu">
                                                     <div class="row">
                                                         <div class="col-xl-12">
-                                                            Kuota Dosen Pembimbing 1 : Terisi <?= count($jumlah_pembimbing_p1) == 0 ? '0' : $jumlah_pembimbing_p1[0]->jumlah . ' dari ' . $jumlah_pembimbing_p1[0]->kuota ?>
+                                                            Kuota Dosen Pembimbing 1 : Terisi <?= count($jumlah_pembimbing_p1) == 0 ? '0 dari 10' : $jumlah_pembimbing_p1[0]->jumlah . ' dari ' . $jumlah_pembimbing_p1[0]->kuota ?>
                                                             <br>
-                                                            Kuota Dosen Pembimbing 2 : Terisi <?= count($jumlah_pembimbing_p2) == 0 ? '0' : $jumlah_pembimbing_p2[0]->jumlah . ' dari ' . $jumlah_pembimbing_p2[0]->kuota ?>
+                                                            Kuota Dosen Pembimbing 2 : Terisi <?= count($jumlah_pembimbing_p2) == 0 ? '0 dari 10' : $jumlah_pembimbing_p2[0]->jumlah . ' dari ' . $jumlah_pembimbing_p2[0]->kuota ?>
                                                             <br><br>
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped mg-b-0 text-md-nowrap" id="validasitable1">
