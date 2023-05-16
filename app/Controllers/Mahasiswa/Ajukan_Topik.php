@@ -166,7 +166,7 @@ class Ajukan_Topik extends BaseController
                 $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai) VALUES ('$nip','0','pembimbing 1')");
                 $pem1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . $nip . "' AND sebagai='pembimbing 1' limit 1")->getResult();
             }
-            if ($pem1[0]->jumlah >= 10) {
+            if ($pem1[0]->jumlah >= $pem1[0]->kuota) {
                 session()->setFlashdata('message_pem1', '
                     <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
@@ -212,7 +212,7 @@ class Ajukan_Topik extends BaseController
                 $this->db->query("INSERT INTO tb_jumlah_pembimbing (nip,jumlah,sebagai) VALUES ('$nip','0','pembimbing 2')");
                 $pem2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . $nip . "' AND sebagai='pembimbing 2' limit 1")->getResult();
             }
-            if ($pem2[0]->jumlah >= 10) {
+            if ($pem2[0]->jumlah >= $pem2[0]->kuota) {
                 session()->setFlashdata('message_pem2', '
                     <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                 <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
