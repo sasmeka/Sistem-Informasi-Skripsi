@@ -44,6 +44,12 @@ use CodeIgniter\Images\Image;
                                         ?>
                                     </select>
                                 </div>
+                                <div class="form-group mb-2 mx-2" style="width: 30%;">
+                                    <select class="form-control  select2" name="jenis_file">
+                                        <option selected value="pdf">PDF</option>
+                                        <option value="excel">EXCEL</option>
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-print"></i></button>
                             </form>
                             <hr>

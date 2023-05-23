@@ -203,6 +203,7 @@ $routes->add('/proses_validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_S
 //Route Khusus Controller Koorprodi-Nilai
 $routes->add('/daftar_nilai', 'Korprodi\Nilai::index');
 $routes->add('/export_nilai', 'Korprodi\Nilai::export');
+$routes->get('/export_nilai_pdf/(:any)/(:any)', 'Korprodi\Nilai::export_pdf/$1/$2');
 //Route Khusus Controller Koorprodi-Data dosesn
 $routes->add('/data_dosen_koorprodi', 'Korprodi\Data_Dosen::index');
 $routes->add('/update_kuota_dosen', 'Korprodi\Data_Dosen::update');

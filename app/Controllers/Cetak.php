@@ -430,8 +430,8 @@ class Cetak extends BaseController
         $idunit = session()->get('ses_idunit');
         $date1 = $this->request->getPost('start');
         $date2 = $this->request->getPost('end');
-        $jenis_sidang = $this->request->getPost('jenis_sidang');
-        if ($jenis_sidang == 'pdf') {
+        $jenis_file = $this->request->getPost('jenis_file');
+        if ($jenis_file == 'pdf') {
             return redirect()->to("hasil_dosen/$idunit/$date1/$date2");
         } else {
             return redirect()->to("hasil_dosen_excel/$idunit/$date1/$date2");
