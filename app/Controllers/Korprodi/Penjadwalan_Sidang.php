@@ -193,4 +193,53 @@ class Penjadwalan_sidang extends BaseController
             return view('Korprodi/data_pendaftar_sidang', $data);
         }
     }
+    public function direct_cetak_pendaftar()
+    {
+        if (session()->get('ses_id') == '' || session()->get('ses_login') == 'mahasiswa') {
+            return redirect()->to('/');
+        }
+        $idunit = session()->get('ses_idunit');
+        $id_jadwal = $this->request->getPost('id_jadwal');
+        $date1 = $this->request->getPost('start');
+        $date2 = $this->request->getPost('end');
+        $jenis_file = $this->request->getPost('jenis_file');
+        if ($date1 == '') {
+            $date1 = 'semua';
+        }
+        if ($date2 == '') {
+            $date2 = 'semua';
+        }
+        if ($jenis_file == 'pdf') {
+            if ($date1 == 'semua') {
+                if ($date2 == 'semua') {
+                    return redirect()->to("cetak_pendaftar/$id_jadwal/semua/semua");
+                } else {
+                    session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> Tentukan tanggal mulai & akhir.</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+                    return redirect()->back()->withInput();
+                }
+            } else {
+                if ($date2 == 'semua') {
+                    session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> Tentukan tanggal mulai & akhir.</span>
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+                    return redirect()->back()->withInput();
+                } else {
+                    return redirect()->to("cetak_pendaftar/$id_jadwal/$date1/$date2");
+                }
+            }
+        } else {
+            // return redirect()->to("hasil_dosen_excel/$idunit/$date1/$date2");
+            return "EXCEL";
+        }
+    }
 }

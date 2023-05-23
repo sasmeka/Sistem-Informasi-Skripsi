@@ -12,15 +12,49 @@ use CodeIgniter\Images\Image;
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <h4 class="card-title mg-b-0">Data Pendaftar Sidang</h4>
-                        <i class="mdi mdi-dots-horizontal text-gray"></i>
                         <div>
-                            <a class="btn btn-primary btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/semua"><i class="fa fa-print"></i> Semua</a>
-                            <a class="btn btn-success btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/terjadwal"><i class="fa fa-print"></i> Terjadwal</a>
+                            <i class="mdi mdi-dots-horizontal text-gray"></i>
+                            <!-- <a class="btn btn-primary btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/semua"><i class="fa fa-print"></i> Semua</a>
+                            <a class="btn btn-success btn-sm" href="<?= base_url() ?>cetak_pendaftar/<?= $id_jadwal ?>/terjadwal"><i class="fa fa-print"></i> Terjadwal</a> -->
                         </div>
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2">Data pendaftar seminar proposal dan sidang skripsi</a></p>
+                    <hr>
+                    <?= session()->getFlashdata('message') ?>
+                    <form action="<?= base_url() ?>direct_cetak_pendaftar" method="POST" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
+                        <div class="row row-sm">
+                            <input class="form-control" name="idunit" type="hidden">
+                            <input class="form-control" name="id_jadwal" type="hidden" value="<?= $id_jadwal ?>">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="form-label">Tanggal Mulai Waktu Sidang</label>
+                                    <input class="form-control" name="start" type="date">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="form-label">Tanggal Akhir Waktu Sidang</label>
+                                    <input class="form-control" name="end" type="date">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="form-label">Jenis File</label>
+                                    <select class="form-control select2" name="jenis_file">
+                                        <option value="pdf" selected>PDF</option>
+                                        <option value="excel">Excel</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-3"><button class="btn btn-success pd-x-20 mt-4" type="submit"><i class="fa fa-print"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
                 </div>
-                <div class="row mt-3">
+                <div class="row">
                     <div class="col">
                         <div class="card-body">
                             <div class="table-responsive">

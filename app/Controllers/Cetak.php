@@ -374,18 +374,29 @@ class Cetak extends BaseController
         $dompdf->stream($filename, array('Attachment' => false));
         exit();
     }
-    public function pendaftar($id, $jenis)
+    public function pendaftar($id, $date1, $date2)
     {
-        $link = base_url() . "cetak_pendaftar/$id/$jenis";
+        $link = base_url() . "cetak_pendaftar/$id/$date1/$date2";
         $qr_link = $this->qr->cetakqr($link);
         $data_jadwal = $this->db->query("SELECT * FROM tb_jadwal_sidang a LEFT JOIN tb_unit b ON a.`idunit`=b.`idunit` WHERE a.`id_jadwal`='$id'")->getResult();
+        if ($date1 == 'semua') {
+            if ($date2 == 'semua') {
+                $data_pendaftar = $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_jadwal='$id'")->getResult();
+            } else {
+            }
+        } else {
+            if ($date2 == 'semua') {
+            } else {
+                $data_pendaftar = $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_jadwal='$id' AND (waktu_sidang BETWEEN '$date1' AND ('$date2' + INTERVAL 1 DAY))")->getResult();
+            }
+        }
         $data = [
             'baseurl' => base_url(),
             'title' => 'Data Pendaftar Sidang',
             'db' => $this->db,
             'id_jadwal' => $id,
-            'jenis' => $jenis,
-            'data_pendaftar' => $this->db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_jadwal='$id'")->getResult(),
+            'jenis' => 'semua',
+            'data_pendaftar' => $data_pendaftar,
             'data_jadwal' => $data_jadwal,
             'namaunit' => $data_jadwal[0]->namaunit,
             'qr_link' => $qr_link,

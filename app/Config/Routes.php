@@ -197,6 +197,7 @@ $routes->add('/add_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::add');
 $routes->add('/del_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::del');
 $routes->add('/upd_jadwal_sidang', 'Korprodi\Penjadwalan_Sidang::upd');
 $routes->add('/data_pendaftar', 'Korprodi\Penjadwalan_Sidang::data_pendaftar');
+$routes->add('/direct_cetak_pendaftar', 'Korprodi\Penjadwalan_Sidang::direct_cetak_pendaftar');
 //Route Khusus Controller Korprodi-Validasi Daftar Seminar
 $routes->add('/validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar::index');
 $routes->add('/proses_validasi_daftar_seminar_koor', 'Korprodi\Validasi_Daftar_Seminar::validasi');
@@ -214,7 +215,9 @@ $routes->get('/form_bimbingan_proposal/(:any)/(:any)', 'Cetak::form_bimbingan_pr
 $routes->get('/berita_acara_proposal/(:any)', 'Cetak::berita_acara_proposal/$1');
 $routes->get('/form_bimbingan_skripsi/(:any)/(:any)', 'Cetak::form_bimbingan_skripsi/$1/$2');
 $routes->get('/berita_acara_skripsi/(:any)', 'Cetak::berita_acara_skripsi/$1');
-$routes->get('/cetak_pendaftar/(:any)/(:any)', 'Cetak::pendaftar/$1/$2');
+
+$routes->get('/cetak_pendaftar/(:any)/(:any)/(:any)', 'Cetak::pendaftar/$1/$2/$3');
+
 $routes->add('/direct_hasil_dosen', 'Cetak::direct_hasil_dosen');
 $routes->get('/hasil_dosen/(:any)/(:any)', 'Cetak::hasil_dosen/$1/$2');
 $routes->get('/hasil_dosen_excel/(:any)/(:any)', 'Cetak::hasil_dosen_excel/$1/$2');

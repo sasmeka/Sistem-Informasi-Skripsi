@@ -68,7 +68,7 @@
             <?php
             $no = 1;
             foreach ($tb_dosen as $key) {
-                $data_mhs = $db->query("SELECT * FROM tb_nilai a LEFT JOIN tb_mahasiswa b ON a.`nim`=b.`nim` WHERE nip='$key->nip'")->getResult();
+                $data_mhs = $db->query("SELECT * FROM tb_nilai a LEFT JOIN tb_mahasiswa b ON a.`nim`=b.`nim` WHERE nip='$key->nip' AND (create_at BETWEEN '$date1' AND ('$date2'+ INTERVAL 1 DAY))")->getResult();
             ?>
 
                 <?php
