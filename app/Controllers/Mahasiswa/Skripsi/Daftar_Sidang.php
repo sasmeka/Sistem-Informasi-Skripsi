@@ -131,15 +131,15 @@ class Daftar_Sidang extends BaseController
                     'mime_in' => 'File Extention Harus Berupa pdf'
                 ]
 
-            ],
-            'berkas_turnitin' => [
-                'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
-                'errors' => [
-                    'uploaded' => 'Berkas turnitin wajib diisi.',
-                    'mime_in' => 'File Extention Harus Berupa pdf'
-                ]
-
-            ],
+            ]
+            // ,
+            // 'berkas_turnitin' => [
+            //     'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
+            //     'errors' => [
+            //         'uploaded' => 'Berkas turnitin wajib diisi.',
+            //         'mime_in' => 'File Extention Harus Berupa pdf'
+            //     ]
+            // ]
         ])) {
             session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
