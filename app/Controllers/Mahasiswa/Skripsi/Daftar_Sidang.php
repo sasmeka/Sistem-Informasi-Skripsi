@@ -123,35 +123,32 @@ class Daftar_Sidang extends BaseController
         if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
             return redirect()->to('/');
         }
-        if (!$this->validate([
-            'berkas_proposal' => [
-                'rules' => 'uploaded[berkas_proposal]|mime_in[berkas_proposal,application/pdf]',
-                'errors' => [
-                    'uploaded' => 'Berkas skripsi wajib diisi.',
-                    'mime_in' => 'File Extention Harus Berupa pdf'
-                ]
+        // if (!$this->validate([
+        //     'berkas_proposal' => [
+        //         'rules' => 'uploaded[berkas_proposal]|mime_in[berkas_proposal,application/pdf]',
+        //         'errors' => [
+        //             'uploaded' => 'Berkas skripsi wajib diisi.',
+        //             'mime_in' => 'File Extention Harus Berupa pdf'
+        //         ]
 
-            ],
-            'berkas_turnitin' => [
-                'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
-                'errors' => [
-                    'uploaded' => 'Berkas turnitin wajib diisi.',
-                    'mime_in' => 'File Extention Harus Berupa pdf'
-                ]
-            ]
-        ])) {
-            session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-            <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-            <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
-            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>');
-            return redirect()->back()->withInput();
-        }
-        if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
-            return redirect()->to('/');
-        }
+        //     ],
+        //     'berkas_turnitin' => [
+        //         'rules' => 'uploaded[berkas_turnitin]|mime_in[berkas_turnitin,application/pdf]',
+        //         'errors' => [
+        //             'uploaded' => 'Berkas turnitin wajib diisi.',
+        //             'mime_in' => 'File Extention Harus Berupa pdf'
+        //         ]
+        //     ]
+        // ])) {
+        //     session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+        //     <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+        //     <span class="alert-inner--text"><strong>Gagal!</strong> ' . $this->validator->listErrors() . '</span>
+        //     <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        //         <span aria-hidden="true">×</span>
+        //     </button>
+        // </div>');
+        //     return redirect()->back()->withInput();
+        // }
         $id_jadwal = $this->request->getPost('id_jadwal');
         $berkas = $this->request->getFile('berkas_proposal');
         $name = $berkas->getRandomName();
