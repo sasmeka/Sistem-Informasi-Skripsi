@@ -13,4 +13,8 @@ class Home extends BaseController
     {
         return view('perbaikan');
     }
+    public function phpinfo()
+    {
+        return phpinfo();
+    }
 }

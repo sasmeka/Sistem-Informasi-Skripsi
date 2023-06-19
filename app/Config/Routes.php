@@ -44,6 +44,7 @@ $routes->setAutoRoute(false);
 // $routes->add('/', 'Home::perbaikan');
 
 $routes->add('/', 'Auth\Login::index');
+$routes->add('/php-info', 'Home::phpinfo');
 $routes->add('/loginkhusus/(:any)', 'Auth\Login::khusus/$1');
 $routes->add('/proses_login', 'Auth\Login::proses_login');
 $routes->add('/redirect', 'Auth\Login::redirect');
