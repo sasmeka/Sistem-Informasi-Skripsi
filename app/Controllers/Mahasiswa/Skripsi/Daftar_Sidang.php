@@ -123,6 +123,9 @@ class Daftar_Sidang extends BaseController
         if (session()->get('ses_id') == '' || session()->get('ses_login') != 'mahasiswa') {
             return redirect()->to('/');
         }
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        ini_set('max_input_time', 0);
         if (!$this->validate([
             'berkas_proposal' => [
                 'rules' => 'uploaded[berkas_proposal]|mime_in[berkas_proposal,application/pdf]',

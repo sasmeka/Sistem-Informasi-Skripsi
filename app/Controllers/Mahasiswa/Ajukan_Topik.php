@@ -72,6 +72,9 @@ class Ajukan_Topik extends BaseController
         $id_topik = $this->request->getPost('topik');
         $judul = $this->request->getPost('judul_topik');
         $berkas = $this->request->getFile('berkas');
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        ini_set('max_input_time', 0);
         if (!$this->validate([
             'topik' => [
                 'rules' => 'required',
