@@ -72,11 +72,11 @@ use CodeIgniter\Images\Image;
                                                                                     <?php
                                                                                     if (!empty($sidang)) {
                                                                                         if ($sidang[0]->hasil_sidang == '1') {
-                                                                                            echo "Disetuji tanpa perbaikan";
+                                                                                            echo "Lulus tanpa perbaikan";
                                                                                         } elseif ($sidang[0]->hasil_sidang == '2') {
-                                                                                            echo "Disetuji dengan perbaikan";
+                                                                                            echo "Lulus dengan perbaikan";
                                                                                         } elseif ($sidang[0]->hasil_sidang == '3') {
-                                                                                            echo "Tidak disetujui/mengulang";
+                                                                                            echo "Tidak lulus/mengulang";
                                                                                         } else {
                                                                                             echo '-';
                                                                                         }
@@ -125,13 +125,13 @@ use CodeIgniter\Images\Image;
                                                                                                 <div class="form-group">
                                                                                                     <label for="exampleInputEmail1">Status Ujian Skripsi</label>
                                                                                                     <label class="rdiobox mb-1">
-                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '1' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="1"><span>Disetuji tanpa perbaikan</span>
+                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '1' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="1"><span>Lulus tanpa perbaikan</span>
                                                                                                     </label>
                                                                                                     <label class="rdiobox mb-1">
-                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '2' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="2"><span>Disetujui dengan perbaikan</span>
+                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '2' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="2"><span>Lulus dengan perbaikan</span>
                                                                                                     </label>
                                                                                                     <label class="rdiobox">
-                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '3' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="3"><span>Tidak disetujui/mengulang</span>
+                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '3' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="3"><span>Tidak lulus/mengulang</span>
                                                                                                     </label>
                                                                                                 </div>
                                                                                             </div>

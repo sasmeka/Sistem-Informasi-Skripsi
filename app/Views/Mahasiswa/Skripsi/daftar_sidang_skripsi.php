@@ -202,85 +202,88 @@ use CodeIgniter\Images\Image;
                                         <tbody id='show_data2'>
                                             <?php
                                             date_default_timezone_set("Asia/Jakarta");
-                                            $no = 1;
-                                            foreach ($data_jadwal as $key) {
-                                                if (time() <= strtotime($key->expire)) {
+                                            $cek_status_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang a LEFT JOIN tb_jadwal_sidang b ON a.`id_jadwal`=b.`id_jadwal` WHERE b.`jenis_sidang`='sidang skripsi' AND a.`nim`='" . session()->get('ses_id') . "' AND (hasil_sidang!=3 AND hasil_sidang IS NOT NULL)")->getResult();;
+                                            if (count($cek_status_sidang > 0)) {
+                                                $no = 1;
+                                                foreach ($data_jadwal as $key) {
+                                                    if (time() <= strtotime($key->expire)) {
                                             ?>
-                                                    <tr>
-                                                        <th scope="row"><?= $no ?></th>
-                                                        <td scope="row"><?= $key->periode ?></td>
-                                                        <td scope="row"><?= $key->open ?></td>
-                                                        <td scope="row"><?= $key->expire ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;">
-                                                            <input type="hidden" name="id_bimbingan" value="" />
-                                                            <?php
-                                                            $acc_pem1 = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='pembimbing 1' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
-                                                            $acc_pem2 = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='pembimbing 2' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
-                                                            $acc_kor = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='koordinator' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
-                                                            $cek_pendaftar_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang WHERE nim='" . session()->get('ses_id') . "' AND id_jadwal='" . $key->id_jadwal . "' ")->getResult();
-                                                            $acc_seminar_penguji1 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 1'")->getResult();
-                                                            $acc_seminar_penguji2 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 2'")->getResult();
-                                                            $acc_seminar_penguji3 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 3'")->getResult();
-                                                            if (time() < strtotime($key->open)) {
-                                                                echo "<a class='text-danger'>Belum Dibuka</a>";
-                                                            } elseif (time() >= strtotime($key->open)) {
-                                                                if ($acc_seminar_penguji1 > 0 && $acc_seminar_penguji2 > 0 && $acc_seminar_penguji3 > 0) {
-                                                                    if (count($acc_pem1) > 0 && count($acc_pem2) > 0) {
-                                                                        if (count($cek_pendaftar_sidang) > 0) {
-                                                                            echo "<a class='text-success'>Telah Mendaftar</a>";
+                                                        <tr>
+                                                            <th scope="row"><?= $no ?></th>
+                                                            <td scope="row"><?= $key->periode ?></td>
+                                                            <td scope="row"><?= $key->open ?></td>
+                                                            <td scope="row"><?= $key->expire ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <input type="hidden" name="id_bimbingan" value="" />
+                                                                <?php
+                                                                $acc_pem1 = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='pembimbing 1' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
+                                                                $acc_pem2 = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='pembimbing 2' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
+                                                                $acc_kor = $db->query("SELECT * FROM tb_perizinan_sidang WHERE nim='" . session()->get('ses_id') . "' AND izin_sebagai='koordinator' AND jenis_sidang='skripsi' AND `status`='disetujui' ")->getResult();
+                                                                $cek_pendaftar_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang WHERE nim='" . session()->get('ses_id') . "' AND id_jadwal='" . $key->id_jadwal . "' ")->getResult();
+                                                                $acc_seminar_penguji1 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 1'")->getResult();
+                                                                $acc_seminar_penguji2 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 2'")->getResult();
+                                                                $acc_seminar_penguji3 = $db->query("SELECT * from tb_acc_revisi where nim='" . session()->get('ses_id') . "' AND `jenis_sidang`='seminar proposal' AND sebagai='Penguji 3'")->getResult();
+                                                                if (time() < strtotime($key->open)) {
+                                                                    echo "<a class='text-danger'>Belum Dibuka</a>";
+                                                                } elseif (time() >= strtotime($key->open)) {
+                                                                    if ($acc_seminar_penguji1 > 0 && $acc_seminar_penguji2 > 0 && $acc_seminar_penguji3 > 0) {
+                                                                        if (count($acc_pem1) > 0 && count($acc_pem2) > 0) {
+                                                                            if (count($cek_pendaftar_sidang) > 0) {
+                                                                                echo "<a class='text-success'>Telah Mendaftar</a>";
+                                                                            } else {
+                                                                ?>
+                                                                                <div class="btn-group">
+                                                                                    <a class="btn btn-primary btn-sm" <?= $ststbl ?> data-bs-target="#modaldaftar<?= $key->id_jadwal ?>" id="revisi" data-bs-toggle="modal" href="#">Daftar Seminar</a>
+                                                                                </div>
+                                                                <?php }
                                                                         } else {
-                                                            ?>
-                                                                            <div class="btn-group">
-                                                                                <a class="btn btn-primary btn-sm" <?= $ststbl ?> data-bs-target="#modaldaftar<?= $key->id_jadwal ?>" id="revisi" data-bs-toggle="modal" href="#">Daftar Seminar</a>
-                                                                            </div>
-                                                            <?php }
+                                                                            echo "<a class='text-danger'> Dapat mendaftar apabila telah mendapat izin dari pembimbing 1 & pembimbing 2. </a>";
+                                                                        }
                                                                     } else {
-                                                                        echo "<a class='text-danger'> Dapat mendaftar apabila telah mendapat izin dari pembimbing 1 & pembimbing 2. </a>";
+                                                                        echo "<a class='text-danger'> Silahkan Selesaikan Revisi Proposal Anda. </a>";
                                                                     }
-                                                                } else {
-                                                                    echo "<a class='text-danger'> Silahkan Selesaikan Revisi Proposal Anda. </a>";
-                                                                }
-                                                            } ?>
-                                                        </td>
-                                                        <div class="modal" id="modaldaftar<?= $key->id_jadwal ?>">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content modal-content-demo">
-                                                                    <div class="modal-header">
-                                                                        <h6 class="modal-title">Daftar Seminar Proposal</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                                                } ?>
+                                                            </td>
+                                                            <div class="modal" id="modaldaftar<?= $key->id_jadwal ?>">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content modal-content-demo">
+                                                                        <div class="modal-header">
+                                                                            <h6 class="modal-title">Daftar Seminar Proposal</h6><button aria-label="Close" class="close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                                                        </div>
+                                                                        <form action="<?= base_url() ?>mendaftar_sidang" method="POST" enctype="multipart/form-data">
+                                                                            <?= csrf_field() ?>
+                                                                            <input type="hidden" name="id_jadwal" value="<?= $key->id_jadwal ?>" />
+                                                                            <div class="modal-body">
+                                                                                <label for="">Upload Proposal Skripsi</label>
+                                                                                <div class="input-group file-browser">
+                                                                                    <input type="text" class="form-control border-right-0 browse-file" placeholder="Proposal Skripsi (.pdf)" name="ket_berkas_proposal">
+                                                                                    <label class="input-group-btn">
+                                                                                        <span class="btn btn-default">
+                                                                                            Browse <input type="file" name="berkas_proposal" class="d-none" multiple>
+                                                                                        </span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <label for="">Upload Hasil Turnitin</label>
+                                                                                <div class="input-group file-browser">
+                                                                                    <input type="text" class="form-control border-right-0 browse-file" placeholder="Berkas Turnitin (.pdf)" name="ket_berkas_turnitin">
+                                                                                    <label class="input-group-btn">
+                                                                                        <span class="btn btn-default">
+                                                                                            Browse <input type="file" name="berkas_turnitin" class="d-none" multiple>
+                                                                                        </span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn ripple btn-primary" type="submit">Daftar</button>
+                                                                                <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Keluar</button>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
-                                                                    <form action="<?= base_url() ?>mendaftar_sidang" method="POST" enctype="multipart/form-data">
-                                                                        <?= csrf_field() ?>
-                                                                        <input type="hidden" name="id_jadwal" value="<?= $key->id_jadwal ?>" />
-                                                                        <div class="modal-body">
-                                                                            <label for="">Upload Proposal Skripsi</label>
-                                                                            <div class="input-group file-browser">
-                                                                                <input type="text" class="form-control border-right-0 browse-file" placeholder="Proposal Skripsi (.pdf)" name="ket_berkas_proposal">
-                                                                                <label class="input-group-btn">
-                                                                                    <span class="btn btn-default">
-                                                                                        Browse <input type="file" name="berkas_proposal" class="d-none" multiple>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </div>
-                                                                            <label for="">Upload Hasil Turnitin</label>
-                                                                            <div class="input-group file-browser">
-                                                                                <input type="text" class="form-control border-right-0 browse-file" placeholder="Berkas Turnitin (.pdf)" name="ket_berkas_turnitin">
-                                                                                <label class="input-group-btn">
-                                                                                    <span class="btn btn-default">
-                                                                                        Browse <input type="file" name="berkas_turnitin" class="d-none" multiple>
-                                                                                    </span>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn ripple btn-primary" type="submit">Daftar</button>
-                                                                            <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Keluar</button>
-                                                                        </div>
-                                                                    </form>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </tr>
+                                                        </tr>
                                             <?php $no++;
+                                                    }
                                                 }
                                             } ?>
                                         </tbody>

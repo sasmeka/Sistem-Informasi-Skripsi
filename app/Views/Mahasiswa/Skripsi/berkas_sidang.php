@@ -170,20 +170,20 @@ use CodeIgniter\Images\Image;
                                                     : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->ruang_sidang != NULL ? $jadwal_sidang[0]->ruang_sidang : '' ?>
                                                 </div>
                                             </div>
-                                            <p class="tx-12 tx-gray-500 pt-1 mb-0">Disetuji tanpa perbaikan, disetujui dengan perbaikan dan Tidak disetujui/mengulang</p>
+                                            <p class="tx-12 tx-gray-500 pt-1 mb-0">Lulus tanpa perbaikan, lulus dengan perbaikan dan tidak lulus/mengulang</p>
                                             <div class="form-group mb-0 justify-content-end">
                                                 <div class="checkbox">
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 1 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-2">
-                                                        <label for="checkbox-2" class="custom-control-label mt-1">Disetuji tanpa perbaikan</label>
+                                                        <label for="checkbox-2" class="custom-control-label mt-1">Lulus tanpa perbaikan</label>
                                                     </div>
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 2 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-3">
-                                                        <label for="checkbox-3" class="custom-control-label mt-1">Disetuji dengan perbaikan</label>
+                                                        <label for="checkbox-3" class="custom-control-label mt-1">Lulus dengan perbaikan</label>
                                                     </div>
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 3 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-4">
-                                                        <label for="checkbox-4" class="custom-control-label mt-1">Tidak disetujui/mengulang</label>
+                                                        <label for="checkbox-4" class="custom-control-label mt-1">Tidak lulus/mengulang</label>
                                                     </div>
                                                 </div>
                                             </div>

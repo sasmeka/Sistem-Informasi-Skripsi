@@ -175,11 +175,11 @@ use CodeIgniter\Images\Image;
                                                 <div class="checkbox">
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 1 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-2">
-                                                        <label for="checkbox-2" class="custom-control-label mt-1">Disetuji tanpa perbaikan</label>
+                                                        <label for="checkbox-2" class="custom-control-label mt-1">Disetujui tanpa perbaikan</label>
                                                     </div>
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 2 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-3">
-                                                        <label for="checkbox-3" class="custom-control-label mt-1">Disetuji dengan perbaikan</label>
+                                                        <label for="checkbox-3" class="custom-control-label mt-1">Disetujui dengan perbaikan</label>
                                                     </div>
                                                     <div class="custom-checkbox custom-control">
                                                         <input type="checkbox" onclick="return false;" <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->hasil_sidang == 3 ? 'checked' : '' : '' ?> data-checkboxes="mygroup" class="custom-control-input" id="checkbox-4">

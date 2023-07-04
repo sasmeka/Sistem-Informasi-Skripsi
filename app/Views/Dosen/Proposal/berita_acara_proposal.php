@@ -123,7 +123,7 @@ use CodeIgniter\Images\Image;
                                                                                                 <div class="form-group">
                                                                                                     <label for="exampleInputEmail1">Status Ujian Skripsi</label>
                                                                                                     <label class="rdiobox mb-1">
-                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '1' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="1"><span>Disetuji tanpa perbaikan</span>
+                                                                                                        <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '1' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="1"><span>Disetujui tanpa perbaikan</span>
                                                                                                     </label>
                                                                                                     <label class="rdiobox mb-1">
                                                                                                         <input <?= !empty($sidang) ? ($sidang[0]->hasil_sidang == '2' ? "checked" : '') : '' ?> <?= $key1->sebagai != '1' ? "disabled" : '' ?> type="radio" name="status" value="2"><span>Disetujui dengan perbaikan</span>
