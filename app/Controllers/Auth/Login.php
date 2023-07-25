@@ -113,6 +113,12 @@ class Login extends BaseController
                         return redirect()->back()->withInput();
                     }
                 } elseif ($data[0]->role == 'dosen') {
+                    $jumlah_bimbingan1 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . $data[0]->id . "' AND sebagai='1' AND status_pengajuan='diterima'")->getResult();
+                    $jumlah_bimbingan2 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . $data[0]->id . "' AND sebagai='2' AND status_pengajuan='diterima'")->getResult();
+                    $jumlah_bimbinganselesai1 = $this->db->query("SELECT * FROM `tb_nilai` WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 1' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                    $jumlah_bimbinganselesai2 = $this->db->query("SELECT * FROM `tb_nilai` WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 2' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan1) - count($jumlah_bimbinganselesai1)) . "' WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 1' ");
+                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan2) - count($jumlah_bimbinganselesai2)) . "' WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 2' ");
                     $cek_kor = $this->db->query("SELECT * FROM tb_korprodi where nip='" . $data[0]->id . "'")->getResult();
                     if (count($cek_kor) > 0) {
                         $image = $this->db->query("SELECT `image` FROM tb_profil_tambahan where id='" . $data[0]->id . "'")->getResult()[0]->image;
@@ -310,6 +316,12 @@ class Login extends BaseController
                         return redirect()->back()->withInput();
                     }
                 } elseif ($data[0]->role == 'dosen') {
+                    $jumlah_bimbingan1 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . $data[0]->id . "' AND sebagai='1' AND status_pengajuan='diterima'")->getResult();
+                    $jumlah_bimbingan2 = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='" . $data[0]->id . "' AND sebagai='2' AND status_pengajuan='diterima'")->getResult();
+                    $jumlah_bimbinganselesai1 = $this->db->query("SELECT * FROM `tb_nilai` WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 1' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                    $jumlah_bimbinganselesai2 = $this->db->query("SELECT * FROM `tb_nilai` WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 2' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan1) - count($jumlah_bimbinganselesai1)) . "' WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 1' ");
+                    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan2) - count($jumlah_bimbinganselesai2)) . "' WHERE nip='" . $data[0]->id . "' AND sebagai='pembimbing 2' ");
                     $cek_kor = $this->db->query("SELECT * FROM tb_korprodi where nip='" . $data[0]->id . "'")->getResult();
                     if (count($cek_kor) > 0) {
                         $image = $this->db->query("SELECT `image` FROM tb_profil_tambahan where id='" . $data[0]->id . "'")->getResult()[0]->image;

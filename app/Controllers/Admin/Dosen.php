@@ -292,10 +292,13 @@ class Dosen extends BaseController
         $email = $this->request->getPost("email");
         $cek_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing a LEFT JOIN tb_users b ON a.`nip`=b.`id` WHERE a.`nip`='$nip' AND b.`email`='$email' AND a.`sebagai`='pembimbing 1'")->getResult();
         $cek_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing a LEFT JOIN tb_users b ON a.`nip`=b.`id` WHERE a.`nip`='$nip' AND b.`email`='$email' AND a.`sebagai`='pembimbing 2'")->getResult();
-        if ((count($cek_p1) && $cek_p1[0]->jumlah > 0) || (count($cek_p2) && $cek_p2[0]->jumlah > 0)) {
+        $cek_u1 = $this->db->query("SELECT * FROM tb_penguji a LEFT JOIN tb_users b ON a.`nip`=b.`id` WHERE a.`nip`='$nip' AND b.`email`='$email' AND a.`sebagai`='1'")->getResult();
+        $cek_u2 = $this->db->query("SELECT * FROM tb_penguji a LEFT JOIN tb_users b ON a.`nip`=b.`id` WHERE a.`nip`='$nip' AND b.`email`='$email' AND a.`sebagai`='2'")->getResult();
+        $cek_u3 = $this->db->query("SELECT * FROM tb_penguji a LEFT JOIN tb_users b ON a.`nip`=b.`id` WHERE a.`nip`='$nip' AND b.`email`='$email' AND a.`sebagai`='3'")->getResult();
+        if ((count($cek_p1) && $cek_p1[0]->jumlah > 0) || (count($cek_p2) && $cek_p2[0]->jumlah > 0) || count($cek_u1) > 0 || count($cek_u2) > 0 || count($cek_u3) > 0) {
             session()->setFlashdata('message', '<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
-            <span class="alert-inner--text"><strong>Gagal!</strong> Dosen/NIP tersebut masih dalam tanggungan bimbingan.</span>
+            <span class="alert-inner--text"><strong>Gagal!</strong> Dosen/NIP tersebut masih dalam tanggungan bimbingan / sebagi penguji.</span>
             <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>

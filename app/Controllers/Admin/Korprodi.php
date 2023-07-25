@@ -91,6 +91,7 @@ class Korprodi extends BaseController
             return redirect()->to('/data_korprodi');
         }
         $this->db->query("INSERT INTO tb_korprodi (idunit,nip) VALUES ('$idunit','$nip')");
+        $this->db->query("UPDATE tb_perizinan_sidang  SET nip='$nip' WHERE idunit='$idunit' AND izin_sebagai='koordinator'");
         session()->setFlashdata('message', '<div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
             <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
             <span class="alert-inner--text"><strong>Sukses!</strong> Menambahkan koordinator program studi</span>

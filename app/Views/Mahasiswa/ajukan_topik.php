@@ -22,6 +22,9 @@ use CodeIgniter\Images\Image;
                         <p class="tx-12 tx-gray-500 mb-2">Ajukan topik skripsi.</p>
                     </div>
                     <?= session()->getFlashdata('message_ajukan_topik') . "<br>"; ?>
+                    <?php
+                    $cek_status_sidang_skripsi = $db->query("SELECT * FROM tb_pendaftar_sidang a LEFT JOIN tb_jadwal_sidang b ON a.`id_jadwal`=b.`id_jadwal` WHERE b.`jenis_sidang`='sidang skripsi' AND a.`nim`='" . session()->get('ses_id') . "'")->getResult();
+                    ?>
                     <div class="">
                         <form action="<?= base_url() ?>proses_ajukan_topik" method="POST" enctype="multipart/form-data">
                             <?= csrf_field() ?>
@@ -35,7 +38,10 @@ use CodeIgniter\Images\Image;
                                         <option value="<?= $key->idtopik ?>" <?php if ($data_pengajuan_topik[0]->id_topik == $key->idtopik) {
                                                                                     echo "selected";
                                                                                 } else {
-                                                                                    if ($stsp1 > 0 || $stsp2 > 0) {
+                                                                                    // if ($stsp1 > 0 || $stsp2 > 0) {
+                                                                                    //     echo "disabled";
+                                                                                    // }
+                                                                                    if (count($cek_status_sidang_skripsi) > 0) {
                                                                                         echo "disabled";
                                                                                     }
                                                                                 } ?>>
@@ -48,7 +54,10 @@ use CodeIgniter\Images\Image;
                             <div class="form-group">
                                 <label for="">Judul</label>
                                 <input type="teks" <?php
-                                                    if ($stsp1 > 0 || $stsp2 > 0) {
+                                                    // if ($stsp1 > 0 || $stsp2 > 0) {
+                                                    //     echo "readonly";
+                                                    // }
+                                                    if (count($cek_status_sidang_skripsi) > 0) {
                                                         echo "readonly";
                                                     }
                                                     ?> name="judul_topik" class="form-control" id="exampleInput" placeholder="Isikan Judul Skripsi Anda" value=<?php if (!empty($data_pengajuan_topik[0]->judul_topik)) {

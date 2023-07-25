@@ -34,6 +34,13 @@ use CodeIgniter\Images\Image;
                                     <tbody>
                                         <?php $no = 1;
                                         foreach ($data as $key) :
+                                            $jumlah_bimbingan1 = $db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='$key->nip' AND sebagai='1' AND status_pengajuan='diterima'")->getResult();
+                                            $jumlah_bimbingan2 = $db->query("SELECT * FROM tb_pengajuan_pembimbing where nip='$key->nip' AND sebagai='2' AND status_pengajuan='diterima'")->getResult();
+                                            $jumlah_bimbinganselesai1 = $db->query("SELECT * FROM `tb_nilai` WHERE nip='$key->nip' AND sebagai='pembimbing 1' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                                            $jumlah_bimbinganselesai2 = $db->query("SELECT * FROM `tb_nilai` WHERE nip='$key->nip' AND sebagai='pembimbing 2' AND nilai_ujian is NOT null AND nilai_bimbingan is not null")->getResult();
+                                            $db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan1) - count($jumlah_bimbinganselesai1)) . "' WHERE nip='$key->nip' AND sebagai='pembimbing 1' ");
+                                            $db->query("UPDATE tb_jumlah_pembimbing SET jumlah='" . (count($jumlah_bimbingan2) - count($jumlah_bimbinganselesai2)) . "' WHERE nip='$key->nip' AND sebagai='pembimbing 2' ");
+
                                             $kuota_p1 = $db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='$key->nip' AND sebagai='pembimbing 1'")->getResult();
                                             $kuota_p2 = $db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='$key->nip' AND sebagai='pembimbing 2'")->getResult();
                                         ?>

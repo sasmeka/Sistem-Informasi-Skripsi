@@ -36,33 +36,32 @@ class Validasi_Usulan extends BaseController
             return redirect()->to('/');
         }
         $this->db->query("UPDATE tb_pengajuan_pembimbing SET status_pengajuan='diterima',agree_at=now() WHERE id_pengajuan_pembimbing=$id");
-$data = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing=$id")->getResult();
-if($data[0]->sebagai == '1'){
-    $jumlah_pembimbing_p1= $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'")->getResult();
-    $jumlah = $jumlah_pembimbing_p1[0]->jumlah + 1;
-    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah' WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'");
-    $jumlah_pembimbing_p1= $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'")->getResult();
-    if($jumlah_pembimbing_p1[0]->jumlah>=10){
-        $datatunggu=$this->db->query("SELECT * FROM tb_pengajuan_pembimbing a LEFT JOIN tb_pengajuan_topik b ON a.`nim`=b.`nim` WHERE a.nip='" . session()->get('ses_id') . "' AND a.sebagai='1' AND a.status_pengajuan='menunggu'")->getResult();
-        foreach($datatunggu as $key){
-            $this->db->query("UPDATE tb_pengajuan_pembimbing SET status_pengajuan='ditolak',pesan='Maaf! Bimbingan penuh',reject_at=now() WHERE id_pengajuan_pembimbing=$key->id_pengajuan");
-            $this->db->query("INSERT INTO tb_penolakan_pengajuan_pembimbing (id_pengajuan_pembimbing,berkas) VALUES ('$key->id_pengajuan','$key->berkas')");    
+        $data = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing WHERE id_pengajuan_pembimbing=$id")->getResult();
+        if ($data[0]->sebagai == '1') {
+            $jumlah_pembimbing_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'")->getResult();
+            $jumlah = $jumlah_pembimbing_p1[0]->jumlah + 1;
+            $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah' WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'");
+            $jumlah_pembimbing_p1 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 1'")->getResult();
+            if ($jumlah_pembimbing_p1[0]->jumlah >= 10) {
+                $datatunggu = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing a LEFT JOIN tb_pengajuan_topik b ON a.`nim`=b.`nim` WHERE a.nip='" . session()->get('ses_id') . "' AND a.sebagai='1' AND a.status_pengajuan='menunggu'")->getResult();
+                foreach ($datatunggu as $key) {
+                    $this->db->query("UPDATE tb_pengajuan_pembimbing SET status_pengajuan='ditolak',pesan='Maaf! Bimbingan penuh',reject_at=now() WHERE id_pengajuan_pembimbing=$key->id_pengajuan");
+                    $this->db->query("INSERT INTO tb_penolakan_pengajuan_pembimbing (id_pengajuan_pembimbing,berkas) VALUES ('$key->id_pengajuan','$key->berkas')");
+                }
+            }
+        } else {
+            $jumlah_pembimbing_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'")->getResult();
+            $jumlah = $jumlah_pembimbing_p2[0]->jumlah + 1;
+            $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah' WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'");
+            $jumlah_pembimbing_p2 = $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'")->getResult();
+            if ($jumlah_pembimbing_p2[0]->jumlah >= 10) {
+                $datatunggu = $this->db->query("SELECT * FROM tb_pengajuan_pembimbing a LEFT JOIN tb_pengajuan_topik b ON a.`nim`=b.`nim` WHERE a.nip='" . session()->get('ses_id') . "' AND a.sebagai='2' AND a.status_pengajuan='menunggu'")->getResult();
+                foreach ($datatunggu as $key) {
+                    $this->db->query("UPDATE tb_pengajuan_pembimbing SET status_pengajuan='ditolak',pesan='Maaf! Bimbingan penuh',reject_at=now() WHERE id_pengajuan_pembimbing=$key->id_pengajuan_pembimbing");
+                    $this->db->query("INSERT INTO tb_penolakan_pengajuan_pembimbing (id_pengajuan_pembimbing,berkas) VALUES ('$key->id_pengajuan_pembimbing','$key->berkas')");
+                }
+            }
         }
-    }
-}else{
-    $jumlah_pembimbing_p2= $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'")->getResult();
-    $jumlah = $jumlah_pembimbing_p2[0]->jumlah + 1;
-    $this->db->query("UPDATE tb_jumlah_pembimbing SET jumlah='$jumlah' WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'");
-    $jumlah_pembimbing_p2= $this->db->query("SELECT * FROM tb_jumlah_pembimbing WHERE nip='" . session()->get('ses_id') . "' AND sebagai='pembimbing 2'")->getResult();
-    if($jumlah_pembimbing_p2[0]->jumlah>=10){
-        $datatunggu=$this->db->query("SELECT * FROM tb_pengajuan_pembimbing a LEFT JOIN tb_pengajuan_topik b ON a.`nim`=b.`nim` WHERE a.nip='" . session()->get('ses_id') . "' AND a.sebagai='2' AND a.status_pengajuan='menunggu'")->getResult();
-        foreach($datatunggu as $key){
-            $this->db->query("UPDATE tb_pengajuan_pembimbing SET status_pengajuan='ditolak',pesan='Maaf! Bimbingan penuh',reject_at=now() WHERE id_pengajuan_pembimbing=$key->id_pengajuan_pembimbing");
-            $this->db->query("INSERT INTO tb_penolakan_pengajuan_pembimbing (id_pengajuan_pembimbing,berkas) VALUES ('$key->id_pengajuan_pembimbing','$key->berkas')");    
-        }
-       }
-
-}
         return redirect()->to('/validasi_usulan');
     }
     public function tolak_validasi()
