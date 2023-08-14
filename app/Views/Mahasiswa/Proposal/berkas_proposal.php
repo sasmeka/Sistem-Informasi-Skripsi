@@ -113,34 +113,34 @@ use CodeIgniter\Images\Image;
                                             function getHari($date)
                                             {
                                                 $datetime = DateTime::createFromFormat('Y-m-d', $date);
-                                                // $day = $datetime->format('l');
-                                                // switch ($day) {
-                                                //     case 'Sunday':
-                                                //         $hari = 'Minggu';
-                                                //         break;
-                                                //     case 'Monday':
-                                                //         $hari = 'Senin';
-                                                //         break;
-                                                //     case 'Tuesday':
-                                                //         $hari = 'Selasa';
-                                                //         break;
-                                                //     case 'Wednesday':
-                                                //         $hari = 'Rabu';
-                                                //         break;
-                                                //     case 'Thursday':
-                                                //         $hari = 'Kamis';
-                                                //         break;
-                                                //     case 'Friday':
-                                                //         $hari = 'Jum\'at';
-                                                //         break;
-                                                //     case 'Saturday':
-                                                //         $hari = 'Sabtu';
-                                                //         break;
-                                                //     default:
-                                                //         $hari = 'Tidak ada';
-                                                //         break;
-                                                // }
-                                                // return $hari;
+                                                $day = $datetime->format('l');
+                                                switch ($day) {
+                                                    case 'Sunday':
+                                                        $hari = 'Minggu';
+                                                        break;
+                                                    case 'Monday':
+                                                        $hari = 'Senin';
+                                                        break;
+                                                    case 'Tuesday':
+                                                        $hari = 'Selasa';
+                                                        break;
+                                                    case 'Wednesday':
+                                                        $hari = 'Rabu';
+                                                        break;
+                                                    case 'Thursday':
+                                                        $hari = 'Kamis';
+                                                        break;
+                                                    case 'Friday':
+                                                        $hari = 'Jum\'at';
+                                                        break;
+                                                    case 'Saturday':
+                                                        $hari = 'Sabtu';
+                                                        break;
+                                                    default:
+                                                        $hari = 'Tidak ada';
+                                                        break;
+                                                }
+                                                return $hari;
                                             }
                                             $id_pendaftar = $db->query("SELECT * FROM tb_pendaftar_sidang a LEFT JOIN tb_jadwal_sidang b ON a.`id_jadwal`=b.`id_jadwal` WHERE b.`jenis_sidang`='seminar proposal' AND nim='" . session()->get('ses_id') . "' ORDER BY create_at DESC LIMIT 1")->getResult()[0]->id_pendaftar;
                                             $jadwal_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_pendaftar='$id_pendaftar'")->getResult();
