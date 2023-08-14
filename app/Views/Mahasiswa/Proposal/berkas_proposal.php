@@ -113,34 +113,34 @@ use CodeIgniter\Images\Image;
                                             function getHari($date)
                                             {
                                                 $datetime = DateTime::createFromFormat('Y-m-d', $date);
-                                                $day = $datetime->format('l');
-                                                switch ($day) {
-                                                    case 'Sunday':
-                                                        $hari = 'Minggu';
-                                                        break;
-                                                    case 'Monday':
-                                                        $hari = 'Senin';
-                                                        break;
-                                                    case 'Tuesday':
-                                                        $hari = 'Selasa';
-                                                        break;
-                                                    case 'Wednesday':
-                                                        $hari = 'Rabu';
-                                                        break;
-                                                    case 'Thursday':
-                                                        $hari = 'Kamis';
-                                                        break;
-                                                    case 'Friday':
-                                                        $hari = 'Jum\'at';
-                                                        break;
-                                                    case 'Saturday':
-                                                        $hari = 'Sabtu';
-                                                        break;
-                                                    default:
-                                                        $hari = 'Tidak ada';
-                                                        break;
-                                                }
-                                                return $hari;
+                                                // $day = $datetime->format('l');
+                                                // switch ($day) {
+                                                //     case 'Sunday':
+                                                //         $hari = 'Minggu';
+                                                //         break;
+                                                //     case 'Monday':
+                                                //         $hari = 'Senin';
+                                                //         break;
+                                                //     case 'Tuesday':
+                                                //         $hari = 'Selasa';
+                                                //         break;
+                                                //     case 'Wednesday':
+                                                //         $hari = 'Rabu';
+                                                //         break;
+                                                //     case 'Thursday':
+                                                //         $hari = 'Kamis';
+                                                //         break;
+                                                //     case 'Friday':
+                                                //         $hari = 'Jum\'at';
+                                                //         break;
+                                                //     case 'Saturday':
+                                                //         $hari = 'Sabtu';
+                                                //         break;
+                                                //     default:
+                                                //         $hari = 'Tidak ada';
+                                                //         break;
+                                                // }
+                                                // return $hari;
                                             }
                                             $id_pendaftar = $db->query("SELECT * FROM tb_pendaftar_sidang a LEFT JOIN tb_jadwal_sidang b ON a.`id_jadwal`=b.`id_jadwal` WHERE b.`jenis_sidang`='seminar proposal' AND nim='" . session()->get('ses_id') . "' ORDER BY create_at DESC LIMIT 1")->getResult()[0]->id_pendaftar;
                                             $jadwal_sidang = $db->query("SELECT * FROM tb_pendaftar_sidang WHERE id_pendaftar='$id_pendaftar'")->getResult();
@@ -151,7 +151,7 @@ use CodeIgniter\Images\Image;
                                                     Hari / Tanggal
                                                 </div>
                                                 <div class="col">
-                                                    : <?= $id_pendaftar != NULL ? getHari(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) . ', ' . tgl_indo(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) : '' ?>
+                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != '0000-00-00 00:00:00' && $jadwal_sidang[0]->waktu_sidang != NULL ? getHari(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) . ', ' . tgl_indo(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) : '' ?>
                                                 </div>
                                             </div>
                                             <div class="row col-md-12 col-lg-6 col-xl-6">
@@ -159,7 +159,7 @@ use CodeIgniter\Images\Image;
                                                     Pukul
                                                 </div>
                                                 <div class="col">
-                                                    : <?= $id_pendaftar != NULL ? date('H:i:s', strtotime($jadwal_sidang[0]->waktu_sidang)) . ' WIB' : '' ?>
+                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != '0000-00-00 00:00:00' && $jadwal_sidang[0]->waktu_sidang != NULL ? date('H:i:s', strtotime($jadwal_sidang[0]->waktu_sidang)) . ' WIB' : '' ?>
                                                 </div>
                                             </div>
                                             <div class="row  col-md-12 col-lg-6 col-xl-6">
@@ -167,7 +167,7 @@ use CodeIgniter\Images\Image;
                                                     Tempat
                                                 </div>
                                                 <div class="col">
-                                                    : <?= $id_pendaftar != NULL ? $jadwal_sidang[0]->ruang_sidang : '' ?>
+                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->ruang_sidang != NULL ? $jadwal_sidang[0]->ruang_sidang : '' ?>
                                                 </div>
                                             </div>
                                             <p class="tx-12 tx-gray-500 pt-1 mb-0">Disetuji tanpa perbaikan, disetujui dengan perbaikan dan Tidak disetujui/mengulang</p>

@@ -151,7 +151,7 @@ use CodeIgniter\Images\Image;
                                                     Hari / Tanggal
                                                 </div>
                                                 <div class="col">
-                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != NULL ? getHari(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) . ', ' . tgl_indo(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) : '' ?>
+                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != NULL && $jadwal_sidang[0]->waktu_sidang != '0000-00-00 00:00:00' ? getHari(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) . ', ' . tgl_indo(date('Y-m-d', strtotime($jadwal_sidang[0]->waktu_sidang))) : '' ?>
                                                 </div>
                                             </div>
                                             <div class="row col-md-12 col-lg-6 col-xl-6">
@@ -159,7 +159,7 @@ use CodeIgniter\Images\Image;
                                                     Pukul
                                                 </div>
                                                 <div class="col">
-                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != NULL ? date('H:i:s', strtotime($jadwal_sidang[0]->waktu_sidang)) . ' WIB' : '' ?>
+                                                    : <?= $id_pendaftar != NULL && $jadwal_sidang[0]->waktu_sidang != NULL && $jadwal_sidang[0]->waktu_sidang != '0000-00-00 00:00:00' ? date('H:i:s', strtotime($jadwal_sidang[0]->waktu_sidang)) . ' WIB' : '' ?>
                                                 </div>
                                             </div>
                                             <div class="row  col-md-12 col-lg-6 col-xl-6">
